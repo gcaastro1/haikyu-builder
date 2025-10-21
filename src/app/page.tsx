@@ -1,103 +1,219 @@
-import Image from "next/image";
+"use client"; 
+
+import { useState } from 'react';
+import { allCharacters, Character, Position } from '../../data/characters'; 
+import { CharacterCard } from './components/CharacterCard';
+import { TeamCourt } from './components/TeamCourt';
+import { PositionFilter } from './components/PositionFilter';
+import { Bench } from './components/Bench'; 
+import { 
+  DndContext, 
+  DragEndEvent, 
+  DragStartEvent, 
+  DragOverlay,
+  closestCenter 
+} from '@dnd-kit/core';
+import { SectionHeader } from './components/SectionHeader';
+
+export type TeamSlots = {
+  pos5_ws: Character | null; pos6_mb: Character | null; pos1_op: Character | null; 
+  pos4_ws: Character | null; pos3_mb: Character | null; pos2_s: Character | null;  
+  libero: Character | null;  
+};
+const initialTeamState: TeamSlots = {
+  pos5_ws: null, pos6_mb: null, pos1_op: null,
+  pos4_ws: null, pos3_mb: null, pos2_s: null, libero: null,
+};
+export type SlotKey = keyof TeamSlots;
+type ActiveDragData = {
+  character: Character;
+  type: 'list' | 'court' | 'bench';
+  [key: string]: unknown; 
+};
+type OverDragData = {
+  type: 'court' | 'bench';
+  acceptedPosition?: Position;
+  [key:string]: unknown; 
+};
+
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  
+  const [team, setTeam] = useState<TeamSlots>(initialTeamState);
+  const [bench, setBench] = useState<(Character | null)[]>(Array(6).fill(null));
+  const [positionFilter, setPositionFilter] = useState<Position | "ALL">("ALL");
+  const [activeDragItem, setActiveDragItem] = useState<Character | null>(null);
+  const [isPositionFree, setIsPositionFree] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const handlePositionModeChange = () => {
+    const newMode = !isPositionFree;
+    if (isPositionFree === true && newMode === false) {
+      setTeam(initialTeamState);
+    }
+    setIsPositionFree(newMode);
+  };
+  const handleDragStart = (event: DragStartEvent) => {
+    const { active } = event;
+    if (active.data.current?.character) {
+      setActiveDragItem(active.data.current.character);
+    }
+  };
+  const handleDragEnd = (event: DragEndEvent) => {
+    setActiveDragItem(null);
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const activeData = active.data.current as ActiveDragData;
+    const overData = over.data.current as OverDragData;
+    const draggedCharacter = activeData.character; 
+    if (!draggedCharacter) return; 
+    const newTeam = { ...team };
+    const newBench = [ ...bench ];
+    const allCurrentNames = [
+      ...Object.values(newTeam).filter(Boolean).map(c => c!.name),
+      ...newBench.filter(Boolean).map(c => c!.name)
+    ];
+    let charFromTargetSlot: Character | null = null;
+    if (overData?.type === 'court') {
+      charFromTargetSlot = newTeam[overData.slotKey as SlotKey];
+    } else if (overData?.type === 'bench') {
+      charFromTargetSlot = newBench[overData.index as number];
+    }
+    const isSubstituting = charFromTargetSlot?.name === draggedCharacter.name;
+    if (allCurrentNames.includes(draggedCharacter.name) && !isSubstituting) {
+       alert(`'${draggedCharacter.name}' já está no seu time. Você só pode substituir, arrastando esta versão sobre a que já está em jogo.`);
+       return;
+    }
+    const targetIsCourt = overData?.type === 'court';
+    if (targetIsCourt) {
+      const targetPosition = overData.acceptedPosition as Position;
+      const targetSlotKey = overData.slotKey as SlotKey;
+      if (targetSlotKey === 'libero') {
+        if (draggedCharacter.position !== 'L') {
+          alert('Apenas Líberos (L) podem ir para o slot de Líbero!');
+          return;
+        }
+      } 
+      else if (isPositionFree) {
+        if (draggedCharacter.position === 'L') {
+           alert('Líberos só podem ir para o slot de Líbero!');
+           return;
+        }
+      } 
+      else {
+        if (draggedCharacter.position !== targetPosition) {
+          alert(`Este personagem (${draggedCharacter.position}) não pode ir para um slot de ${targetPosition}! (Modo Global)`);
+          return;
+        }
+      }
+    }
+    if (overData?.type === 'court') {
+      newTeam[overData.slotKey as SlotKey] = draggedCharacter;
+    } else if (overData?.type === 'bench') {
+      newBench[overData.index as number] = draggedCharacter;
+    }
+    if (activeData?.type === 'court') {
+      newTeam[activeData.slotKey as SlotKey] = isSubstituting ? null : charFromTargetSlot; 
+    } else if (activeData?.type === 'bench') {
+      newBench[activeData.index as number] = isSubstituting ? null : charFromTargetSlot; 
+    }
+    setTeam(newTeam);
+    setBench(newBench);
+  };
+  const handleRemoveFromCourt = (slotKey: SlotKey) => { setTeam((prevTeam) => ({ ...prevTeam, [slotKey]: null })); };
+  const handleRemoveFromBench = (index: number) => { const newBench = [...bench]; newBench[index] = null; setBench(newBench); };
+  const courtCharacterNames = Object.values(team).filter(Boolean).map(char => char!.name);
+  const benchCharacterNames = bench.filter(Boolean).map(char => char!.name);
+  const teamCharacterNames = [...courtCharacterNames, ...benchCharacterNames];
+  const filteredCharacters = allCharacters.filter(character => {
+    if (positionFilter === "ALL") return true;
+    return character.position === positionFilter;
+  });
+
+
+  return (
+    <DndContext 
+      collisionDetection={closestCenter} 
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+    >
+      <main className="container mx-auto p-4 sm:p-8">
+        <h1 className="text-3xl font-bold mb-8 text-center font-bricolage">
+          Haikyu!! Fly High - Team Builder
+        </h1>
+
+        <section className="mb-16 flex flex-col items-center"> 
+          
+          <SectionHeader>Seu Time</SectionHeader>
+          
+          <TeamCourt 
+            team={team} 
+            onRemoveCharacter={handleRemoveFromCourt}
+            onSlotClick={setPositionFilter} 
+            size="small"
+            isPositionFree={isPositionFree} 
+          />
+          <Bench 
+            bench={bench}
+            onRemoveFromBench={handleRemoveFromBench}
+          />
+        </section>
+
+        <section>
+          
+          <SectionHeader>Personagens Disponíveis</SectionHeader>
+          
+          <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-6">
+            <PositionFilter 
+              activeFilter={positionFilter}
+              onFilterChange={setPositionFilter}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+            <label htmlFor="positionToggle" className="flex items-center cursor-pointer">
+              <span className="mr-3 text-sm font-medium text-gray-300">Modo JP (Livre)</span>
+              <div className="relative">
+                <input 
+                  type="checkbox" 
+                  id="positionToggle" 
+                  className="sr-only" 
+                  checked={isPositionFree}
+                  onChange={handlePositionModeChange}
+                />
+                <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
+                <div className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform ${
+                    isPositionFree ? 'translate-x-6 bg-sky-400' : ''
+                }`}></div>
+              </div>
+            </label>
+          </div>
+
+          <div className="flex flex-wrap gap-3 justify-center p-2">
+            {filteredCharacters.map((char) => {
+              const isDisabled = teamCharacterNames.includes(char.name);
+              const dragId = `list-${char.id}`;
+              return (
+                <CharacterCard 
+                  key={dragId} 
+                  dragId={dragId} 
+                  character={char}
+                  isDisabled={isDisabled} 
+                  dragData={{ type: 'list', character: char }}
+                  size="small"
+                />
+              );
+            })}
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+
+      <DragOverlay>
+        {activeDragItem ? (
+          <CharacterCard 
+            character={activeDragItem} 
+            dragId="overlay-item"
+            dragData={{ type: 'overlay', character: activeDragItem }}
+            size="small"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        ) : null}
+      </DragOverlay>
+    </DndContext>
   );
 }
