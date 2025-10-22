@@ -1,5 +1,5 @@
 export type Position = "OP" | "MB" | "WS" | "S" | "L";
-export type Rarity = "UR" | "SP";
+export type Rarity = "SR" | "SSR" | "UR" | "SP";
 export type School = "Shiratorizawa" | "Nekoma" | "Fukurōdani" | "Aoba Johsai" | "Inarizaki" | "Kamomedai" | "Karasuno" | "Date Tech" | "Itachiyama";
 
 export type Character = {

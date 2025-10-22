@@ -1,6 +1,6 @@
 "use client";
 
-import { Character } from "../../../data/characters";
+import { Character } from "../../../data/characters"; 
 import { CharacterCard } from "./CharacterCard";
 import { TeamSlot } from "./TeamSlot";
 
@@ -11,11 +11,14 @@ type BenchProps = {
 
 export function Bench({ bench, onRemoveFromBench }: BenchProps) {
   return (
-    <div className="w-full max-w-5xl mt-8">
-      <h3 className="text-xl font-semibold text-center text-white mb-6">
-        Banco de Reservas (6)
+    <div className="w-full max-w-xl mt-8"> 
+      <h3 className="text-xl font-semibold text-left text-white mb-6 font-bricolage">
+        <span className="font-bold">BANCO DE</span>
+        <span className="font-normal opacity-80 ml-1">RESERVAS</span>
+        <span className="font-normal opacity-80 ml-1">(6)</span>
       </h3>
-      <div className="flex flex-wrap justify-center gap-4">
+      
+      <div className="flex flex-wrap justify-left gap-4">
         {bench.map((character, index) => {
           const dndId = `bench-${index}`;
           const dndData = { type: 'bench', index };

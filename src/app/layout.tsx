@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque } from "next/font/google"; 
 import "./globals.css";
+import { Navbar } from "./components/Navbar"; 
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
-  variable: '--font-inter',
+  display: 'swap',
+  variable: '--font-inter', 
 });
 
 const bricolage = Bricolage_Grotesque({
@@ -25,9 +27,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${bricolage.variable}`}>
-      
-      <body className="bg-gray-900 text-gray-100">{children}</body>
+    <html lang="pt-br" className={`${inter.variable} ${bricolage.variable}`}>
+      <body>
+        <Navbar /> 
+        {children}
+      </body>
     </html>
   );
 }

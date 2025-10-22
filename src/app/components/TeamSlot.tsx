@@ -38,7 +38,7 @@ export function TeamSlot({
           "cursor-pointer hover:bg-gray-700 hover:border-sky-500" : 
           ""
         }
-        ${droppable.isOver ? 'bg-sky-500/30 border-sky-500' : ''} // <-- Usamos a nova variável
+        ${droppable.isOver ? 'bg-sky-500/30 border-sky-500' : ''} 
       `}
     >
       <span className="text-gray-400 font-semibold text-center px-2">

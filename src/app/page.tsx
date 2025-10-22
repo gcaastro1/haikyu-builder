@@ -36,7 +36,6 @@ type OverDragData = {
   [key:string]: unknown; 
 };
 
-
 export default function Home() {
   
   const [team, setTeam] = useState<TeamSlots>(initialTeamState);
@@ -136,72 +135,77 @@ export default function Home() {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <main className="container mx-auto p-4 sm:p-8">
-        <h1 className="text-3xl font-bold mb-8 text-center font-bricolage">
-          Haikyu!! Fly High - Team Builder
-        </h1>
+      <main className="max-w-full mx-auto p-4 sm:p-8">
 
-        <section className="mb-16 flex flex-col items-center"> 
-          
-          <SectionHeader>Seu Time</SectionHeader>
-          
-          <TeamCourt 
-            team={team} 
-            onRemoveCharacter={handleRemoveFromCourt}
-            onSlotClick={setPositionFilter} 
-            size="small"
-            isPositionFree={isPositionFree} 
-          />
-          <Bench 
-            bench={bench}
-            onRemoveFromBench={handleRemoveFromBench}
-          />
-        </section>
+        <div className="flex flex-col lg:flex-row lg:gap-8">
 
-        <section>
-          
-          <SectionHeader>Personagens Disponíveis</SectionHeader>
-          
-          <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-6">
-            <PositionFilter 
-              activeFilter={positionFilter}
-              onFilterChange={setPositionFilter}
+          <section className="lg:w-3/5 flex flex-col"> 
+            <div className="w-full max-w-xl flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
+              <SectionHeader titleBold="Seu" titleRegular="Time" />
+              <label htmlFor="positionToggle" className="flex items-center cursor-pointer self-center sm:self-auto">
+                <span className="mr-3 text-sm font-medium text-gray-300">Modo JP (Livre)</span>
+                <div className="relative">
+                  <input 
+                    type="checkbox" 
+                    id="positionToggle" 
+                    className="sr-only" 
+                    checked={isPositionFree}
+                    onChange={handlePositionModeChange}
+                  />
+                  <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
+                  <div className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform ${
+                      isPositionFree ? 'translate-x-6 bg-sky-400' : ''
+                  }`}></div>
+                </div>
+              </label>
+            </div>
+            <TeamCourt 
+              team={team} 
+              onRemoveCharacter={handleRemoveFromCourt}
+              onSlotClick={setPositionFilter} 
+              size="small"
+              isPositionFree={isPositionFree} 
             />
-            <label htmlFor="positionToggle" className="flex items-center cursor-pointer">
-              <span className="mr-3 text-sm font-medium text-gray-300">Modo JP (Livre)</span>
-              <div className="relative">
-                <input 
-                  type="checkbox" 
-                  id="positionToggle" 
-                  className="sr-only" 
-                  checked={isPositionFree}
-                  onChange={handlePositionModeChange}
-                />
-                <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
-                <div className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform ${
-                    isPositionFree ? 'translate-x-6 bg-sky-400' : ''
-                }`}></div>
-              </div>
-            </label>
-          </div>
+            <Bench 
+              bench={bench}
+              onRemoveFromBench={handleRemoveFromBench}
+            />
+          </section>
 
-          <div className="flex flex-wrap gap-3 justify-center p-2">
-            {filteredCharacters.map((char) => {
-              const isDisabled = teamCharacterNames.includes(char.name);
-              const dragId = `list-${char.id}`;
-              return (
-                <CharacterCard 
-                  key={dragId} 
-                  dragId={dragId} 
-                  character={char}
-                  isDisabled={isDisabled} 
-                  dragData={{ type: 'list', character: char }}
-                  size="small"
-                />
-              );
-            })}
-          </div>
-        </section>
+          <section className="mt-16 lg:mt-0 lg:w-2/5 lg:top-24 lg:self-start 
+                              bg-zinc-950 p-4 rounded-lg shadow-inner border border-gray-700
+                              flex flex-col h-[calc(100vh-6rem)]">
+            
+            <SectionHeader titleBold="Personagens" titleRegular="Disponíveis" />
+            
+            <div className="flex justify-between items-center gap-6 mb-6">
+              <PositionFilter 
+                activeFilter={positionFilter}
+                onFilterChange={setPositionFilter}
+              />
+            </div>
+
+            <div className="flex flex-wrap gap-3 justify-between p-2 
+                            overflow-y-auto flex-grow
+                            custom-scrollbar">
+              
+              {filteredCharacters.map((char) => {
+                const isDisabled = teamCharacterNames.includes(char.name);
+                const dragId = `list-${char.id}`;
+                return (
+                  <CharacterCard 
+                    key={dragId} 
+                    dragId={dragId} 
+                    character={char}
+                    isDisabled={isDisabled} 
+                    dragData={{ type: 'list', character: char }}
+                    size="small"
+                  />
+                );
+              })}
+            </div>
+          </section>
+        </div>
       </main>
 
       <DragOverlay>

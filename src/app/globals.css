@@ -1,12 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -19,28 +16,26 @@
     background-color: var(--background);
     color: var(--foreground);
   }
-}
-
-@layer components {
-  .fancy-title {
-    @apply text-2xl font-bold text-white font-bricolage flex items-center justify-center;
-    
-    &::before, &::after {
-      content: '';
-      display: inline-block;
-      vertical-align: middle;
-      
-      @apply h-[3px] w-8 bg-sky-500;
   
-      box-shadow: 0 5px 0 0 rgb(14 165 233); 
-    }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px; /* Mais fina */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #71717a; 
+    border-radius: 10px;
+  }
 
-    &::before {
-      @apply mr-2;
-    }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #a1a1aa; 
+  }
 
-    &::after {
-      @apply ml-2;
-    }
+  .custom-scrollbar {
+    scrollbar-width: thin; 
+    scrollbar-color: #71717a transparent; 
   }
 }
