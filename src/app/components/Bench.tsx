@@ -1,6 +1,6 @@
 "use client";
-
-import { Character } from "../../../data/characters"; 
+ 
+import { Character } from "@/types";
 import { CharacterCard } from "./CharacterCard";
 import { TeamSlot } from "./TeamSlot";
 

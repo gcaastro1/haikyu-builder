@@ -1,4 +1,3 @@
-// /src/app/components/CharacterCard.tsx
 "use client";
 
 import Image from "next/image";
@@ -9,7 +8,8 @@ import {
   getRarityBorderColor,
   getRarityColor,
 } from "../lib/rarityBackgrounds";
-import { Character } from "@/types";
+import { Character, DoubleClickOrigin, SlotKey } from "@/types"
+
 
 type CharacterCardProps = {
   character: Character;
@@ -18,9 +18,10 @@ type CharacterCardProps = {
   dragId?: string;
   dragData?: Record<string, unknown>;
   dropData?: Record<string, unknown>;
-  originType?: string;
+  originType: DoubleClickOrigin;
+  originKey?: SlotKey;
 
-  onClick?: () => void;
+  onClick?: (slotIdentifier: string) => void;
 };
 
 export function CharacterCard({
@@ -30,6 +31,8 @@ export function CharacterCard({
   dragId,
   dragData,
   dropData,
+  originType,
+  originKey,
   onClick,
 }: CharacterCardProps) {
   const isDraggable = !!dragId;
@@ -56,6 +59,14 @@ export function CharacterCard({
       onRemoveCharacter();
     }
   };
+
+const handleClick = () => {
+  if (onClick && !isDisabled && (originType === 'court' || originType === 'bench')) {
+    if (dragId) {
+      onClick(dragId);
+    }
+  }
+};
 
   const rarityBgUrl = getRarityBackground(character.rarity);
   const rarityBorderColor = getRarityBorderColor(character.rarity);
@@ -87,12 +98,6 @@ export function CharacterCard({
       />
     );
   }
-
-  const handleClick = () => {
-    if (onClick && !isDisabled) {
-      onClick();
-    }
-  };
 
   return (
     <div

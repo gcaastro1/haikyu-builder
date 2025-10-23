@@ -71,3 +71,39 @@ export type TeamSlots = {
 };
 
 export type SlotKey = keyof TeamSlots;
+
+export interface SavedTeam {
+    name: string;
+    court: TeamSlots;
+    bench: (Character | null)[];
+    savedAt: string;
+}
+
+export interface ExportedTeam {
+    c: { [key in SlotKey]?: number | null }; 
+    b: (number | null)[];
+}
+
+export type DbStyle = "quick" | "power" | "receive" | "block" | string; 
+export type RelevantStyleDisplay = "Ataque Rápido" | "Potente" | "Bloqueio" | "Recepção";
+export type TeamType = RelevantStyleDisplay | "Nenhum";
+
+export const dbStyleToTeamTypeMap: { [key in DbStyle]?: RelevantStyleDisplay } = {
+    "quick": "Ataque Rápido",
+    "power": "Potente",
+    "block": "Bloqueio",
+    "receive": "Recepção",
+};
+
+export const teamTypeStyles: Record<TeamType, { color: string; icon?: string }> = {
+    "Ataque Rápido": { color: "text-sky-400" },
+    "Potente": { color: "text-red-500" },
+    "Bloqueio": { color: "text-teal-400" },
+    "Recepção": { color: "text-yellow-400" },
+    "Nenhum": { color: "text-zinc-500" },
+};
+
+export type StyleCounts = Record<RelevantStyleDisplay, number>;
+
+
+export type DoubleClickOrigin = 'list' | 'court' | 'bench';
