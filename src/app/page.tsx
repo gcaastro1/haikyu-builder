@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { shallow } from 'zustand/shallow';
+
 import { CharacterCard } from "./components/CharacterCard";
-import { supabase } from "./lib/supabaseClient";
 import { TeamCourt } from "./components/TeamCourt";
-import { PositionFilter } from "./components/PositionFilter";
 import { Bench } from "./components/Bench";
 import {
   DndContext,
@@ -15,15 +15,9 @@ import {
 } from "@dnd-kit/core";
 import { SectionHeader } from "./components/SectionHeader";
 import { Save, Trash2, List, RotateCw } from "lucide-react";
-import { NameSearchInput } from "./components/NameSearchInput";
-import { SchoolFilter } from "./components/SchoolFilter";
-
 import {
   Character,
   Position,
-  School,
-  Bond,
-  CharacterBondLink,
   ExportedTeam,
   SavedTeam,
   dbStyleToTeamTypeMap,
@@ -31,21 +25,19 @@ import {
   TeamType,
   StyleCounts,
   DoubleClickOrigin,
+  TeamSlots, 
+  SlotKey,   
 } from "@/types";
-import { getAllCharacterBondLinks, getBonds } from "./lib/actions";
 import { ActiveBondsDisplay } from "./components/ActiveBondsDisplay";
 import { SavedTeamsModal } from "./components/SavedTeamsModal";
+import { CharacterSelectionModal } from "./components/CharacterSelectorModal";
 import { TeamTypeDisplay } from "./components/TeamDisplay";
 
-export type TeamSlots = {
-  pos5_ws: Character | null;
-  pos6_mb: Character | null;
-  pos1_op: Character | null;
-  pos4_ws: Character | null;
-  pos3_mb: Character | null;
-  pos2_s: Character | null;
-  libero: Character | null;
-};
+import { useCharacterStore } from "@/stores/useCharacterStore";
+import { useTeamStore } from "@/stores/useTeamStore";
+import { useSavedTeamsStore } from "@/stores/useSavedTeamsStore";
+import { useUIStore } from "@/stores/useUIStore";
+
 
 const initialTeamState: TeamSlots = {
   pos5_ws: null,
@@ -57,7 +49,14 @@ const initialTeamState: TeamSlots = {
   libero: null,
 };
 
-export type SlotKey = keyof TeamSlots;
+const acceptedPosition: Record<Exclude<SlotKey, "libero">, Position> = {
+  pos2_s: "S",
+  pos3_mb: "MB",
+  pos4_ws: "WS",
+  pos1_op: "OP",
+  pos6_mb: "MB",
+  pos5_ws: "WS",
+};
 
 type ActiveDragData = {
   character: Character;
@@ -71,200 +70,61 @@ type OverDragData = {
   [key: string]: any;
 };
 
-const LOCAL_STORAGE_KEY = "haikyuBuilderSavedTeams";
-
 export default function Home() {
-  const [team, setTeam] = useState<TeamSlots>(initialTeamState);
-  const [bench, setBench] = useState<(Character | null)[]>(Array(6).fill(null));
-  const [allCharactersData, setAllCharactersData] = useState<Character[]>([]);
-  const [loadingCharacters, setLoadingCharacters] = useState(true);
-  const [fetchError, setFetchError] = useState<string | null>(null);
-  const [positionFilter, setPositionFilter] = useState<Position | "ALL">("ALL");
-  const [schoolFilter, setSchoolFilter] = useState<School | "ALL">("ALL");
-  const [nameSearch, setNameSearch] = useState<string>("");
+
+  const allCharacters = useCharacterStore((s) => s.allCharacters);
+  const allBonds = useCharacterStore((s) => s.allBonds);
+  const characterBondLinks = useCharacterStore((s) => s.characterBondLinks);
+  const isLoading = useCharacterStore((s) => s.isLoading);
+
+  const team = useTeamStore((s) => s.team);
+  const bench = useTeamStore((s) => s.bench);
+  const isPositionFree = useTeamStore((s) => s.isPositionFree);
+
+  const isTeamsModalOpen = useUIStore((s) => s.isTeamsModalOpen);
+  const isSelectionModalOpen = useUIStore((s) => s.isSelectionModalOpen); 
+  const targetSlotIdentifier = useUIStore((s) => s.targetSlotIdentifier);
+  const feedbackMessage = useUIStore((s) => s.feedbackMessage);
+
+  const savedTeamsList = useSavedTeamsStore((s) => s.savedTeamsList);
+
+  const fetchInitialData = useCharacterStore((s) => s.fetchInitialData);
+  const {
+    togglePositionMode,
+    rotateTeam,
+    clearTeam,
+    setTeam,
+    setBench,
+    removeFromCourt,
+    removeFromBench,
+    setCharacterInSlot,
+  } = useTeamStore();
+  const { showFeedback, openTeamsModal, openSelectionModal, closeModals } =
+    useUIStore();
+  const { loadFromStorage, saveCurrentTeam, loadTeam, deleteTeam } =
+    useSavedTeamsStore();
+
+
   const [activeDragItem, setActiveDragItem] = useState<Character | null>(null);
-  const [isPositionFree, setIsPositionFree] = useState(false);
-  const [allBonds, setAllBonds] = useState<Bond[]>([]);
-  const [characterBondLinks, setCharacterBondLinks] = useState<
-    CharacterBondLink[]
-  >([]);
-  const [loadingBondsData, setLoadingBondsData] = useState(true);
-  const [savedTeamsList, setSavedTeamsList] = useState<SavedTeam[]>([]);
   const [importKey, setImportKey] = useState("");
-  const [feedbackMessage, setFeedbackMessage] = useState<{
-    type: "success" | "error";
-    text: string;
-  } | null>(null);
-  const [isTeamsModalOpen, setIsTeamsModalOpen] = useState(false);
 
-  const [isSelectionModalOpen, setIsSelectionModalOpen] = useState(false);
-  const [targetSlotIdentifier, setTargetSlotIdentifier] = useState<
-    string | null
-  >(null);
-
-  const showFeedback = useCallback(
-    (text: string, type: "success" | "error" = "success") => {
-      setFeedbackMessage({ type, text });
-      const timer = setTimeout(() => setFeedbackMessage(null), 3000);
-      return () => clearTimeout(timer);
-    },
-    []
-  );
 
   useEffect(() => {
-    try {
-      const storedTeams = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (storedTeams) {
-        setSavedTeamsList(JSON.parse(storedTeams));
-      }
-    } catch (error) {
-      console.error("Erro ao carregar times salvos:", error);
-      setSavedTeamsList([]);
-    }
-  }, []);
-
-  useEffect(() => {
-    const fetchInitialData = async () => {
-      setLoadingCharacters(true);
-      setLoadingBondsData(true);
-      setFetchError(null);
-      try {
-        const [charactersResult, bondsResult, linksResult] = await Promise.all([
-          supabase
-            .from("Characters")
-            .select("*")
-            .order("name", { ascending: true }),
-          getBonds(),
-          getAllCharacterBondLinks(),
-        ]);
-
-        if (charactersResult.error) throw charactersResult.error;
-        if (charactersResult.data) {
-          const formattedData = charactersResult.data.map((char: any) => ({
-            ...char,
-            styles: Array.isArray(char.styles)
-              ? char.styles
-              : typeof char.styles === "string"
-              ? JSON.parse(char.styles)
-              : [],
-          })) as Character[];
-          setAllCharactersData(formattedData);
-        } else {
-          setAllCharactersData([]);
-        }
-
-        if (bondsResult.error) throw new Error(bondsResult.error);
-        if (bondsResult.bonds) {
-          setAllBonds(bondsResult.bonds);
-        } else {
-          setAllBonds([]);
-        }
-
-        if (linksResult.error) throw new Error(linksResult.error);
-        if (linksResult.links) {
-          setCharacterBondLinks(linksResult.links);
-        } else {
-          setCharacterBondLinks([]);
-        }
-      } catch (error: any) {
-        console.error("Erro ao buscar dados iniciais:", error);
-        setFetchError(
-          `Erro ao carregar dados: ${error.message || "Erro desconhecido"}`
-        );
-        setAllCharactersData([]);
-        setAllBonds([]);
-        setCharacterBondLinks([]);
-      } finally {
-        setLoadingCharacters(false);
-        setLoadingBondsData(false);
-      }
-    };
     fetchInitialData();
-  }, []);
+    loadFromStorage();
+  }, [fetchInitialData, loadFromStorage]);
 
-  const handleOpenSelectionModal = useCallback((slotIdentifier: string) => {
-    console.log("Abrindo modal para slot:", slotIdentifier); // Debug
-    setTargetSlotIdentifier(slotIdentifier);
-    setIsSelectionModalOpen(true);
-  }, []);
-
-  const handleCloseSelectionModal = useCallback(() => {
-    setIsSelectionModalOpen(false);
-    setTargetSlotIdentifier(null);
-  }, []);
-
-  const handleSelectCharacterFromModal = useCallback(
-    (selectedCharacter: Character) => {
-      if (!targetSlotIdentifier) return; // Segurança
-
-      console.log(
-        "Personagem selecionado:",
-        selectedCharacter.name,
-        "para slot:",
-        targetSlotIdentifier
-      ); // Debug
-
-      const [origin, keyOrIndex] = targetSlotIdentifier.split("-"); // Ex: ['court', 'pos2_s'] ou ['bench', '0']
-
-      if (origin === "court") {
-        const slotKey = keyOrIndex as SlotKey;
-        const acceptedPosition =
-          slotKey === "libero"
-            ? "L"
-            : acceptedPosition[slotKey as Exclude<SlotKey, "libero">];
-        if (
-          !isPositionFree &&
-          selectedCharacter.position !== acceptedPosition
-        ) {
-          showFeedback(
-            `Seleção inválida: ${selectedCharacter.position} não pode ir para ${acceptedPosition}.`,
-            "error"
-          );
-          return; // Impede a seleção
-        }
-        // Validação de Líbero (em qualquer modo)
-        if (slotKey !== "libero" && selectedCharacter.position === "L") {
-          showFeedback("Líbero só pode ir para o slot de Líbero.", "error");
-          return;
-        }
-        if (slotKey === "libero" && selectedCharacter.position !== "L") {
-          showFeedback(
-            "Apenas Líberos podem ir para o slot de Líbero.",
-            "error"
-          );
-          return;
-        }
-        setTeam((prev) => ({ ...prev, [slotKey]: selectedCharacter }));
-      } else if (origin === "bench") {
-        const index = parseInt(keyOrIndex, 10);
-        if (!isNaN(index) && index >= 0 && index < 6) {
-          setBench((prev) => {
-            const newB = [...prev];
-            newB[index] = selectedCharacter;
-            return newB;
-          });
-        }
-      }
-      showFeedback(
-        `${selectedCharacter.name} selecionado para ${targetSlotIdentifier}.`
-      );
-    },
-    [targetSlotIdentifier, isPositionFree, showFeedback]
-  );
+  // --- 5. LÓGICA DERIVADA (useMemo) ---
 
   const { calculatedTeamType, styleCounts } = useMemo(() => {
+    // ... (Lógica de cálculo idêntica à original, sem alterações) ...
     const charactersOnCourtIncludingLibero = Object.values(team).filter(
       Boolean
     ) as Character[];
-
     let finalTeamType: TeamType = "Nenhum";
     const currentStyleCounts: StyleCounts = {
-      "Ataque Rápido": 0,
-      Potente: 0,
-      Bloqueio: 0,
-      Recepção: 0,
+      "Ataque Rápido": 0, Potente: 0, Bloqueio: 0, Recepção: 0,
     };
-
     if (!isPositionFree) {
       const setter = team.pos2_s;
       if (setter?.styles) {
@@ -303,20 +163,74 @@ export default function Home() {
           finalTeamType = "Ataque Rápido";
       }
     }
-
     return {
       calculatedTeamType: finalTeamType,
       styleCounts: currentStyleCounts,
     };
   }, [team, isPositionFree]);
 
-  const handlePositionModeChange = useCallback(() => {
-    const newMode = !isPositionFree;
-    if (isPositionFree === true && newMode === false) {
-      setTeam(initialTeamState);
-    }
-    setIsPositionFree(newMode);
-  }, [isPositionFree]);
+  const activeBonds = useMemo(() => {
+    // ... (Lógica de cálculo idêntica à original, sem alterações) ...
+    const currentActiveBonds: Bond[] = [];
+    const charactersOnCourt = Object.values(team).filter(
+      Boolean
+    ) as Character[];
+    if (
+      charactersOnCourt.length === 0 ||
+      allBonds.length === 0 ||
+      characterBondLinks.length === 0
+    )
+      return currentActiveBonds;
+    const schoolCounts: Record<string, number> = {};
+    charactersOnCourt.forEach((char) => {
+      if (char.school)
+        schoolCounts[char.school] = (schoolCounts[char.school] || 0) + 1;
+    });
+    Object.entries(schoolCounts).forEach(([schoolName, count]) => {
+      if (count >= 4) {
+        const schoolBond = allBonds.find((bond) => bond.name === schoolName);
+        if (schoolBond) currentActiveBonds.push(schoolBond);
+      }
+    });
+    const characterNamesOnCourt = new Set(
+      charactersOnCourt.map((char) => char.name)
+    );
+    const nonSchoolBonds = allBonds.filter(
+      (bond) => !Object.keys(schoolCounts).includes(bond.name || "")
+    );
+    nonSchoolBonds.forEach((bond) => {
+      if (!bond || !bond.id) return;
+      const requiredCharacterLinks = characterBondLinks.filter(
+        (link) => link.bond_id === bond.id
+      );
+      if (requiredCharacterLinks.length === 0) return;
+      const requiredCharacterNames = new Set<string>();
+      requiredCharacterLinks.forEach((link) => {
+        const charData = allCharacters.find(
+          (c) => c.id === link.character_id
+        );
+        if (charData?.name) requiredCharacterNames.add(charData.name);
+      });
+      if (requiredCharacterNames.size === 0) return;
+      let allRequiredPresent = true;
+      for (const reqName of requiredCharacterNames) {
+        if (!characterNamesOnCourt.has(reqName)) {
+          allRequiredPresent = false;
+          break;
+        }
+      }
+      if (allRequiredPresent) currentActiveBonds.push(bond);
+    });
+    return currentActiveBonds;
+  }, [team, allBonds, characterBondLinks, allCharacters]);
+
+  const teamCharacterNames = useMemo(() => {
+    const courtNames = Object.values(team)
+      .filter(Boolean)
+      .map((char) => char!.name);
+    const benchNames = bench.filter(Boolean).map((char) => char!.name);
+    return new Set([...courtNames, ...benchNames]);
+  }, [team, bench]);
 
   const handleDragStart = useCallback((event: DragStartEvent) => {
     const { active } = event;
@@ -339,12 +253,6 @@ export default function Home() {
       const newTeam = { ...team };
       const newBench = [...bench];
 
-      const allCurrentNames = [
-        ...Object.values(team)
-          .filter(Boolean)
-          .map((c) => c!.name),
-        ...bench.filter(Boolean).map((c) => c!.name),
-      ];
       let charFromTargetSlot: Character | null = null;
       if (overData?.type === "court")
         charFromTargetSlot = team[overData.slotKey as SlotKey];
@@ -352,13 +260,14 @@ export default function Home() {
         charFromTargetSlot = bench[overData.index as number];
       const isSubstituting = charFromTargetSlot?.name === draggedCharacter.name;
 
-      if (allCurrentNames.includes(draggedCharacter.name) && !isSubstituting) {
+      if (teamCharacterNames.has(draggedCharacter.name) && !isSubstituting) {
         showFeedback(
           `'${draggedCharacter.name}' já está no time. Só pode substituir.`,
           "error"
         );
         return;
       }
+      
       const targetIsCourt = overData?.type === "court";
       if (targetIsCourt) {
         const targetPosition = overData.acceptedPosition as Position;
@@ -408,66 +317,30 @@ export default function Home() {
       setTeam(newTeam);
       setBench(newBench);
     },
-    [team, bench, isPositionFree, showFeedback]
+    [team, bench, isPositionFree, showFeedback, teamCharacterNames, setTeam, setBench]
   );
 
-  const handleRemoveFromCourt = useCallback((slotKey: SlotKey) => {
-    setTeam((prevTeam) => ({ ...prevTeam, [slotKey]: null }));
-  }, []);
-
-  const handleRemoveFromBench = useCallback((index: number) => {
-    setBench((prevBench) => {
-      const newBench = [...prevBench];
-      newBench[index] = null;
-      return newBench;
-    });
-  }, []);
-
-  const handleRotateTeam = useCallback(() => {
-    setTeam((currentTeam) => {
-      const rotatedTeam: TeamSlots = {
-        pos3_mb: currentTeam.pos2_s,
-        pos4_ws: currentTeam.pos3_mb,
-        pos1_op: currentTeam.pos4_ws,
-        pos6_mb: currentTeam.pos1_op,
-        pos5_ws: currentTeam.pos6_mb,
-        pos2_s: currentTeam.pos5_ws,
-        libero: currentTeam.libero,
-      };
-      return rotatedTeam;
-    });
+  const handleRotate = useCallback(() => {
+    rotateTeam();
     showFeedback("Time rotacionado!");
-  }, [showFeedback]);
+  }, [rotateTeam, showFeedback]);
 
-  const handleClearTeam = useCallback(() => {
+  const handleClear = useCallback(() => {
     if (window.confirm("Limpar a quadra e o banco?")) {
-      setTeam(initialTeamState);
-      setBench(Array(6).fill(null));
+      clearTeam();
       showFeedback("Time limpo.");
     }
-  }, [showFeedback]);
+  }, [clearTeam, showFeedback]);
 
-  const handleSaveTeam = useCallback(() => {
+  const handleSave = useCallback(() => {
     const teamName = prompt("Digite um nome para este time:");
     if (!teamName || teamName.trim() === "") {
       showFeedback("Nome inválido ou cancelado.", "error");
       return;
     }
-    const newSavedTeam: SavedTeam = {
-      name: teamName.trim(),
-      court: { ...team },
-      bench: [...bench],
-      savedAt: new Date().toISOString(),
-    };
-    try {
-      const updatedList = [...savedTeamsList, newSavedTeam];
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedList));
-      setSavedTeamsList(updatedList);
-      showFeedback(`Time "${teamName}" salvo!`);
-    } catch (error) {
-      showFeedback("Erro ao salvar no LocalStorage.", "error");
-    }
-  }, [team, bench, savedTeamsList, showFeedback]);
+    saveCurrentTeam(teamName);
+    showFeedback(`Time "${teamName}" salvo!`);
+  }, [saveCurrentTeam, showFeedback]);
 
   const handleLoadTeam = useCallback(
     (teamToLoad: SavedTeam) => {
@@ -476,36 +349,27 @@ export default function Home() {
           `Carregar o time "${teamToLoad.name}"? As alterações atuais serão perdidas.`
         )
       ) {
-        if (!teamToLoad.court || !teamToLoad.bench) {
+        const success = loadTeam(teamToLoad);
+        if (success) {
+          closeModals();
+          showFeedback(`Time "${teamToLoad.name}" carregado.`);
+        } else {
           showFeedback("Dados corrompidos.", "error");
-          return;
         }
-        setTeam(teamToLoad.court);
-        setBench(teamToLoad.bench);
-        setIsTeamsModalOpen(false);
-        showFeedback(`Time "${teamToLoad.name}" carregado.`);
       }
     },
-    [showFeedback]
+    [loadTeam, closeModals, showFeedback]
   );
 
   const handleDeleteTeam = useCallback(
     (indexToDelete: number) => {
       const teamToDelete = savedTeamsList[indexToDelete];
       if (window.confirm(`Excluir o time "${teamToDelete.name}"?`)) {
-        try {
-          const updatedList = savedTeamsList.filter(
-            (_, index) => index !== indexToDelete
-          );
-          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedList));
-          setSavedTeamsList(updatedList);
-          showFeedback(`Time "${teamToDelete.name}" excluído.`);
-        } catch (error) {
-          showFeedback("Erro ao excluir.", "error");
-        }
+        deleteTeam(indexToDelete);
+        showFeedback(`Time "${teamToDelete.name}" excluído.`);
       }
     },
-    [savedTeamsList, showFeedback]
+    [savedTeamsList, deleteTeam, showFeedback]
   );
 
   const handleExportTeam = useCallback(
@@ -552,7 +416,7 @@ export default function Home() {
         const typedKey = key as SlotKey;
         const charId = importedData.c[typedKey];
         if (charId != null) {
-          const foundChar = allCharactersData.find((c) => c.id === charId);
+          const foundChar = allCharacters.find((c) => c.id === charId);
           if (foundChar) {
             newTeam[typedKey] = foundChar;
           } else {
@@ -567,7 +431,7 @@ export default function Home() {
 
       importedData.b.forEach((charId, index) => {
         if (charId != null && index < 6) {
-          const foundChar = allCharactersData.find((c) => c.id === charId);
+          const foundChar = allCharacters.find((c) => c.id === charId);
           if (foundChar) {
             newBench[index] = foundChar;
           } else {
@@ -590,25 +454,13 @@ export default function Home() {
         }! Digite um nome para salvá-lo (ou cancele):`
       );
       if (teamName && teamName.trim() !== "") {
-        const newSavedTeam: SavedTeam = {
-          name: teamName.trim(),
-          court: newTeam,
-          bench: newBench,
-          savedAt: new Date().toISOString(),
-        };
-        try {
-          const updatedList = [...savedTeamsList, newSavedTeam];
-          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedList));
-          setSavedTeamsList(updatedList);
-          showFeedback(`Time "${teamName}" importado e salvo!`);
-          if (!foundAll)
-            console.warn(
-              "Personagens não encontrados durante importação:",
-              missingChars
-            );
-        } catch (saveError) {
-          showFeedback("Time importado, mas erro ao salvar.", "error");
-        }
+        saveCurrentTeam(teamName);
+        showFeedback(`Time "${teamName}" importado e salvo!`);
+        if (!foundAll)
+          console.warn(
+            "Personagens não encontrados durante importação:",
+            missingChars
+          );
       } else {
         showFeedback(
           foundAll
@@ -619,95 +471,69 @@ export default function Home() {
         if (!foundAll)
           console.warn("Personagens não encontrados:", missingChars);
       }
-      setIsTeamsModalOpen(false);
+      closeModals();
     } catch (error: any) {
       showFeedback(
         `Erro ao importar: ${error.message || "Chave inválida."}`,
         "error"
       );
     }
-  }, [importKey, allCharactersData, savedTeamsList, showFeedback]);
+  }, [
+    importKey,
+    allCharacters,
+    showFeedback,
+    setTeam,
+    setBench,
+    saveCurrentTeam,
+    closeModals,
+  ]);
 
-  const activeBonds = useMemo(() => {
-    const currentActiveBonds: Bond[] = [];
-    const charactersOnCourt = Object.values(team).filter(
-      Boolean
-    ) as Character[];
-    if (
-      charactersOnCourt.length === 0 ||
-      allBonds.length === 0 ||
-      characterBondLinks.length === 0
-    )
-      return currentActiveBonds;
+  const handleSelectCharacterFromModal = useCallback(
+    (selectedCharacter: Character) => {
+      if (!targetSlotIdentifier) return;
 
-    const schoolCounts: Record<string, number> = {};
-    charactersOnCourt.forEach((char) => {
-      if (char.school)
-        schoolCounts[char.school] = (schoolCounts[char.school] || 0) + 1;
-    });
-    Object.entries(schoolCounts).forEach(([schoolName, count]) => {
-      if (count >= 4) {
-        const schoolBond = allBonds.find((bond) => bond.name === schoolName);
-        if (schoolBond) currentActiveBonds.push(schoolBond);
-      }
-    });
+      const [origin, keyOrIndex] = targetSlotIdentifier.split("-");
 
-    const characterNamesOnCourt = new Set(
-      charactersOnCourt.map((char) => char.name)
-    );
-    const nonSchoolBonds = allBonds.filter(
-      (bond) => !Object.keys(schoolCounts).includes(bond.name || "")
-    );
-    nonSchoolBonds.forEach((bond) => {
-      if (!bond || !bond.id) return;
-      const requiredCharacterLinks = characterBondLinks.filter(
-        (link) => link.bond_id === bond.id
-      );
-      if (requiredCharacterLinks.length === 0) return;
-      const requiredCharacterNames = new Set<string>();
-      requiredCharacterLinks.forEach((link) => {
-        const charData = allCharactersData.find(
-          (c) => c.id === link.character_id
-        );
-        if (charData?.name) requiredCharacterNames.add(charData.name);
-      });
-      if (requiredCharacterNames.size === 0) return;
-      let allRequiredPresent = true;
-      for (const reqName of requiredCharacterNames) {
-        if (!characterNamesOnCourt.has(reqName)) {
-          allRequiredPresent = false;
-          break;
+      if (origin === "court") {
+        const slotKey = keyOrIndex as SlotKey;
+
+        const slotAcceptedPosition =
+          slotKey === "libero"
+            ? "L"
+            : acceptedPosition[slotKey as Exclude<SlotKey, "libero">];
+        
+        if (
+          !isPositionFree &&
+          selectedCharacter.position !== slotAcceptedPosition
+        ) {
+          showFeedback(
+            `Seleção inválida: ${selectedCharacter.position} não pode ir para ${slotAcceptedPosition}.`,
+            "error"
+          );
+          return;
+        }
+        if (slotKey !== "libero" && selectedCharacter.position === "L") {
+          showFeedback("Líbero só pode ir para o slot de Líbero.", "error");
+          return;
+        }
+        if (slotKey === "libero" && selectedCharacter.position !== "L") {
+          showFeedback(
+            "Apenas Líberos podem ir para o slot de Líbero.",
+            "error"
+          );
+          return;
         }
       }
-      if (allRequiredPresent) currentActiveBonds.push(bond);
-    });
-    return currentActiveBonds;
-  }, [team, allBonds, characterBondLinks, allCharactersData]);
-
-  const filteredCharacters = useMemo(
-    () =>
-      allCharactersData.filter((character) => {
-        if (positionFilter !== "ALL" && character.position !== positionFilter)
-          return false;
-        if (schoolFilter !== "ALL" && character.school !== schoolFilter)
-          return false;
-        if (
-          nameSearch &&
-          !character.name.toLowerCase().includes(nameSearch.toLowerCase())
-        )
-          return false;
-        return true;
-      }),
-    [allCharactersData, positionFilter, schoolFilter, nameSearch]
+      
+      setCharacterInSlot(targetSlotIdentifier, selectedCharacter);
+      
+      showFeedback(
+        `${selectedCharacter.name} selecionado para ${targetSlotIdentifier}.`
+      );
+      closeModals();
+    },
+    [targetSlotIdentifier, isPositionFree, showFeedback, setCharacterInSlot, closeModals]
   );
-
-  const teamCharacterNames = useMemo(() => {
-    const courtNames = Object.values(team)
-      .filter(Boolean)
-      .map((char) => char!.name);
-    const benchNames = bench.filter(Boolean).map((char) => char!.name);
-    return [...courtNames, ...benchNames];
-  }, [team, bench]);
 
   const findCourtSlotForDoubleClick = useCallback(
     (
@@ -723,12 +549,7 @@ export default function Home() {
 
       if (isFreeMode) {
         const courtKeys: SlotKey[] = [
-          "pos2_s",
-          "pos3_mb",
-          "pos4_ws",
-          "pos5_ws",
-          "pos6_mb",
-          "pos1_op",
+          "pos2_s", "pos3_mb", "pos4_ws", "pos5_ws", "pos6_mb", "pos1_op",
         ];
         for (const key of courtKeys) {
           if (currentTeam[key] === null) {
@@ -770,23 +591,8 @@ export default function Home() {
       origin: DoubleClickOrigin,
       originKey?: SlotKey | number
     ) => {
-      console.log(
-        `Double Clicked: ${character.name} from ${origin} (Key: ${originKey})`
-      );
-
-      const courtCharacterNames = Object.values(team)
-        .filter(Boolean)
-        .map((char) => char!.name);
-      const benchCharacterNames = bench
-        .filter(Boolean)
-        .map((char) => char!.name);
-
       if (origin === "list") {
-        if (
-          [...courtCharacterNames, ...benchCharacterNames].includes(
-            character.name
-          )
-        ) {
+        if (teamCharacterNames.has(character.name)) {
           showFeedback(
             `'${character.name}' já está no time ou banco.`,
             "error"
@@ -795,14 +601,14 @@ export default function Home() {
         }
 
         let added = false;
-
         const targetSlotKey = findCourtSlotForDoubleClick(
           character,
           team,
           isPositionFree
         );
+        
         if (targetSlotKey) {
-          setTeam((prev) => ({ ...prev, [targetSlotKey]: character }));
+          setTeam({ ...team, [targetSlotKey]: character }); 
           showFeedback(`${character.name} adicionado à quadra.`);
           added = true;
         }
@@ -810,11 +616,9 @@ export default function Home() {
         if (!added) {
           const firstEmptyBenchSlot = bench.findIndex((slot) => slot === null);
           if (firstEmptyBenchSlot !== -1) {
-            setBench((prev) => {
-              const newB = [...prev];
-              newB[firstEmptyBenchSlot] = character;
-              return newB;
-            });
+            const newB = [...bench];
+            newB[firstEmptyBenchSlot] = character;
+            setBench(newB); 
             showFeedback(`${character.name} adicionado ao banco.`);
             added = true;
           }
@@ -824,7 +628,7 @@ export default function Home() {
           showFeedback("Time e banco estão cheios!", "error");
         }
       } else if (origin === "court" && typeof originKey === "string") {
-        setTeam((prev) => ({ ...prev, [originKey]: null }));
+        removeFromCourt(originKey as SlotKey); 
         showFeedback(`${character.name} removido da quadra.`);
       } else if (origin === "bench" && typeof originKey === "number") {
         const targetSlotKey = findCourtSlotForDoubleClick(
@@ -833,27 +637,27 @@ export default function Home() {
           isPositionFree
         );
         if (targetSlotKey) {
-          setTeam((prev) => ({ ...prev, [targetSlotKey]: character }));
-          setBench((prev) => {
-            const newB = [...prev];
-            newB[originKey] = null;
-            return newB;
-          });
+          setTeam({ ...team, [targetSlotKey]: character }); 
+          removeFromBench(originKey); 
           showFeedback(`${character.name} movido do banco para a quadra.`);
         } else {
-          setBench((prev) => {
-            const newB = [...prev];
-            newB[originKey] = null;
-            return newB;
-          });
+          removeFromBench(originKey); 
           showFeedback(
             `${character.name} removido do banco (sem espaço na quadra).`
           );
         }
       }
     },
-    [team, bench, isPositionFree, findCourtSlotForDoubleClick, showFeedback]
+    [team, bench, isPositionFree, findCourtSlotForDoubleClick, showFeedback, teamCharacterNames, setTeam, setBench, removeFromCourt]
   );
+
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-zinc-950 text-white">
+        Carregando dados...
+      </div>
+    );
+  }
 
   return (
     <DndContext
@@ -861,7 +665,7 @@ export default function Home() {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <main className="max-w-full mx-auto p-4 sm:p-8">
+      <main className="max-w-7xl mx-auto p-4 sm:p-8">
         <div className="flex flex-col lg:flex-row lg:gap-8">
           <section className="lg:w-3/5 flex flex-col items-center">
             <div className="w-full max-w-xl flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
@@ -879,7 +683,7 @@ export default function Home() {
                     id="positionToggle"
                     className="sr-only"
                     checked={isPositionFree}
-                    onChange={handlePositionModeChange}
+                    onChange={togglePositionMode}
                   />
                   <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
                   <div
@@ -900,68 +704,77 @@ export default function Home() {
 
             <TeamCourt
               team={team}
-              onRemoveCharacter={handleRemoveFromCourt}
-              onSlotClick={setPositionFilter}
+              onRemoveCharacter={removeFromCourt}
+              onSlotClick={() => {}} // Esta prop não é mais necessária
               isPositionFree={isPositionFree}
-              onOpenSelector={handleOpenSelectionModal}
+              onOpenSelector={openSelectionModal}
             />
 
             <div className="flex items-center justify-center flex-wrap gap-3 my-4 w-full max-w-xl">
               <button
-                onClick={handleRotateTeam}
+                onClick={handleRotate}
                 className="p-2 bg-orange-600 hover:bg-orange-700 text-white rounded-full transition-colors w-fit"
                 title="Rotacionar Time"
               >
                 <RotateCw size={18} />
               </button>
               <button
-                onClick={handleClearTeam}
+                onClick={handleClear}
                 className="p-2 bg-red-600 hover:bg-red-700 text-white rounded-full transition-colors w-fit"
                 title="Limpar Time e Banco"
               >
                 <Trash2 size={18} />
               </button>
               <button
-                onClick={handleSaveTeam}
+                onClick={handleSave}
                 className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors text-sm"
               >
-                {" "}
-                <Save size={16} /> Salvar{" "}
+                <Save size={16} /> Salvar
               </button>
               <button
-                onClick={() => setIsTeamsModalOpen(true)}
+                onClick={openTeamsModal}
                 className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors text-sm"
                 title="Gerenciar Times Salvos"
               >
-                {" "}
-                <List size={16} /> Gerenciar{" "}
+                <List size={16} /> Gerenciar
               </button>
             </div>
 
             <ActiveBondsDisplay
               bonds={activeBonds}
-              loading={loadingBondsData}
+              loading={isLoading}
             />
 
-            <Bench bench={bench} onRemoveFromBench={handleRemoveFromBench} />
+            <Bench
+              bench={bench}
+              onRemoveFromBench={removeFromBench}
+              onOpenSelector={openSelectionModal} // Passando a prop para o Bench
+            />
           </section>
         </div>
       </main>
 
-      {isTeamsModalOpen && (
-        <SavedTeamsModal
-          isOpen={isTeamsModalOpen}
-          onClose={() => setIsTeamsModalOpen(false)}
-          savedTeams={savedTeamsList}
-          onLoadTeam={handleLoadTeam}
-          onDeleteTeam={handleDeleteTeam}
-          onExportTeam={handleExportTeam}
-          importKey={importKey}
-          setImportKey={setImportKey}
-          onImportTeam={handleImportTeam}
-          feedbackMessage={feedbackMessage}
-        />
-      )}
+      {/* --- MODAIS --- */}
+
+      <SavedTeamsModal
+        isOpen={isTeamsModalOpen}
+        onClose={closeModals}
+        savedTeams={savedTeamsList}
+        onLoadTeam={handleLoadTeam}
+        onDeleteTeam={handleDeleteTeam}
+        onExportTeam={handleExportTeam}
+        importKey={importKey}
+        setImportKey={setImportKey}
+        onImportTeam={handleImportTeam}
+        feedbackMessage={feedbackMessage}
+      />
+
+      <CharacterSelectionModal
+        isOpen={isSelectionModalOpen}
+        onClose={closeModals}
+        onSelectCharacter={handleSelectCharacterFromModal}
+        currentTeamNames={teamCharacterNames}
+      />
 
       <DragOverlay>
         {activeDragItem ? (
@@ -970,7 +783,6 @@ export default function Home() {
             dragId="overlay-item"
             dragData={{}}
             originType="list"
-            onDoubleClickCharacter={handleDoubleClickCharacter}
           />
         ) : null}
       </DragOverlay>
