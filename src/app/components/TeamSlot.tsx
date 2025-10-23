@@ -1,47 +1,39 @@
-import { useDroppable } from '@dnd-kit/core'; 
+import { useDroppable } from '@dnd-kit/core';
 
 type TeamSlotProps = {
-  positionName: string; 
-  onSlotClick?: () => void; 
-  size?: 'normal' | 'small';
-  dropId: string; 
-  dropData: Record<string, unknown>;
+  positionName: string;
+  onSlotClick?: () => void;
+  dropId: string;
+  dropData: Record<string, any>;
 };
 
-export function TeamSlot({ 
-  positionName, 
-  onSlotClick, 
-  size = 'normal',
+export function TeamSlot({
+  positionName,
+  onSlotClick,
   dropId,
   dropData
 }: TeamSlotProps) {
-  
-  const droppable = useDroppable({
-    id: dropId,
-    data: dropData,
-  });
 
+  const droppable = useDroppable({ id: dropId, data: dropData });
   const isClickable = !!onSlotClick;
-  const isSmall = size === 'small';
 
   return (
-    <div 
-      ref={droppable.setNodeRef} 
-      onClick={onSlotClick} 
+    <div
+      ref={droppable.setNodeRef}
+      onClick={onSlotClick}
       className={`
         bg-gray-800 shadow-md rounded-lg
-        flex flex-col items-center justify-center 
-        border-2 border-dashed border-gray-600
+        flex flex-col items-center justify-center
         transition-all
-        ${isSmall ? 'w-28 h-[9.5rem]' : 'w-36 h-[12rem]'} 
-        ${isClickable ? 
-          "cursor-pointer hover:bg-gray-700 hover:border-sky-500" : 
-          ""
-        }
-        ${droppable.isOver ? 'bg-sky-500/30 border-sky-500' : ''} 
+        ${isClickable ? "cursor-pointer hover:bg-gray-700 hover:border-sky-500" : ""}
+        ${droppable.isOver ? 'bg-sky-500/30 border-sky-500' : 'border-gray-600'}
+
+        border-2
+
+        w-24 h-[8rem] sm:w-28 sm:h-[9.5rem]
       `}
     >
-      <span className="text-gray-400 font-semibold text-center px-2">
+      <span className="text-gray-400 font-semibold text-center text-xs sm:text-sm px-1"> 
         {positionName}
       </span>
     </div>

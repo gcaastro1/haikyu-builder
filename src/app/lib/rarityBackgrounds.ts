@@ -20,3 +20,14 @@ const rarityColorMap: Record<Rarity, string> = {
 export const getRarityColor = (rarity: Rarity): string => {
     return rarityColorMap[rarity] || "text-gray-300";
 }
+
+const rarityBorderColorMap: Record<Rarity, string> = {
+    "SR": "border-purple-500",    
+    "SSR": "border-yellow-500", 
+    "UR": "border-red-500",  
+    "SP": "border-blue-300", 
+};
+
+export const getRarityBorderColor = (rarity: Rarity): string => {
+    return rarityBorderColorMap[rarity] || "border-gray-700";
+};

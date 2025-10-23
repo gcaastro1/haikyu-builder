@@ -1,100 +1,133 @@
 // /src/app/components/CharacterCard.tsx
-"use client"; 
+"use client";
 
-import Image from 'next/image';
-import { Character } from '../../../data/characters'; 
-import React from 'react'; 
-import { useDraggable, useDroppable } from '@dnd-kit/core';
-import { getTeamBorderColor } from '../lib/teamColors';
-// 🌟 Importar os novos helpers 🌟
-import { getRarityBackground, getRarityColor } from '../lib/rarityBackgrounds';
+import Image from "next/image";
+import React from "react";
+import { useDraggable, useDroppable } from "@dnd-kit/core";
+import {
+  getRarityBackground,
+  getRarityBorderColor,
+  getRarityColor,
+} from "../lib/rarityBackgrounds";
+import { Character } from "@/types";
 
 type CharacterCardProps = {
   character: Character;
-  onRemoveCharacter?: () => void; 
-  isDisabled?: boolean; 
-  size?: 'normal' | 'small';
-  dragId: string; 
-  dragData: Record<string, unknown>; 
-  dropData?: Record<string, unknown>; 
+  onRemoveCharacter?: () => void;
+  isDisabled?: boolean;
+  dragId?: string;
+  dragData?: Record<string, unknown>;
+  dropData?: Record<string, unknown>;
+  originType?: string;
+
+  onClick?: () => void;
 };
 
-export function CharacterCard({ 
-  character, 
-  onRemoveCharacter, 
+export function CharacterCard({
+  character,
+  onRemoveCharacter,
   isDisabled = false,
-  size = 'normal',
   dragId,
-  dragData, 
-  dropData 
+  dragData,
+  dropData,
+  onClick,
 }: CharacterCardProps) {
+  const isDraggable = !!dragId;
+  const draggable = useDraggable({
+    id: dragId || `card-${character.id}`,
+    data: dragData,
+    disabled: isDisabled || !isDraggable,
+  });
+  const droppable = useDroppable({
+    id: dragId || `card-${character.id}`,
+    data: dropData || dragData,
+    disabled: !isDraggable,
+  });
 
-  const draggable = useDraggable({ id: dragId, data: dragData, disabled: isDisabled });
-  const droppable = useDroppable({ id: dragId, data: dropData || dragData });
-  const style = draggable.transform ? { transform: `translate3d(${draggable.transform.x}px, ${draggable.transform.y}px, 0)` } : undefined;
-  
-  const handleRightClick = (e: React.MouseEvent) => { if (onRemoveCharacter) { e.preventDefault(); onRemoveCharacter(); } };
+  const style = draggable.transform
+    ? {
+        transform: `translate3d(${draggable.transform.x}px, ${draggable.transform.y}px, 0)`,
+      }
+    : undefined;
 
-  const isSmall = size === 'small';
-  const teamBorderColor = getTeamBorderColor(character.school);
+  const handleRightClick = (e: React.MouseEvent) => {
+    if (onRemoveCharacter) {
+      e.preventDefault();
+      onRemoveCharacter();
+    }
+  };
+
   const rarityBgUrl = getRarityBackground(character.rarity);
-  const rarityColor = getRarityColor(character.rarity);
+  const rarityBorderColor = getRarityBorderColor(character.rarity);
 
-  const cursorStyle = isDisabled ? 'cursor-not-allowed' : (onRemoveCharacter ? 'cursor-pointer' : 'cursor-grab');
-  const visualStyle = isDisabled ? 'opacity-40 grayscale' : ''; 
-  const hoverStyle = !isDisabled && (onRemoveCharacter || dragData?.type === 'list') ? 'hover:shadow-lg hover:scale-[1.03]' : ''; // Efeito de scale no hover
-  
-  if (draggable.isDragging) {
-    return ( <div ref={draggable.setNodeRef} style={style} className={`rounded-lg bg-gray-800 ${isSmall ? 'w-28 h-[9.5rem]' : 'w-36 h-[12rem]'}`} /> );
+  let cursorStyle = "cursor-default";
+  if (isDisabled) {
+    cursorStyle = "cursor-not-allowed";
+  } else if (isDraggable) {
+    cursorStyle = "cursor-grab";
+  } else if (onClick) {
+    cursorStyle = "cursor-pointer";
   }
 
+  const visualStyle = isDisabled ? "opacity-40 grayscale" : "";
+  const hoverStyle =
+    !isDisabled && (onRemoveCharacter || dragData?.type === "list")
+      ? "hover:shadow-lg hover:scale-[1.03]"
+      : ""; 
+      
+  const rarityColor = getRarityColor(character.rarity);
+
+  if (draggable.isDragging) {
+    return (
+      <div
+        ref={draggable.setNodeRef}
+        style={style}
+        className={`border-2 border-dashed rounded-lg bg-gray-800
+                         w-24 h-[8rem] sm:w-28 sm:h-[9.5rem]`}
+      />
+    );
+  }
+
+  const handleClick = () => {
+    if (onClick && !isDisabled) {
+      onClick();
+    }
+  };
+
   return (
-    <div 
+    <div
       ref={(node) => { draggable.setNodeRef(node); droppable.setNodeRef(node); }}
       style={style}
       className={`
-        relative rounded-lg overflow-hidden shadow-md 
+        relative rounded-lg overflow-hidden shadow-md
+        flex flex-col
         transition-all duration-200 ${hoverStyle} ${cursorStyle} ${visualStyle}
-        ${isSmall ? 'w-28 h-[9.5rem]' : 'w-36 h-[12rem]'} 
-        ${droppable.isOver ? 'ring-2 ring-orange-500' : ''} 
-        ${teamBorderColor} border-b-4 
+        ${droppable.isOver ? 'ring-2 ring-orange-500' : ''}
+        border-2 ${rarityBorderColor}
+
+        w-24 h-[8rem] sm:w-28 sm:h-[9.5rem]
       `}
-      onContextMenu={handleRightClick} 
-      {...draggable.listeners} 
-      {...draggable.attributes} 
+      onContextMenu={handleRightClick}
+      onClick={handleClick}
+      {...(isDraggable ? draggable.listeners : {})}
+      {...(isDraggable ? draggable.attributes : {})}
     >
-      
-      <Image 
-        src={rarityBgUrl} 
-        alt={`${character.rarity} Background`} 
-        layout="fill" 
-        objectFit="cover" 
-        className="z-0"
-      />
+      <Image src={rarityBgUrl} alt={`${character.rarity} Background`} layout="fill" objectFit="cover" className="z-0" priority={true}/>
 
-      <div className={`absolute z-10 
-                      ${isSmall ? 'bottom-[-10px] left-[-15px] w-[130px] h-[130px]' : 'bottom-[-15px] left-[-20px] w-[170px] h-[170px]'}`}> 
-        <Image 
-          src={character.imageUrl} 
-          alt={character.name} 
-          layout="fill" 
-          objectFit="contain" 
-        />
-      </div>
+      <Image src={character.image_url || '/images/placeholder.png'} alt={character.name} layout="fill" objectFit="cover" className="z-10" priority={true}/>
 
-      <div className="absolute top-1 left-1 right-1 flex justify-between items-center z-20 px-1">
-
-        <span className={`bg-black/70 ${rarityColor} font-bold rounded px-1.5 py-0.5 text-xs shadow-md`}>
-          {character.rarity}
+      <div className="absolute top-0.5 left-0.5 right-0.5 flex justify-between items-center z-20 px-0.5">
+        <span className={`bg-black/70 ${rarityColor} font-bold rounded px-1 py-0 text-[10px] sm:text-xs shadow-md`}>
+            {character.rarity}
         </span>
-        <span className="bg-black/70 text-gray-200 text-xs font-semibold rounded-full px-2 py-0.5 shadow-md">
-          {character.position}
+        <span className="bg-black/70 text-gray-200 text-[10px] sm:text-xs font-semibold rounded-full px-1.5 py-0 shadow-md"> 
+            {character.position}
         </span>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 z-20 p-1 bg-gradient-to-t from-black/70 via-black/50 to-transparent">
-        <h3 className={`font-bold truncate text-left text-white ${isSmall ? 'text-xs' : 'text-sm'}`}>
-          {character.name}
+      <div className="absolute bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-black/70 via-black/50 to-transparent p-1 sm:p-1.5"> 
+        <h3 className={`font-bold truncate text-left text-white text-[10px] sm:text-xs`}> 
+            {character.name}
         </h3>
       </div>
     </div>

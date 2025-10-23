@@ -1,50 +1,54 @@
-import { TeamSlots, SlotKey } from '../page'; 
+// /src/app/components/TeamCourt.tsx
+import { Position } from '@/types';
+import { TeamSlots, SlotKey } from '../page';
 import { CharacterCard } from './CharacterCard';
 import { TeamSlot } from './TeamSlot';
-import { Position } from '../../../data/characters'; 
 
 type TeamCourtProps = {
   team: TeamSlots;
   onRemoveCharacter: (slotKey: SlotKey) => void;
-  onSlotClick: (position: Position | "ALL") => void; 
-  size?: 'normal' | 'small';
-  isPositionFree?: boolean; 
+  onSlotClick: (position: Position | "ALL") => void;
+  isPositionFree?: boolean;
 }
 
-export function TeamCourt({ 
-  team, 
-  onRemoveCharacter, 
-  onSlotClick, 
-  size = 'normal',
-  isPositionFree = false 
+export function TeamCourt({
+  team,
+  onRemoveCharacter,
+  onSlotClick,
+  isPositionFree = false
 }: TeamCourtProps) {
-  
-  const originalPositionNames: Record<SlotKey, string> = {
+
+  const acceptedPositions: Record<Exclude<SlotKey, 'libero'>, Position> = {
     pos2_s: "S", pos3_mb: "MB", pos4_ws: "WS",
-    pos5_ws: "WS", pos6_mb: "MB", pos1_op: "OP",
-    libero: "L",
+    pos1_op: "OP", pos6_mb: "MB", pos5_ws: "WS",
   };
 
-  const acceptedPositions: Record<SlotKey, Position> = {
-    pos2_s: "S", pos3_mb: "MB", pos4_ws: "WS",
-    pos5_ws: "WS", pos6_mb: "MB", pos1_op: "OP", libero: "L",
+  const positionNumbers: Record<Exclude<SlotKey, 'libero'>, number> = {
+      pos2_s: 1, 
+      pos3_mb: 2, 
+      pos4_ws: 3,
+      pos1_op: 4,
+      pos6_mb: 5,
+      pos5_ws: 6, 
   };
-  
+
+
   const renderSlot = (slotKey: SlotKey) => {
     const character = team[slotKey];
     const dndId = `court-${slotKey}`;
-    const acceptedPosition = acceptedPositions[slotKey];
+
+    const acceptedPosition = slotKey === 'libero' ? 'L' : acceptedPositions[slotKey];
     const dndData = { type: 'court', slotKey, acceptedPosition };
 
     let slotDisplayName: string;
     if (slotKey === 'libero') {
-      slotDisplayName = "L"; 
+      slotDisplayName = "Líbero (L)";
     } else if (isPositionFree) {
-      const posNumber = slotKey.charAt(3); 
-      slotDisplayName = `${posNumber}`;
+      slotDisplayName = `Posição ${positionNumbers[slotKey]}`;
     } else {
-      slotDisplayName = originalPositionNames[slotKey];
+      slotDisplayName = `Pos ${positionNumbers[slotKey]} (${acceptedPosition})`;
     }
+
 
     if (character) {
       return (
@@ -55,43 +59,41 @@ export function TeamCourt({
           dragId={dndId}
           dragData={{ ...dndData, character }}
           dropData={dndData}
-          size={size}
+          originType="court"
         />
       );
     } else {
       return (
         <TeamSlot
           key={dndId}
-          positionName={slotDisplayName}
+          positionName={slotDisplayName} 
           onSlotClick={() => onSlotClick(acceptedPosition)}
           dropId={dndId}
           dropData={dndData}
-          size={size}
         />
       );
     }
   };
 
   return (
-    <div className="bg-zinc-950 p-4 rounded-lg shadow-inner 
-                    border border-gray-700 w-full max-w-xl">
-    
-      <div className="grid grid-cols-4 gap-x-3">
-        
-        <div></div> 
-        
-        {renderSlot('pos2_s')}
-        {renderSlot('pos3_mb')}
-        {renderSlot('pos4_ws')}
+    <div className="flex flex-col lg:flex-row justify-center gap-4 w-full max-w-xl">
+      <div className="bg-zinc-950 p-3 sm:p-4 rounded-lg shadow-inner border border-zinc-800 w-full lg:w-auto mx-auto flex flex-col">
+        <div className="flex flex-grow items-center justify-center">
+          {renderSlot('libero')}
+        </div>
       </div>
-
-      <div className="h-px bg-gray-600 my-4"></div>
-
-      <div className="grid grid-cols-4 gap-x-3">
-        {renderSlot('libero')} 
-        {renderSlot('pos5_ws')}
-        {renderSlot('pos6_mb')}
-        {renderSlot('pos1_op')}
+      <div className="bg-zinc-950 p-3 sm:p-4 rounded-lg shadow-inner border border-zinc-800 w-full">
+        <div className="grid grid-cols-3 gap-x-2 sm:gap-x-3 justify-items-center">
+          {renderSlot('pos2_s')}
+          {renderSlot('pos3_mb')}
+          {renderSlot('pos4_ws')}
+        </div>
+        <div className="h-px bg-zinc-700 my-3 sm:my-4"></div>
+        <div className="grid grid-cols-3 gap-x-2 sm:gap-x-3 justify-items-center">
+          {renderSlot('pos5_ws')}
+          {renderSlot('pos6_mb')}
+          {renderSlot('pos1_op')}
+        </div>
       </div>
     </div>
   );
