@@ -1,38 +1,46 @@
-import { useDroppable } from '@dnd-kit/core';
+"use client";
+
+import { useDroppable } from "@dnd-kit/core";
+import { motion } from "framer-motion";
 
 type TeamSlotProps = {
   positionName: string;
-  dropId: string; 
+  dropId: string;
   dropData: Record<string, unknown>;
-  onOpenSelector: (slotIdentifier: string) => void;
+  onSlotClick?: (slotIdentifier: string) => void;
 };
 
 export function TeamSlot({
   positionName,
   dropId,
   dropData,
-  onOpenSelector
+  onSlotClick,
 }: TeamSlotProps) {
-
   const droppable = useDroppable({ id: dropId, data: dropData });
-  const isClickable = !!onOpenSelector;
+  const isClickable = !!onSlotClick;
+  const isLibero = positionName.toLowerCase().includes("líbero");
+
+  const handleClick = () => {
+    if (isClickable) onSlotClick?.(dropId);
+  };
 
   return (
-    <div
+    <motion.div
       ref={droppable.setNodeRef}
-      onClick={() => { if(isClickable) onOpenSelector(dropId) }}
-      className={`
-        bg-zinc-800 shadow-md rounded-lg
-        flex flex-col items-center justify-center
-        border-2 ${droppable.isOver ? 'border-sky-500 bg-sky-500/10' : 'border-gray-600 border-dashed'}
-        transition-all
-        w-24 h-[8rem] sm:w-28 sm:h-[9.5rem] {/* Tamanhos responsivos */}
-        ${isClickable ? "cursor-pointer hover:bg-zinc-700 hover:border-sky-500" : ""}
-      `}
+      onClick={handleClick}
+      whileHover={{ scale: 1.05, y: -4 }}
+      whileTap={{ scale: 0.98 }}
+      className={`team-slot ${isClickable ? "clickable" : ""} ${
+        isLibero ? "libero" : ""
+      }`}
     >
-      <span className="text-gray-400 font-semibold text-center text-xs sm:text-sm px-1">
-        {positionName}
-      </span>
-    </div>
+      {isLibero && (
+        <div className="team-slot__highlight">
+          <div className="team-slot__glow" />
+        </div>
+      )}
+
+      <span className="team-slot__label">{positionName}</span>
+    </motion.div>
   );
 }

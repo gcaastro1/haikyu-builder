@@ -17,6 +17,18 @@ export interface Bond {
   created_at?: string;
 }
 
+export interface CalculatedBond {
+  id: number;
+  name: string | null;
+  description: string | null;
+  totalRequired: number;
+  currentCount: number;
+  isActive: boolean;
+  hasAnyMemberOnCourt: boolean;
+  isTeamBond?: boolean;
+}
+
+
 export interface CharacterBondLink {
     character_id: number;
     bond_id: number;
@@ -61,12 +73,12 @@ export interface Character {
 }
 
 export type TeamSlots = {
-  pos5_ws: Character | null;
-  pos6_mb: Character | null;
-  pos1_op: Character | null;
-  pos4_ws: Character | null;
-  pos3_mb: Character | null;
-  pos2_s: Character | null;
+  pos6_ws: Character | null;
+  pos5_mb: Character | null;
+  pos4_op: Character | null;
+  pos3_ws: Character | null;
+  pos2_mb: Character | null;
+  pos1_s: Character | null;
   libero: Character | null;
 };
 

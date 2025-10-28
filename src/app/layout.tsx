@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque } from "next/font/google"; 
 import "./globals.css";
+import "@/styles/main.scss";
 import { Navbar } from "./components/Navbar"; 
+import { FeedbackToast } from "./components/FeedbackToast";
 
 const inter = Inter({
   subsets: ["latin"],

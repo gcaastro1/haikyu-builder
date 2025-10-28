@@ -1,30 +1,43 @@
 "use client";
 
-import { Position } from "../../../data/characters";
-
-// Define os botões
-const positions: (Position | "ALL")[] = ["ALL", "WS", "MB", "S", "OP", "L"];
+import React from "react";
+import { Position } from "@/types";
 
 type PositionFilterProps = {
   activeFilter: Position | "ALL";
   onFilterChange: (position: Position | "ALL") => void;
+  className?: string; 
 };
 
-export function PositionFilter({ activeFilter, onFilterChange }: PositionFilterProps) {
+const positions: (Position | "ALL")[] = [
+  "ALL",
+  "S", 
+  "MB", 
+  "WS", 
+  "OP", 
+  "L",  
+];
+
+export function PositionFilter({
+  activeFilter,
+  onFilterChange,
+  className = "",
+}: PositionFilterProps) {
   return (
-    <div className="flex flex-wrap justify-center gap-2 mb-6">
+    <div className={`flex flex-wrap justify-center sm:justify-start gap-2 ${className}`}>
       {positions.map((pos) => {
-        const isActive = activeFilter === pos;
+        const isActive = pos === activeFilter;
 
         return (
           <button
             key={pos}
             onClick={() => onFilterChange(pos)}
-            className={`py-2 px-4 rounded-full text-sm font-semibold transition-all
+            className={`
+              px-3 py-1.5 text-sm rounded-md border transition-colors duration-150
               ${
                 isActive
-                  ? "bg-orange-500 text-white" 
-                  : "bg-gray-700 text-gray-300 hover:bg-gray-600" 
+                  ? "bg-orange-500 text-white border-orange-600 shadow-md"
+                  : "bg-zinc-800 text-zinc-300 border-zinc-700 hover:border-orange-400 hover:text-white"
               }
             `}
           >

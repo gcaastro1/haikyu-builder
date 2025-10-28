@@ -1,58 +1,68 @@
-import { create } from 'zustand';
+import { create, StoreApi, UseBoundStore } from "zustand";
 
-type FeedbackMessage = {
-  type: "success" | "error";
-  text: string;
-} | null;
+type FeedbackMessage =
+  | {
+      type: "success" | "error";
+      text: string;
+    }
+  | null;
 
-type UIStoreState = {
+export type UIStoreState = {
+  // === Estados existentes ===
   isTeamsModalOpen: boolean;
   isSelectionModalOpen: boolean;
-  targetSlotIdentifier: string | null; 
+  targetSlotIdentifier: string | null;
   feedbackMessage: FeedbackMessage;
-  
-  _feedbackTimer: NodeJS.Timeout | null; 
+  _feedbackTimer: ReturnType<typeof setTimeout> | null;
 
+  // === Novo estado ===
+  modalPosition: string; // ✅ adicionamos isso
+
+  // === Métodos ===
   openTeamsModal: () => void;
-  openSelectionModal: (slotIdentifier: string) => void;
+  openSelectionModal: (slotIdentifier: string, position?: string) => void; // ✅ agora recebe posição opcional
   closeModals: () => void;
   showFeedback: (text: string, type?: "success" | "error") => void;
 };
 
-export const useUIStore = create<UIStoreState>((set, get) => ({
-
-  isTeamsModalOpen: false,
-  isSelectionModalOpen: false,
-  targetSlotIdentifier: null,
-  feedbackMessage: null,
-  _feedbackTimer: null,
-
-  openTeamsModal: () => set({ isTeamsModalOpen: true }),
-  
-  openSelectionModal: (slotIdentifier) => set({
-    isSelectionModalOpen: true,
-    targetSlotIdentifier: slotIdentifier,
-  }),
-
-  closeModals: () => set({
+export const useUIStore: UseBoundStore<StoreApi<UIStoreState>> =
+  create<UIStoreState>((set, get) => ({
+    // === Defaults ===
     isTeamsModalOpen: false,
     isSelectionModalOpen: false,
     targetSlotIdentifier: null,
-  }),
+    feedbackMessage: null,
+    _feedbackTimer: null,
+    modalPosition: "ALL", 
 
-  showFeedback: (text, type = "success") => {
+    openSelectionModal: (slotIdentifier, position = "ALL") =>
+      set({
+        isSelectionModalOpen: true,
+        targetSlotIdentifier: slotIdentifier,
+        modalPosition: position,
+      }),
 
-    const existingTimer = get()._feedbackTimer;
-    if (existingTimer) {
-      clearTimeout(existingTimer);
-    }
+    openTeamsModal: () => set({ isTeamsModalOpen: true }),
 
-    set({ feedbackMessage: { text, type } });
+    closeModals: () =>
+      set({
+        isTeamsModalOpen: false,
+        isSelectionModalOpen: false,
+        targetSlotIdentifier: null,
+        modalPosition: "ALL", 
+      }),
 
-    const newTimer = setTimeout(() => {
-      set({ feedbackMessage: null, _feedbackTimer: null });
-    }, 3000); 
+    showFeedback: (text, type = "success") => {
+      const { _feedbackTimer } = get();
 
-    set({ _feedbackTimer: newTimer });
-  },
-}));
+      if (_feedbackTimer) clearTimeout(_feedbackTimer);
+
+      set({ feedbackMessage: { text, type } });
+
+      const newTimer = setTimeout(() => {
+        set({ feedbackMessage: null, _feedbackTimer: null });
+      }, 3000);
+
+      set({ _feedbackTimer: newTimer });
+    },
+  }));

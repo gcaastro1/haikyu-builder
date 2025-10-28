@@ -1,0 +1,67 @@
+@use "../variables" as *; // ajuste o caminho conforme sua estrutura
+
+.team-slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 1rem;
+  cursor: default;
+  transition: all 0.2s ease;
+  background: linear-gradient(to bottom, rgba(39, 39, 42, 0.9), rgba(24, 24, 27, 0.95));
+  border: 1px solid rgba(82, 82, 91, 0.7);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  width: clamp(64px, 15vw, 110px);
+  height: clamp(88px, 21vw, 150px);
+  font-family: var(--font-poppins);
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+      transform: translateY(-4px) scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &.libero {
+    border-color: rgba($color-primary, 0.8);
+
+    .team-slot__label {
+      color: lighten($color-primary, 15%);
+    }
+  }
+
+  .team-slot__highlight {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    pointer-events: none;
+
+    .team-slot__glow {
+      width: 66%;
+      height: 24px;
+      border-radius: 9999px;
+      background-color: rgba($color-primary, 0.1);
+      filter: blur(6px);
+    }
+  }
+
+  .team-slot__label {
+    position: relative;
+    z-index: 1;
+    font-weight: 600;
+    font-size: clamp(10px, 2.5vw, 14px);
+    color: rgba($color-secondary, 0.95);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+  }
+}

@@ -1,0 +1,24 @@
+$color-primary: #d79a4a;
+$color-secondary: #e5b875;
+$color-line: rgba(255, 255, 255, 0.85);
+$shadow-card: 0 6px 18px rgba(0, 0, 0, 0.4);
+
+$btn-save: #7fd977;       // verde oliva claro
+$btn-manage: #d79a4a;     // âmbar (igual ao seu $color-primary)
+$btn-delete: #c6483e;     // vermelho acobreado
+$btn-rotate: #e5b875;     // dourado claro (igual ao seu $color-secondary)
+
+
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap");
+
+$font-bricolage: "Bricolage Grotesque", "Poppins", "Inter", sans-serif;
+
+$font-poppins: "Poppins", "Inter", sans-serif;
+$font-inter: "Inter", sans-serif;
+
+:root {
+  --font-bricolage: #{$font-bricolage};
+  --font-poppins: #{$font-poppins};
+  --font-inter: #{$font-inter};
+}
+

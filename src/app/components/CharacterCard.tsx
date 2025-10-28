@@ -1,57 +1,64 @@
 "use client";
 
+import React, { useState } from "react";
 import Image from "next/image";
-import React from "react";
 import { useDraggable, useDroppable } from "@dnd-kit/core";
+import { motion } from "framer-motion";
+import { Info } from "lucide-react";
 import {
   getRarityBackground,
   getRarityBorderColor,
   getRarityColor,
-} from "../lib/rarityBackgrounds";
-import { Character, DoubleClickOrigin, SlotKey } from "@/types"
-
+} from "@/app/lib/rarityBackgrounds";
+import { Character, DoubleClickOrigin, SlotKey } from "@/types";
 
 type CharacterCardProps = {
   character: Character;
   onRemoveCharacter?: () => void;
+  onClick?: (slotIdentifier: string) => void;
   isDisabled?: boolean;
   dragId?: string;
   dragData?: Record<string, unknown>;
   dropData?: Record<string, unknown>;
   originType: DoubleClickOrigin;
   originKey?: SlotKey;
-
-  onClick?: (slotIdentifier: string) => void;
+  onAddToTeam?: (character: Character) => void;
 };
 
 export function CharacterCard({
   character,
   onRemoveCharacter,
+  onClick,
   isDisabled = false,
   dragId,
   dragData,
   dropData,
   originType,
-  originKey,
-  onClick,
 }: CharacterCardProps) {
-  const isDraggable = !!dragId;
+  const [flipped, setFlipped] = useState(false);
+
   const draggable = useDraggable({
     id: dragId || `card-${character.id}`,
     data: dragData,
-    disabled: isDisabled || !isDraggable,
+    disabled: isDisabled || !dragId,
   });
+
   const droppable = useDroppable({
     id: dragId || `card-${character.id}`,
     data: dropData || dragData,
-    disabled: !isDraggable,
+    disabled: !dragId,
   });
 
   const style = draggable.transform
-    ? {
-        transform: `translate3d(${draggable.transform.x}px, ${draggable.transform.y}px, 0)`,
-      }
+    ? { transform: `translate3d(${draggable.transform.x}px, ${draggable.transform.y}px, 0)` }
     : undefined;
+
+  const handleClick = () => {
+    if (flipped) return;
+    if (onClick && !isDisabled && (originType === "court" || originType === "bench")) {
+      if (dragId) onClick(dragId);
+    }
+  };
 
   const handleRightClick = (e: React.MouseEvent) => {
     if (onRemoveCharacter) {
@@ -60,81 +67,85 @@ export function CharacterCard({
     }
   };
 
-const handleClick = () => {
-  if (onClick && !isDisabled && (originType === 'court' || originType === 'bench')) {
-    if (dragId) {
-      onClick(dragId);
-    }
-  }
-};
+  const handleFlip = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setFlipped(!flipped);
+  };
 
-  const rarityBgUrl = getRarityBackground(character.rarity);
-  const rarityBorderColor = getRarityBorderColor(character.rarity);
-
-  let cursorStyle = "cursor-default";
-  if (isDisabled) {
-    cursorStyle = "cursor-not-allowed";
-  } else if (isDraggable) {
-    cursorStyle = "cursor-grab";
-  } else if (onClick) {
-    cursorStyle = "cursor-pointer";
-  }
-
-  const visualStyle = isDisabled ? "opacity-40 grayscale" : "";
-  const hoverStyle =
-    !isDisabled && (onRemoveCharacter || dragData?.type === "list")
-      ? "hover:shadow-lg hover:scale-[1.03]"
-      : ""; 
-      
+  const rarityBg = getRarityBackground(character.rarity);
+  const rarityBorder = getRarityBorderColor(character.rarity);
   const rarityColor = getRarityColor(character.rarity);
-
-  if (draggable.isDragging) {
-    return (
-      <div
-        ref={draggable.setNodeRef}
-        style={style}
-        className={`border-2 border-dashed rounded-lg bg-gray-800
-                         w-24 h-[8rem] sm:w-28 sm:h-[9.5rem]`}
-      />
-    );
-  }
+  const cursorClass = isDisabled ? "disabled" : dragId ? "draggable" : "clickable";
 
   return (
-    <div
-      ref={(node) => { draggable.setNodeRef(node); droppable.setNodeRef(node); }}
-      style={style}
-      className={`
-        relative rounded-lg overflow-hidden shadow-md
-        flex flex-col
-        transition-all duration-200 ${hoverStyle} ${cursorStyle} ${visualStyle}
-        ${droppable.isOver ? 'ring-2 ring-orange-500' : ''}
-        border-2 ${rarityBorderColor}
-
-        w-24 h-[8rem] sm:w-28 sm:h-[9.5rem]
-      `}
+    <motion.div
+      ref={(node) => {
+        draggable.setNodeRef(node);
+        droppable.setNodeRef(node);
+      }}
+      style={{ ...style, perspective: 1000 }}
       onContextMenu={handleRightClick}
       onClick={handleClick}
-      {...(isDraggable ? draggable.listeners : {})}
-      {...(isDraggable ? draggable.attributes : {})}
+      onDoubleClick={handleFlip}
+      className={`character-card ${cursorClass} ${droppable.isOver ? "character-card--over" : ""}`}
+      {...(dragId ? draggable.listeners : {})}
+      {...(dragId ? draggable.attributes : {})}
     >
-      <Image src={rarityBgUrl} alt={`${character.rarity} Background`} layout="fill" objectFit="cover" className="z-0" priority={true}/>
+      <motion.div
+        className="character-card__inner"
+        animate={{ rotateY: flipped ? 180 : 0 }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        {/* FRONT */}
+        <motion.div
+          className="character-card__front"
+          style={{ backfaceVisibility: "hidden" }}
+        >
+          <Image src={rarityBg} alt="" fill className="character-card__background" />
+          <Image
+            src={character.image_url || "/images/placeholder.png"}
+            alt={character.name}
+            fill
+            className="character-card__image"
+          />
 
-      <Image src={character.image_url || '/images/placeholder.png'} alt={character.name} layout="fill" objectFit="cover" className="z-10" priority={true}/>
+          <div className="character-card__header">
+            <span className={`character-card__rarity ${rarityColor}`}>
+              {character.rarity}
+            </span>
+            <button
+              onClick={handleFlip}
+              className="character-card__info"
+              title="Ver detalhes"
+            >
+              <Info size={12} />
+            </button>
+          </div>
 
-      <div className="absolute top-0.5 left-0.5 right-0.5 flex justify-between items-center z-20 px-0.5">
-        <span className={`bg-black/70 ${rarityColor} font-bold rounded px-1 py-0 text-[10px] sm:text-xs shadow-md`}>
-            {character.rarity}
-        </span>
-        <span className="bg-black/70 text-gray-200 text-[10px] sm:text-xs font-semibold rounded-full px-1.5 py-0 shadow-md"> 
-            {character.position}
-        </span>
-      </div>
+          <div className="character-card__footer">
+            <h3 className="character-card__name">{character.name}</h3>
+          </div>
+        </motion.div>
 
-      <div className="absolute bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-black/70 via-black/50 to-transparent p-1 sm:p-1.5"> 
-        <h3 className={`font-bold truncate text-left text-white text-[10px] sm:text-xs`}> 
-            {character.name}
-        </h3>
-      </div>
-    </div>
+        {/* BACK */}
+        <motion.div
+          className="character-card__back"
+          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+        >
+          <div className="character-card__back-content">
+            <h4 className="character-card__section-title">Potenciais</h4>
+            <div className="character-card__potentials">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="character-card__potential-slot" />
+              ))}
+            </div>
+
+            <h4 className="character-card__section-title">Memória</h4>
+            <div className="character-card__memory-slot" />
+          </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 }

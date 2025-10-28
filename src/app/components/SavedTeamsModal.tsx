@@ -1,15 +1,8 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
-import type {
-  SavedTeam,
-  ExportedTeam,
-  SlotKey,
-  TeamSlots,
-  Character,
-} from "@/types";
+import type { SavedTeam, ExportedTeam, SlotKey, TeamSlots, Character } from "@/types";
 import { Upload, Trash2, X, Copy } from "lucide-react";
-
 import { useUIStore } from "@/stores/useUIStore";
 import { useSavedTeamsStore } from "@/stores/useSavedTeamsStore";
 import { useTeamStore } from "@/stores/useTeamStore";
@@ -26,35 +19,30 @@ const initialTeamState: TeamSlots = {
 };
 
 export function SavedTeamsModal() {
-
   const [importKey, setImportKey] = useState("");
 
+  const isOpen = useUIStore((s) => s.isTeamsModalOpen);
+  const onClose = useUIStore((s) => s.closeModals);
+  const showFeedback = useUIStore((s) => s.showFeedback);
+  const feedbackMessage = useUIStore((s) => s.feedbackMessage);
 
-  const isOpen = useUIStore((state) => state.isTeamsModalOpen);
-  const onClose = useUIStore((state) => state.closeModals);
-  const showFeedback = useUIStore((state) => state.showFeedback);
-  const feedbackMessage = useUIStore((state) => state.feedbackMessage);
+  const savedTeamsList = useSavedTeamsStore((s) => s.savedTeamsList);
+  const storeLoadTeam = useSavedTeamsStore((s) => s.loadTeam);
+  const storeDeleteTeam = useSavedTeamsStore((s) => s.deleteTeam);
+  const storeSaveCurrentTeam = useSavedTeamsStore((s) => s.saveCurrentTeam);
 
-  const savedTeamsList = useSavedTeamsStore((state) => state.savedTeamsList);
-  const storeLoadTeam = useSavedTeamsStore((state) => state.loadTeam); 
-  const storeDeleteTeam = useSavedTeamsStore((state) => state.deleteTeam);
-  const storeSaveCurrentTeam = useSavedTeamsStore((state) => state.saveCurrentTeam);
-
-  const setTeam = useTeamStore((state) => state.setTeam);
-  const setBench = useTeamStore((state) => state.setBench);
-
-  const allCharacters = useCharacterStore((state) => state.allCharacters);
+  const setTeam = useTeamStore((s) => s.setTeam);
+  const setBench = useTeamStore((s) => s.setBench);
+  const allCharacters = useCharacterStore((s) => s.allCharacters);
 
   const handleLoadTeam = useCallback(
-    (teamToLoad: SavedTeam) => {
-      if (window.confirm(`Carregar o time "${teamToLoad.name}"?`)) {
-        const success = storeLoadTeam(teamToLoad);
+    (team: SavedTeam) => {
+      if (window.confirm(`Carregar o time "${team.name}"?`)) {
+        const success = storeLoadTeam(team);
         if (success) {
           onClose();
-          showFeedback(`Time "${teamToLoad.name}" carregado.`);
-        } else {
-          showFeedback("Dados corrompidos.", "error");
-        }
+          showFeedback(`Time "${team.name}" carregado!`);
+        } else showFeedback("Erro ao carregar time.", "error");
       }
     },
     [storeLoadTeam, onClose, showFeedback]
@@ -62,27 +50,26 @@ export function SavedTeamsModal() {
 
   const handleDeleteTeam = useCallback(
     (index: number) => {
-      const teamToDelete = savedTeamsList[index];
-      if (window.confirm(`Excluir o time "${teamToDelete.name}"?`)) {
+      const team = savedTeamsList[index];
+      if (window.confirm(`Excluir o time "${team.name}"?`)) {
         storeDeleteTeam(index);
-        showFeedback(`Time "${teamToDelete.name}" excluído.`);
+        showFeedback(`Time "${team.name}" excluído.`);
       }
     },
     [savedTeamsList, storeDeleteTeam, showFeedback]
   );
 
   const handleExportTeam = useCallback(
-    (teamToExport: SavedTeam): string | null => {
+    (team: SavedTeam): string | null => {
       try {
-        const exportedData: ExportedTeam = { c: {}, b: [] };
-        for (const key in teamToExport.court) {
-          const typedKey = key as SlotKey;
-          exportedData.c[typedKey] = teamToExport.court[typedKey]?.id ?? null;
+        const exported: ExportedTeam = { c: {}, b: [] };
+        for (const key in team.court) {
+          const typed = key as SlotKey;
+          exported.c[typed] = team.court[typed]?.id ?? null;
         }
-        exportedData.b = teamToExport.bench.map((char) => char?.id ?? null);
-        const jsonString = JSON.stringify(exportedData);
-        return btoa(jsonString);
-      } catch (error) {
+        exported.b = team.bench.map((c) => c?.id ?? null);
+        return btoa(JSON.stringify(exported));
+      } catch {
         showFeedback("Erro ao gerar chave.", "error");
         return null;
       }
@@ -90,79 +77,58 @@ export function SavedTeamsModal() {
     [showFeedback]
   );
 
-  const handleCopyToClipboard = useCallback(
+  const handleCopyKey = useCallback(
     async (key: string) => {
       try {
         await navigator.clipboard.writeText(key);
         showFeedback("Chave copiada para a área de transferência!");
-      } catch (err) {
-        console.error("Falha ao copiar:", err);
-        showFeedback("Erro ao copiar a chave.", "error");
+      } catch {
+        showFeedback("Erro ao copiar chave.", "error");
       }
     },
     [showFeedback]
   );
 
-  const exportAndCopy = useCallback(
+  const handleExportAndCopy = useCallback(
     (team: SavedTeam) => {
       const key = handleExportTeam(team);
-      if (key) {
-        handleCopyToClipboard(key);
-      }
+      if (key) handleCopyKey(key);
     },
-    [handleExportTeam, handleCopyToClipboard]
+    [handleExportTeam, handleCopyKey]
   );
 
-  const handleImportTeam = useCallback(async () => {
-    if (!importKey || importKey.trim() === "") {
-      showFeedback("Cole a chave.", "error");
+  const handleImport = useCallback(async () => {
+    if (!importKey.trim()) {
+      showFeedback("Cole uma chave válida.", "error");
       return;
     }
+
     try {
-      const jsonString = atob(importKey.trim());
-      const importedData = JSON.parse(jsonString) as ExportedTeam;
-      if (
-        !importedData ||
-        typeof importedData.c !== "object" ||
-        !Array.isArray(importedData.b)
-      ) {
-        throw new Error("Formato inválido.");
-      }
+      const data = JSON.parse(atob(importKey.trim())) as ExportedTeam;
+      if (!data?.c || !Array.isArray(data.b)) throw new Error("Formato inválido.");
 
       const newTeam: TeamSlots = { ...initialTeamState };
       const newBench: (Character | null)[] = Array(6).fill(null);
       let foundAll = true;
-      const missingChars: string[] = [];
+      const missing: string[] = [];
 
-      for (const key in importedData.c) {
-        const typedKey = key as SlotKey;
-        const charId = importedData.c[typedKey];
-        if (charId != null) {
-          const foundChar = allCharacters.find((c) => c.id === charId);
-          if (foundChar) {
-            newTeam[typedKey] = foundChar;
-          } else {
-            foundAll = false;
-            newTeam[typedKey] = null;
-            missingChars.push(`ID ${charId} (slot ${typedKey})`);
-          }
-        } else {
-          newTeam[typedKey] = null;
+      for (const key in data.c) {
+        const typed = key as SlotKey;
+        const charId = data.c[typed];
+        const found = allCharacters.find((c) => c.id === charId) ?? null;
+        newTeam[typed] = found;
+        if (!found && charId) {
+          missing.push(`${charId}`);
+          foundAll = false;
         }
       }
 
-      importedData.b.forEach((charId, index) => {
-        if (charId != null && index < 6) {
-          const foundChar = allCharacters.find((c) => c.id === charId);
-          if (foundChar) {
-            newBench[index] = foundChar;
-          } else {
-            foundAll = false;
-            newBench[index] = null;
-            missingChars.push(`ID ${charId} (banco ${index})`);
-          }
-        } else if (index < 6) {
-          newBench[index] = null;
+      data.b.forEach((id, i) => {
+        const found = allCharacters.find((c) => c.id === id) ?? null;
+        newBench[i] = found;
+        if (!found && id) {
+          missing.push(`${id}`);
+          foundAll = false;
         }
       });
 
@@ -170,122 +136,79 @@ export function SavedTeamsModal() {
       setBench(newBench);
       setImportKey("");
 
-      const teamName = prompt(
-        `Time importado ${
-          foundAll ? "" : "(com ressalvas)"
-        }! Digite um nome para salvá-lo (ou cancele):`
+      const name = prompt(
+        `Time importado${foundAll ? "" : " (com falhas)"}! Digite um nome para salvá-lo:`
       );
-      if (teamName && teamName.trim() !== "") {
-        storeSaveCurrentTeam(teamName);
-        showFeedback(`Time "${teamName}" importado e salvo!`);
+      if (name && name.trim() !== "") {
+        storeSaveCurrentTeam(name);
+        showFeedback(`Time "${name}" importado e salvo!`);
       } else {
         showFeedback(
-          foundAll
-            ? "Time importado!"
-            : "Time importado (alguns personagens não encontrados). Não foi salvo.",
+          foundAll ? "Time importado com sucesso!" : "Time importado com falhas.",
           foundAll ? "success" : "error"
         );
       }
+
       onClose();
-    } catch (error: any) {
-      showFeedback(
-        `Erro ao importar: ${error.message || "Chave inválida."}`,
-        "error"
-      );
+    } catch (err: any) {
+      showFeedback(`Erro ao importar: ${err.message}`, "error");
     }
-  }, [
-    importKey,
-    allCharacters,
-    showFeedback,
-    setTeam,
-    setBench,
-    storeSaveCurrentTeam,
-    onClose,
-  ]);
+  }, [importKey, allCharacters, setTeam, setBench, storeSaveCurrentTeam, showFeedback, onClose]);
 
   if (!isOpen) return null;
 
-  const handleModalContentClick = (e: React.MouseEvent) => e.stopPropagation();
-
   return (
-    <div
-      className="fixed inset-0 z-[70] bg-black/70 flex items-center justify-center p-4 backdrop-blur-sm"
-      onClick={onClose}
-    >
-      <div
-        className="bg-zinc-900 rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] border border-zinc-700 flex flex-col overflow-hidden"
-        onClick={handleModalContentClick}
-      >
-        <div className="flex-shrink-0 p-4 border-b border-zinc-700 flex justify-between items-center">
-          <h3 className="text-lg font-semibold text-white font-bricolage">
-            Gerenciar Times Salvos
-          </h3>
-          <button
-            onClick={onClose}
-            className="text-zinc-400 hover:text-white transition-colors"
-            aria-label="Fechar modal"
-          >
-            <X size={24} />
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <header className="modal__header">
+          <h3>Gerenciar Times Salvos</h3>
+          <button onClick={onClose} aria-label="Fechar">
+            <X size={22} />
           </button>
-        </div>
+        </header>
 
-        <div className="flex-grow overflow-y-auto custom-scrollbar p-6 space-y-6">
+        <div className="modal__content">
           {feedbackMessage && (
-            <p
-              className={`p-2 rounded text-white text-sm text-center ${
-                feedbackMessage.type === "error"
-                  ? "bg-red-700/80"
-                  : "bg-green-700/80"
-              }`}
+            <div
+              className={`modal__feedback ${feedbackMessage.type === "error" ? "error" : "success"}`}
             >
               {feedbackMessage.text}
-            </p>
+            </div>
           )}
 
-          <div className="mb-6">
-            <h4 className="text-md font-semibold text-zinc-300 mb-2">
-              Times Salvos:
-            </h4>
+          <section className="modal__section">
+            <h4>Times Salvos</h4>
             {savedTeamsList.length === 0 ? (
-              <p className="text-sm text-zinc-500 italic">
-                Nenhum time salvo ainda.
-              </p>
+              <p className="modal__empty">Nenhum time salvo.</p>
             ) : (
-              <ul className="space-y-2 max-h-60 overflow-y-auto custom-scrollbar pr-2 border border-zinc-700 rounded-md p-2 bg-zinc-800/50">
-                {savedTeamsList.map((savedTeam, index) => (
-                  <li
-                    key={index}
-                    className="flex flex-col sm:flex-row justify-between items-center bg-zinc-700/50 p-2 rounded gap-2"
-                  >
-                    <div className="flex-grow">
-                      <span className="font-semibold text-white">
-                        {savedTeam.name}
-                      </span>
-                      <span className="text-xs text-zinc-400 ml-2">
-                        {" "}
-                        (Salvo em:{" "}
-                        {new Date(savedTeam.savedAt).toLocaleDateString()})
+              <ul className="modal__team-list">
+                {savedTeamsList.map((team, i) => (
+                  <li key={i} className="modal__team">
+                    <div className="modal__team-info">
+                      <strong>{team.name}</strong>
+                      <span>
+                        ({new Date(team.savedAt).toLocaleDateString("pt-BR")})
                       </span>
                     </div>
-                    <div className="flex gap-2 flex-shrink-0">
+                    <div className="modal__team-actions">
                       <button
-                        onClick={() => handleLoadTeam(savedTeam)}
                         title="Carregar"
-                        className="p-1.5 bg-sky-600 hover:bg-sky-700 rounded text-white"
+                        className="btn-icon blue"
+                        onClick={() => handleLoadTeam(team)}
                       >
                         <Upload size={16} />
                       </button>
                       <button
-                        onClick={() => exportAndCopy(savedTeam)}
-                        title="Copiar Chave de Exportação"
-                        className="p-1.5 bg-yellow-600 hover:bg-yellow-700 rounded text-white"
+                        title="Copiar chave"
+                        className="btn-icon yellow"
+                        onClick={() => handleExportAndCopy(team)}
                       >
                         <Copy size={16} />
                       </button>
                       <button
-                        onClick={() => handleDeleteTeam(index)}
                         title="Excluir"
-                        className="p-1.5 bg-red-600 hover:bg-red-700 rounded text-white"
+                        className="btn-icon red"
+                        onClick={() => handleDeleteTeam(i)}
                       >
                         <Trash2 size={16} />
                       </button>
@@ -294,28 +217,20 @@ export function SavedTeamsModal() {
                 ))}
               </ul>
             )}
-          </div>
+          </section>
 
-          <div>
-            <h4 className="text-md font-semibold text-zinc-300 mb-2">
-              Importar Time por Chave:
-            </h4>
-            <div className="flex gap-2">
+          <section className="modal__section">
+            <h4>Importar Time por Chave</h4>
+            <div className="modal__import">
               <input
                 type="text"
+                placeholder="Cole a chave aqui..."
                 value={importKey}
                 onChange={(e) => setImportKey(e.target.value)}
-                placeholder="Cole a chave aqui..."
-                className="flex-grow bg-zinc-700 border border-zinc-600 rounded px-2 py-1 text-sm text-white focus:outline-none focus:ring-1 focus:ring-orange-500"
               />
-              <button
-                onClick={handleImportTeam}
-                className="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-1 px-3 text-sm rounded transition-colors"
-              >
-                Importar
-              </button>
+              <button onClick={handleImport}>Importar</button>
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </div>

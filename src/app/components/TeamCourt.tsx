@@ -1,100 +1,112 @@
-// /src/app/components/TeamCourt.tsx
-import { Position } from '@/types';
-import { TeamSlots, SlotKey } from '../page';
-import { CharacterCard } from './CharacterCard';
-import { TeamSlot } from './TeamSlot';
+"use client";
 
-type TeamCourtProps = {
-  team: TeamSlots;
-  onRemoveCharacter: (slotKey: SlotKey) => void;
-  onSlotClick: (position: Position | "ALL") => void;
-  isPositionFree?: boolean;
-}
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { TeamSlot } from "./TeamSlot";
+import { CharacterCard } from "./CharacterCard";
+import type { TeamSlots, SlotKey } from "@/types";
+import { useUIStore } from "@/stores/useUIStore";
+import { useTeamStore } from "@/stores/useTeamStore";
+
+const label = (slotKey: SlotKey) => {
+  switch (slotKey) {
+    case "pos1_s": return "S";
+    case "pos2_mb": return "MB";
+    case "pos3_ws": return "WS";
+    case "pos4_op": return "OP";
+    case "pos5_mb": return "MB";
+    case "pos6_ws": return "WS";
+    case "libero":  return "L";
+    default:        return "";
+  }
+};
 
 export function TeamCourt({
   team,
   onRemoveCharacter,
-  onSlotClick,
-  isPositionFree = false
-}: TeamCourtProps) {
+  isPositionFree,
+}: {
+  team: TeamSlots;
+  onRemoveCharacter: (key: keyof TeamSlots) => void;
+  isPositionFree: boolean;
+}) {
+  const openSelectionModal = useUIStore((s) => s.openSelectionModal);
+  const slotOrder = useTeamStore((s) => s.slotOrder);
+  const isRotating = useTeamStore((s) => s.isRotating);
 
-  const acceptedPositions: Record<Exclude<SlotKey, 'libero'>, Position> = {
-    pos2_s: "S", pos3_mb: "MB", pos4_ws: "WS",
-    pos1_op: "OP", pos6_mb: "MB", pos5_ws: "WS",
-  };
-
-  const positionNumbers: Record<Exclude<SlotKey, 'libero'>, number> = {
-      pos2_s: 1, 
-      pos3_mb: 2, 
-      pos4_ws: 3,
-      pos1_op: 4,
-      pos6_mb: 5,
-      pos5_ws: 6, 
-  };
+  const handleSlotClick = (slotKey: SlotKey) => {
+  const position = label(slotKey); 
+  openSelectionModal(`court-${slotKey}`, position);
+};
 
 
   const renderSlot = (slotKey: SlotKey) => {
     const character = team[slotKey];
     const dndId = `court-${slotKey}`;
+    const dndData = { type: "court", slotKey };
 
-    const acceptedPosition = slotKey === 'libero' ? 'L' : acceptedPositions[slotKey];
-    const dndData = { type: 'court', slotKey, acceptedPosition };
-
-    let slotDisplayName: string;
-    if (slotKey === 'libero') {
-      slotDisplayName = "Líbero (L)";
-    } else if (isPositionFree) {
-      slotDisplayName = `Posição ${positionNumbers[slotKey]}`;
-    } else {
-      slotDisplayName = `Pos ${positionNumbers[slotKey]} (${acceptedPosition})`;
-    }
-
-
-    if (character) {
-      return (
-        <CharacterCard
-          key={dndId}
-          character={character}
-          onRemoveCharacter={() => onRemoveCharacter(slotKey)}
-          dragId={dndId}
-          dragData={{ ...dndData, character }}
-          dropData={dndData}
-          originType="court"
-        />
-      );
-    } else {
-      return (
-        <TeamSlot
-          key={dndId}
-          positionName={slotDisplayName} 
-          onSlotClick={() => onSlotClick(acceptedPosition)}
-          dropId={dndId}
-          dropData={dndData}
-        />
-      );
-    }
+    return (
+      <AnimatePresence mode="wait" key={slotKey}>
+        {character ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 0 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 0 }}
+            whileHover={{ y: -6, scale: 1.03 }} 
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+          >
+            <CharacterCard
+              character={character}
+              originType="court"
+              onRemoveCharacter={() => onRemoveCharacter(slotKey)}
+              dragId={dndId}
+              dragData={{ ...dndData, character }}
+              dropData={dndData}
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.18 }}
+          >
+            <TeamSlot
+              positionName={label(slotKey)}
+              dropId={dndId}
+              dropData={dndData}
+              onSlotClick={() => handleSlotClick(slotKey)}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    );
   };
 
+  const top = [slotOrder[0], slotOrder[1], slotOrder[2]] as SlotKey[]; 
+  const bottom = ["libero" as SlotKey, slotOrder[5], slotOrder[4], slotOrder[3]]; 
+
   return (
-    <div className="flex flex-col lg:flex-row justify-center gap-4 w-full max-w-xl">
-      <div className="bg-zinc-950 p-3 sm:p-4 rounded-lg shadow-inner border border-zinc-800 w-full lg:w-auto mx-auto flex flex-col">
-        <div className="flex flex-grow items-center justify-center">
-          {renderSlot('libero')}
+    <motion.div
+      className="court"
+      animate={
+        isRotating
+          ? { rotate: [0, 6, -6, 0], scale: [1, 0.98, 1] }
+          : { rotate: 0, scale: 1 }
+      }
+      transition={{ duration: 0.6, ease: "easeInOut" }}
+    >
+      <div className="court__base" />
+
+      <div className="court__lanes">
+        <div className="court__row court__row--top">
+          {top.map(renderSlot)}
+        </div>
+        <div className="court__row court__row--bottom">
+          {bottom.map(renderSlot)}
         </div>
       </div>
-      <div className="bg-zinc-950 p-3 sm:p-4 rounded-lg shadow-inner border border-zinc-800 w-full">
-        <div className="grid grid-cols-3 gap-x-2 sm:gap-x-3 justify-items-center">
-          {renderSlot('pos2_s')}
-          {renderSlot('pos3_mb')}
-          {renderSlot('pos4_ws')}
-        </div>
-        <div className="h-px bg-zinc-700 my-3 sm:my-4"></div>
-        <div className="grid grid-cols-3 gap-x-2 sm:gap-x-3 justify-items-center">
-          {renderSlot('pos5_ws')}
-          {renderSlot('pos6_mb')}
-          {renderSlot('pos1_op')}
-        </div>
-      </div>
-    </div>
+    </motion.div>
   );
 }

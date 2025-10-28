@@ -1,52 +1,86 @@
-import { Bond } from "@/types";
-import React from "react";
+import { CalculatedBond } from "@/types";
+import React, { useState } from "react";
 
 type ActiveBondsDisplayProps = {
-  bonds: Bond[];
+  bonds: CalculatedBond[];
   loading: boolean;
 };
 
-export function ActiveBondsDisplay({
-  bonds,
-  loading,
-}: ActiveBondsDisplayProps) {
+export function ActiveBondsDisplay({ bonds, loading }: ActiveBondsDisplayProps) {
+  const [activeTab, setActiveTab] = useState<"ativos" | "pendentes">("ativos");
+
   if (loading) {
     return (
-      <>
-        <div className="w-full max-w-xl mt-6 p-4 bg-zinc-950 rounded-lg border border-zinc-700">
-          <p className="text-sm text-center text-zinc-400">
-            Carregando vínculos...
-          </p>
-        </div>
-      </>
+      <div className="active-bonds-display">
+        <p className="loading-text">Carregando vínculos...</p>
+      </div>
     );
   }
 
+  const activeBonds = bonds.filter((b) => b.isActive);
+  const pendingBonds = bonds.filter(
+    (b) => !b.isActive && b.hasAnyMemberOnCourt && !b.isTeamBond
+  );
+
+  const displayedBonds = activeTab === "ativos" ? activeBonds : pendingBonds;
+
   return (
-    <>
-      <h3 className="text-xl font-semibold text-white text-left font-bricolage">
-        <span className="font-bold">VINCULOS</span>
-        <span className="font-normal opacity-80 ml-1">ATIVOS</span>
-        <span className="font-normal opacity-80 ml-1">({bonds.length})</span>
-      </h3>
-      <div className="w-full max-w-xl mt-6 p-4 bg-zinc-950 rounded-lg border border-zinc-700">
-        {bonds.length > 0 ? (
-          <ul className="space-y-3">
-            {bonds.map((bond) => (
-              <li key={bond.id} className="text-sm">
-                <strong className="text-orange-400">{bond.name}:</strong>
-                <p className="text-xs text-zinc-300 ml-2">
-                  {bond.description || "Sem descrição."}
-                </p>
-              </li>
-            ))}
-          </ul>
+    <div className="active-bonds-display">
+      <div className="header">
+        <h3>VÍNCULOS</h3>
+        <div className="tabs">
+          <button
+            className={activeTab === "ativos" ? "tab active" : "tab"}
+            onClick={() => setActiveTab("ativos")}
+          >
+            Ativos ({activeBonds.length})
+          </button>
+          <button
+            className={activeTab === "pendentes" ? "tab active" : "tab"}
+            onClick={() => setActiveTab("pendentes")}
+          >
+            Pendentes ({pendingBonds.length})
+          </button>
+        </div>
+      </div>
+
+      <div className="bonds-container">
+        {displayedBonds.length > 0 ? (
+          displayedBonds.map((bond) => (
+            <div
+              key={bond.id}
+              className={`bond-card ${bond.isActive ? "active" : "pending"}`}
+            >
+              <div className="bond-header">
+                <span className="bond-name">{bond.name}</span>
+                <span className="bond-progress">
+                  {bond.currentCount}/{bond.totalRequired}
+                </span>
+              </div>
+              <div className="bond-progress-bar">
+                <div
+                  className="bond-progress-fill"
+                  style={{
+                    width: `${Math.min(
+                      (bond.currentCount / bond.totalRequired) * 100,
+                      100
+                    )}%`,
+                  }}
+                ></div>
+              </div>
+              <p className="bond-description">
+                {bond.description || "Sem descrição."}
+              </p>
+            </div>
+          ))
         ) : (
-          <p className="text-sm text-center text-zinc-500">
-            Nenhum vínculo ativo.
+          <p className="empty-text">
+            {activeTab === "ativos"
+              ? "Nenhum vínculo ativo."
+              : "Nenhum vínculo pendente."}
           </p>
         )}
       </div>
-    </>
+    </div>
   );
 }

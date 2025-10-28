@@ -1,41 +1,103 @@
-import React from 'react';
-import type { TeamType, RelevantStyleDisplay, StyleCounts } from '@/types'; 
-import { teamTypeStyles } from '@/types'; 
+"use client";
 
-type TeamTypeDisplayProps = {
-    teamType: TeamType;
-    styleCounts: StyleCounts; 
+import React, { useMemo } from "react";
+import { useTeamStore } from "@/stores/useTeamStore";
+import { useCharacterStore } from "@/stores/useCharacterStore";
+import {
+  TeamType,
+  RelevantStyleDisplay,
+  dbStyleToTeamTypeMap,
+  teamTypeStyles,
+} from "@/types";
+
+const displayOrder: RelevantStyleDisplay[] = [
+  "Ataque Rápido",
+  "Potente",
+  "Bloqueio",
+  "Recepção",
+];
+
+const activationThreshold: Record<RelevantStyleDisplay, number> = {
+  "Ataque Rápido": 4,
+  Potente: 4,
+  Bloqueio: 4,
+  Recepção: 5,
 };
 
-const displayOrder: RelevantStyleDisplay[] = ["Ataque Rápido", "Potente", "Bloqueio", "Recepção"];
+export function TeamTypeDisplay() {
+  const team = useTeamStore((s) => s.team);
+  const allCharacters = useCharacterStore((s) => s.allCharacters);
 
-export function TeamTypeDisplay({ teamType, styleCounts }: TeamTypeDisplayProps) {
-    const mainStyle = teamTypeStyles[teamType] || teamTypeStyles["Nenhum"];
+  const { teamType, styleCounts } = useMemo(() => {
+    const counts: Record<RelevantStyleDisplay, number> = {
+      "Ataque Rápido": 0,
+      Potente: 0,
+      Bloqueio: 0,
+      Recepção: 0,
+    };
 
-    return (
-        <div className="w-full max-w-xl mx-auto mb-4 p-3 bg-zinc-950 rounded-lg border border-zinc-700 flex flex-col items-center gap-2"> {/* Adicionado mb-4 */}
+    Object.values(team)
+      .filter(Boolean)
+      .forEach((member) => {
+        const found = allCharacters.find((c) => c.id === member?.id);
+        if (found && Array.isArray(found.styles)) {
+          found.styles.forEach((style: string) => {
+            const translated =
+              dbStyleToTeamTypeMap[
+                style as keyof typeof dbStyleToTeamTypeMap
+              ];
+            if (translated) counts[translated] += 1;
+          });
+        }
+      });
 
-            <div className="flex items-center justify-center gap-2">
-                <span className="text-sm font-semibold text-zinc-400">Tipo de Time:</span>
-                <span className={`font-bold text-sm ${mainStyle.color}`}>
-                    {teamType}
-                </span>
+    let mainType: TeamType = "Nenhum";
+    let maxCount = 0;
+
+    for (const style of displayOrder) {
+      const count = counts[style];
+      const minRequired = activationThreshold[style];
+
+      if (count >= minRequired && count > maxCount) {
+        mainType = style;
+        maxCount = count;
+      }
+    }
+
+    return { teamType: mainType, styleCounts: counts };
+  }, [team, allCharacters]);
+
+  const mainStyle = teamTypeStyles[teamType] ?? teamTypeStyles["Nenhum"];
+
+  return (
+    <div className="team-type-display">
+      <div className="team-type-display__header">
+        <span className="label">Tipo de Time:</span>
+        <span className={`value ${mainStyle.color}`}>{teamType}</span>
+      </div>
+
+      <div className="team-type-display__styles">
+        {displayOrder.map((styleName) => {
+          const count = styleCounts[styleName];
+          const countStyle = teamTypeStyles[styleName];
+          const threshold = activationThreshold[styleName];
+          const isActive = count >= threshold;
+
+          return (
+            <div
+              key={styleName}
+              className={`team-type-display__style ${
+                isActive ? "active" : "inactive"
+              }`}
+            >
+              <span className={`name ${countStyle.color}`}>{styleName}:</span>
+              <span className="count">
+                {count} / {threshold}
+              </span>
             </div>
-
-            <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 border-t border-zinc-700 pt-2 w-full">
-                {displayOrder.map(styleName => {
-                    const count = styleCounts[styleName];
-                    const countStyle = teamTypeStyles[styleName]; 
-                    const opacityClass = count > 0 ? 'opacity-100' : 'opacity-40';
-
-                    return (
-                        <div key={styleName} className={`flex items-center gap-1 text-xs transition-opacity ${opacityClass}`}>
-                             <span className={`font-semibold ${countStyle.color}`}>{styleName}:</span>
-                             <span className="text-zinc-200 font-medium">{count}</span>
-                        </div>
-                    );
-                 })}
-            </div>
-        </div>
-    );
+          );
+        })}
+      </div>
+    </div>
+  );
 }

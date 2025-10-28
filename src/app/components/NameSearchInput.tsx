@@ -1,26 +1,29 @@
 "use client";
 
-import { Search } from 'lucide-react'; 
+import { Search } from "lucide-react";
+import React from "react";
 
 type NameSearchInputProps = {
   value: string;
   onChange: (value: string) => void;
+  className?: string;
 };
 
-export function NameSearchInput({ value, onChange }: NameSearchInputProps) {
+export function NameSearchInput({
+  value,
+  onChange,
+  className = "",
+}: NameSearchInputProps) {
   return (
-    <div className="relative">
+    <div className={`input-wrapper ${className}`}>
       <input
         type="text"
         placeholder="Pesquisar por nome..."
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg py-2 px-4 text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+        className="text-input"
       />
-      <Search
-        className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500"
-        size={18}
-      />
+      <Search className="input-icon" size={18} />
     </div>
   );
 }
