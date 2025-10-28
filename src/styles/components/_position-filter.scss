@@ -1,0 +1,42 @@
+@use "../variables" as *;
+
+.position-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+
+  @media (min-width: 640px) {
+    justify-content: flex-start;
+  }
+
+  &__btn {
+    background: $color-zinc-800;
+    color: $color-gray-200;
+    border: 1px solid $color-zinc-700;
+    border-radius: 8px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: var(--font-inter);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.3px;
+
+    &:hover {
+      border-color: $color-orange-500;
+      color: $color-white;
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+
+    &.is-active {
+      background: $color-orange-500;
+      border-color: darken($color-orange-500, 10%);
+      color: $color-white;
+      box-shadow: 0 4px 8px rgba($color-orange-500, 0.35);
+    }
+  }
+}

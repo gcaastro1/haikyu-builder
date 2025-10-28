@@ -27,9 +27,7 @@ export function CharacterSelectionModal() {
   const [error, setError] = useState<string | null>(null);
   const [schoolFilter, setSchoolFilter] = useState<School | "ALL">("ALL");
   const [nameSearch, setNameSearch] = useState<string>("");
-  const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
-    null
-  );
+  const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
 
   useEffect(() => {
     if (isSelectionModalOpen && allCharacters.length === 0) {
@@ -84,17 +82,21 @@ export function CharacterSelectionModal() {
 
   const filteredCharacters = useMemo(() => {
     return allCharacters.filter((c) => {
-      if (!isJPMode && autoPosition !== "ALL" && c.position !== autoPosition)
-        return false;
+      if (!isJPMode && autoPosition !== "ALL" && c.position !== autoPosition) return false;
       if (schoolFilter !== "ALL" && c.school !== schoolFilter) return false;
-      if (
-        nameSearch &&
-        !c.name.toLowerCase().includes(nameSearch.toLowerCase())
-      )
-        return false;
+      if (nameSearch && !c.name.toLowerCase().includes(nameSearch.toLowerCase())) return false;
       return true;
     });
   }, [allCharacters, autoPosition, schoolFilter, nameSearch, isJPMode]);
+
+  // === NOVO: cria um set de nomes que já estão na quadra ===
+  const inCourtNames = useMemo(() => {
+    return new Set(
+      Object.values(team)
+        .filter(Boolean)
+        .map((c) => c!.name)
+    );
+  }, [team]);
 
   const handleConfirm = () => {
     if (!selectedCharacter || !targetSlotIdentifier) return;
@@ -112,15 +114,13 @@ export function CharacterSelectionModal() {
     }
 
     setCharacterInSlot(targetSlotIdentifier, selectedCharacter);
-    showFeedback(
-      `${selectedCharacter.name} adicionado com sucesso!`,
-      "success"
-    );
+    showFeedback(`${selectedCharacter.name} adicionado com sucesso!`, "success");
     setSelectedCharacter(null);
     closeModals();
   };
 
   const handleCardClick = (char: Character) => {
+    if (inCourtNames.has(char.name)) return; // 🔒 não deixa clicar em bloqueado
     setSelectedCharacter((prev) => (prev?.id === char.id ? null : char));
   };
 
@@ -132,12 +132,7 @@ export function CharacterSelectionModal() {
       y: 0,
       transition: { duration: 0.25, ease: "easeOut" },
     },
-    exit: {
-      opacity: 0,
-      scale: 0.95,
-      y: 10,
-      transition: { duration: 0.2 },
-    },
+    exit: { opacity: 0, scale: 0.95, y: 10, transition: { duration: 0.2 } },
   };
 
   return (
@@ -189,17 +184,22 @@ export function CharacterSelectionModal() {
               <div className="character-modal__grid">
                 {filteredCharacters.map((char) => {
                   const isSelected = selectedCharacter?.id === char.id;
+                  const isDisabled = inCourtNames.has(char.name); // 🔒 bloqueado se já está na quadra
                   return (
                     <motion.div
                       key={char.id}
                       onClick={() => handleCardClick(char)}
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
+                      whileHover={!isDisabled ? { scale: 1.03 } : {}}
+                      whileTap={!isDisabled ? { scale: 0.97 } : {}}
                       className={`character-modal__card ${
                         isSelected ? "selected" : ""
-                      }`}
+                      } ${isDisabled ? "disabled" : ""}`}
                     >
-                      <CharacterCard character={char} originType="list" />
+                      <CharacterCard
+                        character={char}
+                        originType="list"
+                        isDisabled={isDisabled}
+                      />
                     </motion.div>
                   );
                 })}

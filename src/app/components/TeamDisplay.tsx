@@ -73,7 +73,7 @@ export function TeamTypeDisplay() {
     <div className="team-type-display">
       <div className="team-type-display__header">
         <span className="label">Tipo de Time:</span>
-        <span className={`value ${mainStyle.color}`}>{teamType}</span>
+        <span className={`value ${mainStyle.className}`}>{teamType}</span>
       </div>
 
       <div className="team-type-display__styles">
@@ -90,7 +90,7 @@ export function TeamTypeDisplay() {
                 isActive ? "active" : "inactive"
               }`}
             >
-              <span className={`name ${countStyle.color}`}>{styleName}:</span>
+              <span className={`name ${countStyle.className}`}>{styleName}:</span>
               <span className="count">
                 {count} / {threshold}
               </span>

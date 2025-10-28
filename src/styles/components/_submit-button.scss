@@ -1,0 +1,57 @@
+@use "../variables" as *;
+
+.submit-button {
+  width: 100%;
+  background: $color-orange-500;
+  color: $color-white;
+  font-family: var(--font-poppins);
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  padding: 0.85rem 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  transition: background 0.25s ease, transform 0.15s ease;
+  box-shadow: 0 4px 10px rgba($color-orange-500, 0.25);
+
+  &:hover {
+    background: lighten($color-orange-500, 5%);
+    box-shadow: 0 6px 12px rgba($color-orange-500, 0.35);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background: $color-zinc-700;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.7;
+  }
+
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  &__icon {
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

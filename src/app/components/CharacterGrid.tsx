@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Character } from "@/types";
 import { CharacterCard } from "./CharacterCard";
 
+import "@/styles/components/character-grid.scss";
+
 type CharacterGridProps = {
   isLoading: boolean;
   fetchError: string | null;
@@ -52,17 +54,21 @@ export function CharacterGrid({
 
   if (isLoading)
     return (
-      <p className="text-center text-gray-400 py-10">
+      <p className="database-character-grid__status database-character-grid__status--loading">
         Carregando personagens...
       </p>
     );
 
   if (fetchError)
-    return <p className="text-center text-red-500 py-10">{fetchError}</p>;
+    return (
+      <p className="database-character-grid__status database-character-grid__status--error">
+        {fetchError}
+      </p>
+    );
 
   if (characters.length === 0)
     return (
-      <p className="text-center text-gray-500 py-10">
+      <p className="database-character-grid__status database-character-grid__status--empty">
         Nenhum personagem encontrado...
       </p>
     );
@@ -70,12 +76,12 @@ export function CharacterGrid({
   const visibleCharacters = characters.slice(0, visibleCount);
 
   return (
-    <div className="flex-grow overflow-y-auto custom-scrollbar px-4 pb-4">
-      <div className="text-gray-400 text-sm text-right mb-2 pr-1 select-none">
+    <div className="database-character-grid">
+      <div className="database-character-grid__counter">
         Mostrando {visibleCharacters.length} de {characters.length}
       </div>
 
-      <div className="grid gap-3 grid-cols-[repeat(auto-fit,minmax(theme(width.28),1fr))] place-items-center transition-all duration-200">
+      <div className="database-character-grid__wrapper">
         <AnimatePresence>
           {visibleCharacters.map((char, index) => (
             <motion.div
@@ -97,11 +103,8 @@ export function CharacterGrid({
       </div>
 
       {visibleCount < characters.length && (
-        <div
-          ref={loaderRef}
-          className="w-full h-10 flex justify-center items-center mt-6"
-        >
-          <span className="text-gray-500 text-xs animate-pulse">
+        <div ref={loaderRef} className="database-character-grid__loader">
+          <span className="database-character-grid__loader-text">
             Carregando mais...
           </span>
         </div>

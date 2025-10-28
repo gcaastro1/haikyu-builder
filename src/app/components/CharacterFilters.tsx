@@ -31,106 +31,66 @@ export function CharacterFilters({
   const rarities = ["ALL", "UR", "SSR", "SR", "R"];
 
   return (
-    <div className="p-4 border-b border-zinc-700 bg-zinc-900/40 flex flex-col gap-5 rounded-b-md">
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="flex flex-col gap-1">
-          <label className="flex items-center text-zinc-400 text-xs uppercase tracking-wide gap-1">
-            <span title="Filtros">
-              <Filter
-                size={12}
-                className="text-orange-400"
-                aria-label="Filtros"
-              />
-            </span>
+    <div className="database-character-filters">
+      <div className="database-character-filters__grid">
+        <div className="database-character-filters__field">
+          <label className="database-character-filters__label">
+            <Filter size={12} className="database-character-filters__icon--filter" />
             Buscar por nome
-            <span title="Procure por personagens pelo nome. A busca aceita pequenos erros de digitação (ex: 'Hinatta' → Hinata).">
-              <Info size={12} className="text-zinc-500 ml-1" aria-hidden />
-            </span>
+            <Info size={12} className="database-character-filters__icon--info" />
           </label>
           <NameSearchInput
             value={nameSearch}
             onChange={setNameSearch}
-            className="w-full h-[42px]"
+            className="database-character-filters__input"
           />
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="flex items-center text-zinc-400 text-xs uppercase tracking-wide gap-1">
-            <span title="Filtros">
-              <Filter
-                size={12}
-                className="text-orange-400"
-                aria-label="Filtros"
-              />
-            </span>
+        <div className="database-character-filters__field">
+          <label className="database-character-filters__label">
+            <Filter size={12} className="database-character-filters__icon--filter" />
             Escola
-            <span title="Filtra os personagens por escola (ex: Karasuno, Nekoma, Shiratorizawa...).">
-              <Info size={12} className="text-zinc-500 ml-1" aria-hidden />
-            </span>
+            <Info size={12} className="database-character-filters__icon--info" />
           </label>
           <SchoolFilter
             activeFilter={schoolFilter}
             onFilterChange={setSchoolFilter}
-            className="w-full h-[42px]"
+            className="database-character-filters__input"
           />
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div className="flex flex-col gap-1 flex-1 sm:mr-3">
-          <label className="flex items-center text-zinc-400 text-xs uppercase tracking-wide gap-1">
-            <span title="Filtros">
-              <Filter
-                size={12}
-                className="text-orange-400"
-                aria-label="Filtros"
-              />
-            </span>
+      <div className="database-character-filters__bottom">
+        <div className="database-character-filters__field database-character-filters__field--wide">
+          <label className="database-character-filters__label">
+            <Filter size={12} className="database-character-filters__icon--filter" />
             Posição
-            <span title="Filtra personagens por posição em quadra (S, MB, WS, OP, L).">
-              <Info size={12} className="text-zinc-500 ml-1" aria-hidden />
-            </span>
+            <Info size={12} className="database-character-filters__icon--info" />
           </label>
           <PositionFilter
             activeFilter={positionFilter}
             onFilterChange={setPositionFilter}
-            className="flex-1"
+            className="database-character-filters__input"
           />
         </div>
 
-        <div className="flex flex-col gap-1 flex-1 sm:items-end">
-          <label className="flex items-center text-zinc-400 text-xs uppercase tracking-wide gap-1">
-            <span title="Filtros">
-              <Filter
-                size={12}
-                className="text-orange-400"
-                aria-label="Filtros"
-              />
-            </span>
+        <div className="database-character-filters__rarity">
+          <label className="database-character-filters__label">
+            <Filter size={12} className="database-character-filters__icon--filter" />
             Raridade
-            <span title="Filtra por raridade das cartas (UR, SSR, SR, R).">
-              <Info size={12} className="text-zinc-500 ml-1" aria-hidden />
-            </span>
+            <Info size={12} className="database-character-filters__icon--info" />
           </label>
-          <div className="flex flex-wrap justify-center sm:justify-end gap-2 mt-1">
+
+          <div className="database-character-filters__rarity-buttons">
             {rarities.map((rarity) => {
               const isActive = rarityFilter === rarity;
               return (
                 <button
                   key={rarity}
                   onClick={() => setRarityFilter(rarity)}
-                  className={`px-3 py-1.5 text-sm rounded-md border transition-colors duration-150
-                    ${
-                      isActive
-                        ? "bg-orange-500 text-white border-orange-600 shadow-md"
-                        : "bg-zinc-800 text-zinc-300 border-zinc-700 hover:border-orange-400 hover:text-white"
-                    }`}
-                  title={
-                    rarity === "ALL"
-                      ? "Mostrar todas as raridades"
-                      : `Mostrar apenas personagens ${rarity}`
-                  }
+                  className={`database-character-filters__rarity-btn ${
+                    isActive ? "active" : ""
+                  }`}
                 >
                   {rarity}
                 </button>

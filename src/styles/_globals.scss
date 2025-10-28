@@ -1,0 +1,17 @@
+@use "variables" as *;
+
+.style-quick {
+    color: $style-quick;
+}
+.style-power {
+    color: $style-power;
+}
+.style-block {
+    color: $style-block;
+}
+.style-receive {
+    color: $style-receive;
+}
+.style-none {
+    color: $style-none;
+}

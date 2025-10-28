@@ -1,0 +1,43 @@
+@use "../variables" as *;
+
+.feedback-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  color: $color-white;
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  animation: toast-slide-up 0.3s ease-out;
+
+  &.success {
+    background: rgba(16, 185, 129, 0.95); 
+  }
+
+  &.error {
+    background: rgba(220, 38, 38, 0.95); 
+  }
+
+  &__message {
+    line-height: 1.3;
+  }
+}
+
+@keyframes toast-slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

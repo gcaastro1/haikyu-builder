@@ -5,11 +5,21 @@
 // Components
 @use "components/bench";
 @use "components/bonds";
+@use "components/character-modal";
 @use "components/court";
 @use "components/character-card";
+@use "components/character-filters";
+@use "components/character-grid";
+@use "components/feedback-toast";
+@use "components/image-selector";
 @use "components/inputs";
+@use "components/navbar";
+@use "components/position-filter";  
 @use "components/saved-teams-modal";
+@use "components/section-header";
 @use "components/school-filter";
+@use "components/style-selector";
+@use "components/submit-button";
 @use "components/team-controls";
 @use "components/team-display";
 @use "components/team-slot";
@@ -18,3 +28,5 @@
 
 // Pages
 @use "pages/home";
+@use "pages/database";
+@use "pages/register";

@@ -1,4 +1,3 @@
-// src/app/database/CharacterModal.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -11,6 +10,7 @@ import {
   getCharacterStatBonds,
   updateCharacter,
 } from "../lib/actions";
+
 import { X, Edit, Save, RotateCw } from "lucide-react";
 import {
   Bond,
@@ -21,6 +21,7 @@ import {
   School,
   Skill,
 } from "@/types";
+
 import { CharacterCard } from "./CharacterCard";
 import { ImageSelector } from "./ImageSelector";
 import { BondSelector } from "./BondSelector";
@@ -87,15 +88,10 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
           setCharacterBondIds(charBondsResult.bondIds);
           setEditedBondIds(charBondsResult.bondIds);
         }
-        if (allBondsResult.bonds) {
-          setAllAvailableBonds(allBondsResult.bonds);
-        }
-        if (skillsResult.skills) {
-          setCharacterSkills(skillsResult.skills);
-        }
-        if (statBondsResult.statsBonds) {
+        if (allBondsResult.bonds) setAllAvailableBonds(allBondsResult.bonds);
+        if (skillsResult.skills) setCharacterSkills(skillsResult.skills);
+        if (statBondsResult.statsBonds)
           setCharacterStatBonds(statBondsResult.statsBonds);
-        }
       } catch (error) {
         console.error("Erro ao carregar dados relacionados:", error);
         setSaveMessage("Erro ao carregar detalhes.");
@@ -149,14 +145,11 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
       } else {
         setCharacterBondIds(editedBondIds);
       }
-      // TODO: Add logic to update Skills and StatBonds if they become editable
     }
 
     setSaveStatus(overallSuccess ? "success" : "error");
     setSaveMessage(finalMessage);
-    if (overallSuccess) {
-      setIsEditing(false);
-    }
+    if (overallSuccess) setIsEditing(false);
   };
 
   const handleCancel = () => {
@@ -169,24 +162,20 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
     setSaveMessage("");
   };
 
-  // --- Helper Functions ---
-  const getValue = (key: keyof Character) => {
-    const editedValue = (editedData as any)[key];
-    const originalValue = (character as any)[key];
-    return editedValue ?? originalValue ?? "";
-  };
-  const getNumberValue = (key: keyof Character) => {
-    const editedValue = (editedData as any)[key];
-    const originalValue = (character as any)[key];
-    const value = editedValue ?? originalValue ?? 0;
-    return Number(value);
-  };
+  // --- Helpers ---
+  const getValue = (key: keyof Character) =>
+    (editedData as any)[key] ?? (character as any)[key] ?? "";
+  const getNumberValue = (key: keyof Character) =>
+    Number((editedData as any)[key] ?? (character as any)[key] ?? 0);
+
   const getBondNameById = (id: number): string => {
     const bond = allAvailableBonds.find((b) => b.id === id);
     return bond ? bond.name || `ID ${id}` : `ID ${id}`;
   };
+
   const currentImageUrl = isEditing ? editedImageUrl : character.image_url;
   const handleModalContentClick = (e: React.MouseEvent) => e.stopPropagation();
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -195,27 +184,23 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
   };
 
   return (
-    <div
-      className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4 backdrop-blur-sm"
-      onClick={onClose}
-    >
+    <div className="database-character-modal" onClick={onClose}>
       <div
-        className="bg-zinc-900 rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] border border-zinc-700 flex flex-col overflow-hidden"
+        className="database-character-modal__content"
         onClick={handleModalContentClick}
       >
-        <div className="flex-shrink-0 p-4 border-b border-zinc-700 flex justify-end items-center">
+        <div className="database-character-modal__header">
           <button
             onClick={isEditing ? handleCancel : onClose}
-            className="text-zinc-400 hover:text-white transition-colors"
             aria-label={isEditing ? "Cancelar Edição" : "Fechar modal"}
           >
             <X size={24} />
           </button>
         </div>
 
-        <div className="flex-grow overflow-y-auto custom-scrollbar p-6">
-          <div className="flex flex-col md:flex-row gap-6 md:gap-8">
-            <div className="w-full md:w-1/3 lg:w-[200px] flex-shrink-0 md:sticky md:top-6 self-start mx-auto md:mx-0">
+        <div className="database-character-modal__body">
+          <div className="modal-grid">
+            <div className="modal-sidebar">
               <CharacterCard
                 character={
                   {
@@ -224,158 +209,125 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                     image_url: currentImageUrl,
                   } as Character
                 }
-                size="normal"
                 dragId={`modal-${character.id}`}
                 dragData={{}}
                 originType="list"
               />
             </div>
 
-            <div className="flex-grow flex flex-col text-zinc-300 min-w-0">
+            <div className="modal-content">
               {isEditing ? (
                 <input
                   type="text"
                   name="name"
                   value={getValue("name")}
                   onChange={handleInputChange}
-                  className="text-2xl font-bold font-bricolage bg-zinc-800 border border-zinc-700 p-1 rounded mb-2 text-white w-full"
+                  className="database-character-modal__input"
                 />
               ) : (
-                <h2 className="text-2xl font-bold font-bricolage text-white mb-2">
+                <h2 className="database-character-modal__title">
                   {getValue("name")}
                 </h2>
               )}
 
-              <div className="flex flex-wrap gap-2 items-center mb-4 text-sm">
+              <div className="meta">
                 {isEditing ? (
                   <>
                     <select
                       name="rarity"
                       value={getValue("rarity")}
                       onChange={handleInputChange}
-                      className="bg-zinc-700 px-2 py-1 rounded text-xs text-white cursor-pointer"
+                      className="database-character-modal__select"
                     >
-                      {" "}
                       {rarities.map((r) => (
                         <option key={r} value={r}>
                           {r}
                         </option>
-                      ))}{" "}
+                      ))}
                     </select>
+
                     <select
                       name="position"
                       value={getValue("position")}
                       onChange={handleInputChange}
-                      className="bg-zinc-700 px-2 py-1 rounded text-xs text-white cursor-pointer"
+                      className="database-character-modal__select"
                     >
-                      {" "}
                       {positions.map((p) => (
                         <option key={p} value={p}>
                           {p}
                         </option>
-                      ))}{" "}
+                      ))}
                     </select>
+
                     <select
                       name="school"
                       value={getValue("school")}
                       onChange={handleInputChange}
-                      className="bg-zinc-700 px-2 py-1 rounded text-xs text-white cursor-pointer w-full sm:w-auto"
+                      className="database-character-modal__select"
                     >
-                      {" "}
                       {schools.map((s) => (
                         <option key={s} value={s}>
                           {s}
                         </option>
-                      ))}{" "}
+                      ))}
                     </select>
                   </>
                 ) : (
                   <>
-                    <span className="bg-zinc-700 px-2 py-0.5 rounded text-xs">
-                      {getValue("rarity")}
-                    </span>
-                    <span className="bg-zinc-700 px-2 py-0.5 rounded text-xs">
-                      {getValue("position")}
-                    </span>
-                    <span className="bg-zinc-700 px-2 py-0.5 rounded text-xs">
-                      {getValue("school")}
-                    </span>
+                    <span>{getValue("rarity")}</span>
+                    <span>{getValue("position")}</span>
+                    <span>{getValue("school")}</span>
                   </>
                 )}
               </div>
 
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold text-white mb-2 border-b border-zinc-700 pb-1">
-                  Atributos
-                </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-1 text-sm">
-                  {[
-                    "serve",
-                    "attack",
-                    "set",
-                    "receive",
-                    "block",
-                    "defense",
-                  ].map((attrKey) => (
-                    <div key={attrKey} className="flex items-center gap-2">
-                      <strong className="text-zinc-100 w-20 capitalize flex-shrink-0">
-                        {attrKey}:
-                      </strong>
+              <div className="database-character-modal__section">
+                <h3>Atributos</h3>
+                {["serve", "attack", "set", "receive", "block", "defense"].map(
+                  (attr) => (
+                    <div key={attr} className="attribute">
+                      <strong>{attr}:</strong>
                       {isEditing ? (
                         <input
                           type="number"
-                          name={attrKey}
-                          value={getNumberValue(attrKey as keyof Character)}
+                          name={attr}
+                          value={getNumberValue(attr as keyof Character)}
                           onChange={handleInputChange}
-                          min="0"
-                          className="bg-zinc-800 border border-zinc-700 p-1 rounded text-white w-20"
+                          className="database-character-modal__input"
                         />
                       ) : (
-                        <span>
-                          {getNumberValue(attrKey as keyof Character)}
-                        </span>
+                        <span>{getNumberValue(attr as keyof Character)}</span>
                       )}
                     </div>
-                  ))}
-                </div>
+                  )
+                )}
               </div>
 
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold text-white mb-2 border-b border-zinc-700 pb-1">
-                  Estilos
-                </h3>
+              <div className="database-character-modal__section">
+                <h3>Estilos</h3>
                 {isEditing ? (
                   <input
                     type="text"
                     value={editedStylesString}
                     onChange={(e) => setEditedStylesString(e.target.value)}
                     placeholder="Estilos separados por vírgula"
-                    className="w-full bg-zinc-800 border border-zinc-700 p-2 rounded text-xs text-white"
+                    className="database-character-modal__input"
                   />
-                ) : (
-                  <div className="flex flex-wrap gap-2">
-                    {character.styles && character.styles.length > 0 ? (
-                      character.styles.map((style) => (
-                        <span
-                          key={style}
-                          className="bg-zinc-700 text-xs px-2 py-0.5 rounded"
-                        >
-                          {style}
-                        </span>
-                      ))
-                    ) : (
-                      <span className="text-xs text-zinc-500">
-                        Nenhum estilo definido.
+                ) : character.styles?.length ? (
+                  <div className="tags">
+                    {character.styles.map((style) => (
+                      <span key={style} className="tag">
+                        {style}
                       </span>
-                    )}
+                    ))}
                   </div>
+                ) : (
+                  <p className="empty">Nenhum estilo definido.</p>
                 )}
               </div>
 
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold text-white mb-2 border-b border-zinc-700 pb-1">
-                  Imagem
-                </h3>
+              <div className="database-character-modal__section">
+                <h3>Imagem</h3>
                 {isEditing ? (
                   <ImageSelector
                     name="image_url_selector_only"
@@ -383,7 +335,7 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                     onChange={setEditedImageUrl}
                   />
                 ) : (
-                  <p className="text-sm text-zinc-500 italic">
+                  <p className="empty">
                     {character.image_url
                       ? "Imagem exibida no card."
                       : "Nenhuma imagem definida."}
@@ -391,13 +343,11 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                 )}
               </div>
 
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold text-white mb-2 border-b border-zinc-700 pb-1">
-                  Vínculos
-                </h3>
+              <div className="database-character-modal__section">
+                <h3>Vínculos</h3>
                 {isEditing ? (
                   loadingRelatedData ? (
-                    <p className="text-sm text-zinc-400">Carregando...</p>
+                    <p className="loading">Carregando...</p>
                   ) : (
                     <BondSelector
                       initialSelectedIds={editedBondIds}
@@ -405,88 +355,55 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                     />
                   )
                 ) : loadingRelatedData ? (
-                  <p className="text-sm text-zinc-400">Carregando...</p>
-                ) : (
-                  <div className="flex flex-wrap gap-2">
-                    {characterBondIds.length > 0 ? (
-                      characterBondIds.map((id) => (
-                        <span
-                          key={id}
-                          className="bg-zinc-700 text-xs px-2 py-0.5 rounded"
-                        >
-                          {getBondNameById(id)}
-                        </span>
-                      ))
-                    ) : (
-                      <span className="text-xs text-zinc-500">
-                        Nenhum vínculo definido.
+                  <p className="loading">Carregando...</p>
+                ) : characterBondIds.length ? (
+                  <div className="tags">
+                    {characterBondIds.map((id) => (
+                      <span key={id} className="tag">
+                        {getBondNameById(id)}
                       </span>
-                    )}
+                    ))}
                   </div>
+                ) : (
+                  <p className="empty">Nenhum vínculo definido.</p>
                 )}
               </div>
 
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold text-white mb-2 border-b border-zinc-700 pb-1">
-                  Habilidades
-                </h3>
+              <div className="database-character-modal__section">
+                <h3>Habilidades</h3>
                 {loadingRelatedData ? (
-                  <p className="text-sm text-zinc-400">Carregando...</p>
-                ) : isEditing ? (
-                  <div>
-                    <p className="text-sm text-zinc-500 italic">
-                      (Edição não implementada)
-                    </p>
-                  </div>
+                  <p className="loading">Carregando...</p>
                 ) : (
-                  <ul className="list-disc list-inside text-sm space-y-2">
-                    {characterSkills.length > 0 ? (
+                  <ul className="skills">
+                    {characterSkills.length ? (
                       characterSkills.map((skill) => (
                         <li key={skill.id}>
-                          <strong className="text-zinc-100">
-                            {skill.name || "Sem nome"}
-                          </strong>
-                          <p className="text-xs text-zinc-400 ml-4">
-                            {skill.description || "Sem descrição."}
-                          </p>
+                          <strong>{skill.name}</strong>
+                          <p>{skill.description}</p>
                         </li>
                       ))
                     ) : (
-                      <li className="text-zinc-500">
-                        Nenhuma habilidade definida.
-                      </li>
+                      <li className="empty">Nenhuma habilidade definida.</li>
                     )}
                   </ul>
                 )}
               </div>
 
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold text-white mb-2 border-b border-zinc-700 pb-1">
-                  Bônus de Vínculo (Stats)
-                </h3>
+              <div className="database-character-modal__section">
+                <h3>Bônus de Vínculo (Stats)</h3>
                 {loadingRelatedData ? (
-                  <p className="text-sm text-zinc-400">Carregando...</p>
-                ) : isEditing ? (
-                  <div>
-                    <p className="text-sm text-zinc-500 italic">
-                      (Edição não implementada)
-                    </p>
-                  </div>
+                  <p className="loading">Carregando...</p>
                 ) : (
-                  <ul className="list-disc list-inside text-sm space-y-2">
-                    {characterStatBonds.length > 0 ? (
+                  <ul className="skills">
+                    {characterStatBonds.length ? (
                       characterStatBonds.map((sb) => (
                         <li key={sb.id}>
-                          <strong className="text-zinc-100">
-                            {sb.stats_bond_name || "Sem nome"}
-                          </strong>
-                          <p className="text-xs text-zinc-400 ml-4">
-                            {sb.buff_description || "Sem descrição."}
-                          </p>
+                          <strong>{sb.stats_bond_name}</strong>
+                          <p>{sb.buff_description}</p>
                         </li>
                       ))
                     ) : (
-                      <li className="text-zinc-500">Nenhum bônus definido.</li>
+                      <li className="empty">Nenhum bônus definido.</li>
                     )}
                   </ul>
                 )}
@@ -495,14 +412,14 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
           </div>
         </div>
 
-        <div className="flex-shrink-0 p-4 border-t border-zinc-700 flex justify-between items-center">
-          <div className="flex-grow mr-4">
+        <div className="database-character-modal__footer">
+          <div className="message-area">
             {saveStatus !== "idle" && saveStatus !== "saving" && (
               <p
-                className={`p-2 text-center text-sm rounded ${
+                className={`database-character-modal__message ${
                   saveStatus === "success"
-                    ? "bg-green-700/50 text-green-300"
-                    : "bg-red-700/50 text-red-300"
+                    ? "database-character-modal__message--success"
+                    : "database-character-modal__message--error"
                 }`}
               >
                 {saveMessage}
@@ -510,24 +427,26 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
             )}
           </div>
 
-          <div className="flex gap-3 flex-shrink-0">
+          <div className="actions">
             {isEditing ? (
               <>
                 <button
                   onClick={handleCancel}
-                  className="bg-zinc-600 hover:bg-zinc-700 text-white font-bold py-2 px-4 rounded-md transition-colors text-sm"
+                  className="database-character-modal__button database-character-modal__button--cancel"
                 >
                   Cancelar
                 </button>
                 <button
                   onClick={handleSave}
                   disabled={saveStatus === "saving"}
-                  className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md transition-colors text-sm flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
+                  className={`database-character-modal__button database-character-modal__button--save ${
+                    saveStatus === "saving" ? "disabled" : ""
+                  }`}
                 >
                   {saveStatus === "saving" ? (
-                    <RotateCw size={16} className="animate-spin mr-1" />
+                    <RotateCw size={16} className="spin" />
                   ) : (
-                    <Save size={16} className="mr-1" />
+                    <Save size={16} />
                   )}
                   Salvar
                 </button>
@@ -535,7 +454,7 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
             ) : (
               <button
                 onClick={() => setIsEditing(true)}
-                className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md transition-colors text-sm"
+                className="database-character-modal__button database-character-modal__button--edit"
               >
                 <Edit size={16} />
                 Editar

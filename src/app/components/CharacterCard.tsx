@@ -50,12 +50,18 @@ export function CharacterCard({
   });
 
   const style = draggable.transform
-    ? { transform: `translate3d(${draggable.transform.x}px, ${draggable.transform.y}px, 0)` }
+    ? {
+        transform: `translate3d(${draggable.transform.x}px, ${draggable.transform.y}px, 0)`,
+      }
     : undefined;
 
   const handleClick = () => {
     if (flipped) return;
-    if (onClick && !isDisabled && (originType === "court" || originType === "bench")) {
+    if (
+      onClick &&
+      !isDisabled &&
+      (originType === "court" || originType === "bench")
+    ) {
       if (dragId) onClick(dragId);
     }
   };
@@ -75,7 +81,11 @@ export function CharacterCard({
   const rarityBg = getRarityBackground(character.rarity);
   const rarityBorder = getRarityBorderColor(character.rarity);
   const rarityColor = getRarityColor(character.rarity);
-  const cursorClass = isDisabled ? "disabled" : dragId ? "draggable" : "clickable";
+  const cursorClass = isDisabled
+    ? "disabled"
+    : dragId
+    ? "draggable"
+    : "clickable";
 
   return (
     <motion.div
@@ -87,7 +97,9 @@ export function CharacterCard({
       onContextMenu={handleRightClick}
       onClick={handleClick}
       onDoubleClick={handleFlip}
-      className={`character-card ${cursorClass} ${droppable.isOver ? "character-card--over" : ""}`}
+      className={`character-card ${cursorClass} ${
+        droppable.isOver ? "character-card--over" : ""
+      }`}
       {...(dragId ? draggable.listeners : {})}
       {...(dragId ? draggable.attributes : {})}
     >
@@ -102,7 +114,12 @@ export function CharacterCard({
           className="character-card__front"
           style={{ backfaceVisibility: "hidden" }}
         >
-          <Image src={rarityBg} alt="" fill className="character-card__background" />
+          <Image
+            src={rarityBg}
+            alt=""
+            fill
+            className="character-card__background"
+          />
           <Image
             src={character.image_url || "/images/placeholder.png"}
             alt={character.name}
@@ -110,10 +127,9 @@ export function CharacterCard({
             className="character-card__image"
           />
 
+          <div className="character-card__overlay" />
+
           <div className="character-card__header">
-            <span className={`character-card__rarity ${rarityColor}`}>
-              {character.rarity}
-            </span>
             <button
               onClick={handleFlip}
               className="character-card__info"
@@ -124,6 +140,11 @@ export function CharacterCard({
           </div>
 
           <div className="character-card__footer">
+            <div
+              className={`character-card__position-badge character-card__position-badge--${character.rarity.toLowerCase()}`}
+            >
+              <span>{character.position}</span>
+            </div>
             <h3 className="character-card__name">{character.name}</h3>
           </div>
         </motion.div>

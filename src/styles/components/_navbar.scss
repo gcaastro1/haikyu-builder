@@ -1,0 +1,171 @@
+@use "../variables" as *;
+
+@mixin link-hover-effect {
+  position: relative;
+  color: $color-gray-200;
+  transition: color 0.3s ease-in-out;
+  text-decoration: none;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background-color: $color-orange-500;
+    transition: width 0.3s ease-in-out;
+  }
+
+  &:hover {
+    color: $color-white;
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+@mixin donate-button-effect {
+  display: inline-block;
+  background-color: transparent;
+  border: 1px solid $color-orange-500;
+  color: $color-orange-500;
+  font-weight: 700;
+  padding: 0.5rem 1.25rem; 
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: $shadow-donate;
+  text-decoration: none; 
+
+  &:hover {
+    background-color: $color-orange-500;
+    color: $color-white;
+    box-shadow: $shadow-donate-hover;
+  }
+}
+
+.navbar {
+  background-color: $color-zinc-950;
+  border-bottom: 1px solid $color-zinc-800;
+  box-shadow: $shadow-card; 
+  color: $color-white;
+  padding: 1rem; 
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  &__container {
+    max-width: 1280px; 
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    font-family: $font-bricolage;
+    font-size: 1.25rem; 
+    line-height: 1.75rem;
+    text-decoration: none;
+
+    &-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-main {
+      font-weight: 700; 
+    }
+
+    &-sub {
+      font-weight: 400; 
+      opacity: 0.8;
+      margin-left: 0.25rem; 
+    }
+
+    &-author {
+      font-size: 0.75rem; 
+      font-weight: 400;
+      opacity: 0.7;
+      align-self: flex-end;
+      margin-top: -0.25rem;
+    }
+  }
+
+  &__desktop-nav {
+    display: none;
+    gap: 2rem; 
+    align-items: center;
+
+    @media (min-width: 768px) {
+      display: flex;
+    }
+  }
+
+  &__desktop-link {
+    @include link-hover-effect;
+  }
+
+  &__desktop-donate {
+    display: none;
+
+    @media (min-width: 768px) {
+      display: block;
+    }
+  }
+
+  &__donate-button {
+    @include donate-button-effect;
+  }
+
+  &__mobile-toggle {
+    button {
+      background: none;
+      border: none;
+      color: $color-white;
+      cursor: pointer;
+    }
+
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__mobile-menu {
+    margin-top: 1rem; 
+    padding: 1rem; 
+    background-color: $color-zinc-900;
+    border-radius: 0.5rem; 
+
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; 
+    text-align: center;
+  }
+
+  &__mobile-link {
+    transition: color 0.3s ease;
+    padding-top: 0.5rem; 
+    padding-bottom: 0.5rem; 
+    color: $color-white; 
+    text-decoration: none;
+
+    &:hover {
+      color: $color-orange-500;
+    }
+  }
+
+  &__mobile-divider {
+    height: 1px;
+    background-color: $color-zinc-700;
+    margin-top: 0.5rem; 
+    margin-bottom: 0.5rem; 
+  }
+}

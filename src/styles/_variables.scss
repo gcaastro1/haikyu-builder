@@ -3,10 +3,35 @@ $color-secondary: #e5b875;
 $color-line: rgba(255, 255, 255, 0.85);
 $shadow-card: 0 6px 18px rgba(0, 0, 0, 0.4);
 
-$btn-save: #7fd977;       // verde oliva claro
-$btn-manage: #d79a4a;     // âmbar (igual ao seu $color-primary)
-$btn-delete: #c6483e;     // vermelho acobreado
-$btn-rotate: #e5b875;     // dourado claro (igual ao seu $color-secondary)
+$color-white: #ffffff;
+
+$color-gray-200: #e5e7eb;
+$color-zinc-300: #d4d4d8;
+$color-zinc-400: #a1a1aa;
+$color-zinc-500: #71717a;
+$color-zinc-600: #52525b;
+$color-zinc-700: #3f3f46;
+$color-zinc-800: #27272a;
+$color-zinc-900: #18181b;
+$color-zinc-950: #09090b;
+$color-orange-500: #f97316;
+
+$shadow-donate: 0 10px 15px -3px rgba($color-orange-500, 0.2), 0 4px 6px -4px rgba($color-orange-500, 0.2);
+
+$shadow-donate-hover: 0 10px 15px -3px rgba($color-orange-500, 0.4), 0 4px 6px -4px rgba($color-orange-500, 0.4);
+
+$btn-save: #7fd977;    
+$btn-manage: #d79a4a;   
+$btn-delete: #c6483e;   
+$btn-rotate: #e5b875;     
+
+$style-quick: #38bdf8;    
+$style-power: #ef4444;   
+$style-block: #2dd4bf;   
+$style-receive: #facc15;  
+$style-none: #71717a;
+
+$max-w-7xl: 80rem;
 
 
 @import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap");
