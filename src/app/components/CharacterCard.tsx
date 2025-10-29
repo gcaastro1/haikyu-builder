@@ -78,9 +78,9 @@ export function CharacterCard({
     setFlipped(!flipped);
   };
 
-  const rarityBg = getRarityBackground(character.rarity);
-  const rarityBorder = getRarityBorderColor(character.rarity);
-  const rarityColor = getRarityColor(character.rarity);
+  const rarityBg = getRarityBackground(character.rarity!);
+  const rarityBorder = getRarityBorderColor(character.rarity!);
+  const rarityColor = getRarityColor(character.rarity!);
   const cursorClass = isDisabled
     ? "disabled"
     : dragId

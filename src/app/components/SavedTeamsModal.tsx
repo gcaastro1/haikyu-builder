@@ -9,14 +9,15 @@ import { useTeamStore } from "@/stores/useTeamStore";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 
 const initialTeamState: TeamSlots = {
-  pos5_ws: null,
-  pos6_mb: null,
-  pos1_op: null,
-  pos4_ws: null,
-  pos3_mb: null,
-  pos2_s: null,
+  pos5_mb: null,
+  pos6_ws: null,
+  pos4_op: null,
+  pos3_ws: null,
+  pos2_mb: null,
+  pos1_s: null,
   libero: null,
 };
+
 
 export function SavedTeamsModal() {
   const [importKey, setImportKey] = useState("");

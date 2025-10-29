@@ -1,4 +1,5 @@
-import { Rarity } from "../../../data/characters"; 
+import { Rarity } from "@/types";
+
 
 const rarityBackgroundMap: Record<Rarity, string> = {
   "SR": "/images/backgrounds/BackgroundSR.png",     

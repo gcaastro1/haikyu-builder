@@ -90,7 +90,7 @@ export default function DatabasePage() {
 
   return (
     <main className="database-page">
-      <SectionHeader titleBold="Banco de Dados" titleRegular="de Personagens" />
+      <SectionHeader title="Banco de Dados de Personagens"/>
 
       <div className="database-page__filters">
         <div className="database-page__filters-row">

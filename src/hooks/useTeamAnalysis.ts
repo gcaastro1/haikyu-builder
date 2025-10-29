@@ -23,8 +23,8 @@ export function useTeamAnalysis(team: TeamSlots, isPositionFree: boolean) {
 
     let finalTeamType: TeamType = "Nenhum";
 
-    if (!isPositionFree && team.pos2_s?.styles) {
-      for (const style of team.pos2_s.styles) {
+    if (!isPositionFree && team.pos1_s?.styles) {
+      for (const style of team.pos1_s.styles) {
         const mapped = dbStyleToTeamTypeMap[style];
         if (mapped) {
           finalTeamType = mapped;

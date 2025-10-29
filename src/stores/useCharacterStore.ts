@@ -274,7 +274,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
             const expectedDbKey =
               teamTypeToDbKey[targetType as RelevantStyleDisplay];
             if (char.styles.includes(expectedDbKey)) {
-              finalCounts[expectedDbKey]++;
+              finalCounts[expectedDbKey as keyof typeof finalCounts]++;
             } else {
               const firstStyle = char.styles[0] as keyof typeof finalCounts;
               if (firstStyle && finalCounts[firstStyle] !== undefined)

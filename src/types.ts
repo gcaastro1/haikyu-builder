@@ -63,7 +63,7 @@ export interface Character {
   id: number; //
   name: string;
   position: Position | string | null;
-  rarity: Rarity | string | null;
+  rarity: Rarity | null;
   school: School | string | null;
   image_url: string | null;
   styles: string[] | null;

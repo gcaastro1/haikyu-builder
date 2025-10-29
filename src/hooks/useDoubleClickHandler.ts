@@ -19,7 +19,7 @@ export function useDoubleClickHandler(
 
       if (position === "L") return currentTeam.libero === null ? "libero" : null;
 
-      const courtKeys: SlotKey[] = ["pos2_s", "pos3_mb", "pos4_ws", "pos5_ws", "pos6_mb", "pos1_op"];
+      const courtKeys: SlotKey[] = ["pos1_s", "pos2_mb", "pos3_ws", "pos5_mb", "pos6_ws", "pos4_op"];
 
       if (isFreeMode) {
         for (const key of courtKeys) {
@@ -31,10 +31,10 @@ export function useDoubleClickHandler(
       }
 
       switch (position) {
-        case "WS": return currentTeam.pos4_ws === null ? "pos4_ws" : currentTeam.pos5_ws === null ? "pos5_ws" : null;
-        case "MB": return currentTeam.pos3_mb === null ? "pos3_mb" : currentTeam.pos6_mb === null ? "pos6_mb" : null;
-        case "S": return currentTeam.pos2_s === null ? "pos2_s" : null;
-        case "OP": return currentTeam.pos1_op === null ? "pos1_op" : null;
+        case "WS": return currentTeam.pos3_ws === null ? "pos3_ws" : currentTeam.pos6_ws === null ? "pos6_ws" : null;
+        case "MB": return currentTeam.pos2_mb === null ? "pos2_mb" : currentTeam.pos5_mb === null ? "pos5_mb" : null;
+        case "S": return currentTeam.pos1_s === null ? "pos1_s" : null;
+        case "OP": return currentTeam.pos4_op === null ? "pos4_op" : null;
         default: return null;
       }
     },
