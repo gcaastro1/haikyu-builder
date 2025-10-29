@@ -1,0 +1,53 @@
+.donate-modal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.donate-modal__content {
+  background: $color-zinc-950;
+  border: 1px solid $color-zinc-800;
+  border-radius: 1rem;
+  padding: 2rem;
+  color: $color-white;
+  text-align: center;
+  box-shadow: $shadow-card;
+  position: relative;
+  max-width: 320px;
+}
+
+.donate-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: $color-gray-300;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $color-orange-500;
+  }
+}
+
+.donate-modal__title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.donate-modal__text {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.donate-modal__key {
+  font-size: 0.8rem;
+  color: $color-gray-400;
+  margin-top: 1rem;
+  user-select: all;
+}

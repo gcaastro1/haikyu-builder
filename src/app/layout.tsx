@@ -3,7 +3,7 @@ import { Inter, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import "@/styles/main.scss";
 import { Navbar } from "./components/Navbar"; 
-import { FeedbackToast } from "./components/FeedbackToast";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,6 +33,7 @@ export default function RootLayout({
       <body>
         <Navbar /> 
         {children}
+        <SpeedInsights/>
       </body>
     </html>
   );
