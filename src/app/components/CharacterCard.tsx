@@ -141,7 +141,11 @@ export function CharacterCard({
 
           <div className="character-card__footer">
             <div
-              className={`character-card__position-badge character-card__position-badge--${character.rarity.toLowerCase()}`}
+              className={`character-card__position-badge ${
+                character.rarity
+                  ? `character-card__position-badge--${character.rarity.toLowerCase()}`
+                  : ""
+              }`}
             >
               <span>{character.position}</span>
             </div>
