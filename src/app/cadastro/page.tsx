@@ -85,7 +85,7 @@ export default function CadastroPage() {
 
   return (
     <main className="cadastro-page">
-      <SectionHeader titleBold="Cadastro" titleRegular="de Personagem" />
+      <SectionHeader title="Cadastro de Personagem" />
 
       {state.message && (
         <p
@@ -155,7 +155,7 @@ export default function CadastroPage() {
         </div>
 
         <div className="cadastro-page__section">
-          <SectionHeader titleBold="Atributos" titleRegular="(0–999)" />
+          <SectionHeader title="Atributos (0–999)" />
         </div>
 
         <div className="cadastro-page__attributes">

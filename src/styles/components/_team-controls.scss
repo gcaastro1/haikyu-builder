@@ -1,4 +1,5 @@
 @use "../variables" as *;
+@use "sass:color";
 
 /* Container */
 .team-controls {
@@ -41,7 +42,8 @@
   &--save {
     background: #7fd977;
     color: #111;
-    &:hover { background: darken(#7fd977, 6%); }
+    &:hover { background: color.adjust(#7fd977, $lightness: -6%); }
+    
   }
 
   &--manage {
