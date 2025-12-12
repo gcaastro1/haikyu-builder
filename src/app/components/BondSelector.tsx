@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { getBonds } from "../lib/actions";
-import { Search } from "lucide-react";
 import { Bond } from "@/types";
+import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getBonds } from "../lib/actions";
 
 type BondSelectorProps = {
   initialSelectedIds?: number[];
@@ -42,8 +42,10 @@ export function BondSelector({
     onChange(newSelectedIds);
   };
 
+  // Otimização: memoizar searchTerm normalizado para evitar .toLowerCase() repetido
+  const normalizedSearchTerm = searchTerm.toLowerCase();
   const filteredBonds = allBonds.filter((bond) =>
-    bond.name!.toLowerCase().includes(searchTerm.toLowerCase())
+    bond.name!.toLowerCase().includes(normalizedSearchTerm)
   );
 
   if (loading) {

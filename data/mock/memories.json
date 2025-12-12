@@ -1,0 +1,37 @@
+[
+  {
+    "id": "mem_op",
+    "name": "Memória de OP",
+    "positions": ["OP"],
+    "desc": "Quando um membro com esta memória joga pela primeira vez em cada set, sua Recepção aumenta em 24% por 3 ralis.",
+    "image_url": "/images/memories/MemoOP.png"
+  },
+  {
+    "id": "mem_l",
+    "name": "Memória de L",
+    "positions": ["L"],
+    "desc": "Parâmetros principais +6.4%. Se a recepção não for BAD, aumenta o próximo Ataque Potente do aliado em 24% × Ataque Potente do atacante.",
+    "image_url": "/images/memories/MemoL.png"
+  },
+  {
+    "id": "mem_ws",
+    "name": "Memória de WS",
+    "positions": ["WS"],
+    "desc": "Ataque Potente +12%. Ao atacar, reduz Bloqueio do oponente em 6.4% por até duas travessias da rede.",
+    "image_url": "/images/memories/MemoWS.png"
+  },
+  {
+    "id": "mem_s",
+    "name": "Memória de S",
+    "positions": ["S"],
+    "desc": "Enquanto em quadra, Passe dos aliados +8%. Uma vez por set, quando Stamina < 30, restaura 24.",
+    "image_url": "/images/memories/MemoS.png"
+  },
+  {
+    "id": "mem_mb",
+    "name": "Memória de MB",
+    "positions": ["MB"],
+    "desc": "Ataque Rápido +12%. Para cada Bloqueador na linha de frente oponente, Ataque Rápido +6.4%.",
+    "image_url": "/images/memories/MemoMB.png"
+  }
+]

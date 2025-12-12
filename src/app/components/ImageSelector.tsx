@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { getStorageImages } from '../lib/actions';
-import { Search } from 'lucide-react';
 import "@/styles/components/_image-selector.scss";
+import { Search } from 'lucide-react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { getStorageImages } from '../lib/actions';
 
 interface StorageFile {
   name: string;
@@ -18,7 +18,6 @@ type ImageSelectorProps = {
 };
 
 export function ImageSelector({ name, initialValue, onChange }: ImageSelectorProps) {
-  const [images, setImages] = useState<StorageFile[]>([]);
   const [loading, setLoading] = useState(true);
   const [allImages, setAllImages] = useState<StorageFile[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -82,7 +81,6 @@ export function ImageSelector({ name, initialValue, onChange }: ImageSelectorPro
                   width={80}
                   height={80}
                   className="image-selector__thumb"
-                  unoptimized
                 />
               </div>
             ))}
@@ -106,7 +104,6 @@ export function ImageSelector({ name, initialValue, onChange }: ImageSelectorPro
             width={60}
             height={60}
             className="image-selector__preview-thumb"
-            unoptimized
           />
           <p className="image-selector__preview-name">
             {selectedUrl.split('/').pop()}

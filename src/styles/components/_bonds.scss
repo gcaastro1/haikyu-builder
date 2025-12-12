@@ -1,9 +1,13 @@
-.active-bonds-display {
-  width: 100%;
-  font-family: var(--font-bricolage, "Bricolage Grotesque", sans-serif);
-  color: #fff;
-  background: transparent;
-  position: relative;
+  .active-bonds-display {
+    width: 100%;
+    font-family: var(--font-bricolage, "Bricolage Grotesque", sans-serif);
+    color: #fff;
+    background: transparent;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
 
   .header {
     display: flex;
@@ -56,9 +60,24 @@
     flex-direction: column;
     gap: 0.9rem;
     position: relative;
-    overflow: hidden;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     animation: fadeSlideIn 0.35s ease both;
+  }
+
+  .bonds-container::-webkit-scrollbar {
+    width: 6px;
+  }
+  .bonds-container::-webkit-scrollbar-track {
+    background: rgba(50, 50, 50, 0.3);
+    border-radius: 3px;
+  }
+  .bonds-container::-webkit-scrollbar-thumb {
+    background: rgba(150, 150, 150, 0.5);
+    border-radius: 3px;
   }
 
   @keyframes fadeSlideIn {
@@ -80,6 +99,9 @@
     transition: background 0.3s ease, border-color 0.3s ease;
     backdrop-filter: blur(6px);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    position: relative;
+    box-sizing: border-box;
+    max-width: 100%;
 
     &.active {
       background: rgba(255, 153, 0, 0.12);
@@ -93,6 +115,11 @@
     &:hover {
       background: rgba(255, 153, 0, 0.15);
       border-color: rgba(255, 153, 0, 0.45);
+      z-index: 1000;
+    }
+
+    &.is-open {
+      z-index: 1000;
     }
 
     .bond-header {
@@ -104,12 +131,12 @@
 
       .bond-name {
         color: #ffb11a;
-        font-size: 1rem;
+        font-size: clamp(0.95rem, 1.6vw, 1rem);
         text-shadow: 0 0 4px rgba(255, 177, 26, 0.25);
       }
 
       .bond-progress {
-        font-size: 0.85rem;
+        font-size: clamp(0.75rem, 1.5vw, 0.85rem);
         color: #ccc;
         opacity: 0.85;
       }
@@ -119,7 +146,7 @@
       height: 5px;
       border-radius: 2px;
       background: rgba(80, 80, 80, 0.6);
-      margin-bottom: 0.8rem;
+      margin-bottom: clamp(0.5rem, 1.5vw, 0.8rem);
       overflow: hidden;
 
       .bond-progress-fill {
@@ -129,15 +156,105 @@
       }
     }
 
+    .bond-tooltip {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 0;
+      z-index: 2000;
+      background: rgba(25, 25, 25, 0.95);
+      border: 1px solid rgba(255, 177, 26, 0.25);
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+      padding: 0.6rem 0.7rem;
+      min-width: 240px;
+      max-width: min(420px, 90vw);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.15s ease, visibility 0.15s ease;
+    }
+    .bond-tooltip--bottom {
+      bottom: auto;
+      top: calc(100% + 8px);
+    }
+    .bond-card:hover .bond-tooltip,
+    .bond-card:focus-within .bond-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+    .bond-card.is-open .bond-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+    .bond-tooltip__desc {
+      font-size: 0.85rem;
+      color: #e5e5e5;
+      margin: 0 0 0.6rem 0;
+    }
+    .bond-tooltip__participants {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .bond-tooltip__avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .bond-tooltip__avatar.off img {
+      filter: grayscale(100%);
+      opacity: 0.75;
+    }
+
+  .bond-members {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.5rem 0 0.25rem 0;
+  }
+  .bond-members--nowrap {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(150, 150, 150, 0.5);
+      border-radius: 3px;
+    }
+  }
     .bond-description {
-      font-size: 0.9rem;
-      color: #c6c6c6;
-      line-height: 1.55;
-      font-weight: 400;
-      letter-spacing: 0.15px;
-      text-align: justify;
-      text-shadow: none;
-      filter: brightness(0.95);
+      font-size: 0.85rem;
+      color: #cfcfcf;
+      margin: 0;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .bond-member-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      flex: 0 0 auto;
+    }
+    .bond-members__more {
+      font-size: 0.75rem;
+      color: #a0a0a0;
+      padding: 0 0.25rem;
+    }
+    .bond-members--off .bond-member-avatar img {
+      filter: grayscale(100%);
+      opacity: 0.75;
+    }
+    .bond-member-avatar.off img {
+      filter: grayscale(100%);
+      opacity: 0.75;
     }
   }
 

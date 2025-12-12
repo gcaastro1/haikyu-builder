@@ -1,0 +1,414 @@
+[
+  {
+    "id": 1,
+    "name": "Karasuno",
+    "description": "Aumenta em 10% os Stats de Ataque Potente e Ataque Rápido de TODOS os jogadores.",
+    "participants": [
+      11,
+      10,
+      1,
+      2,
+      9,
+      8,
+      12,
+      7,
+      3,
+      4,
+      6,
+      5
+    ],
+    "is_team_bond": true
+  },
+  {
+    "id": 2,
+    "name": "Nekoma",
+    "description": "Aumenta em 15% o Stat de Recepção de TODOS os jogadores.",
+    "participants": [
+      13,
+      14,
+      17,
+      16,
+      54,
+      18,
+      15
+    ],
+    "is_team_bond": true
+  },
+  {
+    "id": 3,
+    "name": "Date Tech",
+    "description": "Aumenta em 15% o Stat de Bloqueio de TODOS os jogadores.",
+    "participants": [
+      23,
+      56,
+      21,
+      20,
+      19,
+      22
+    ],
+    "is_team_bond": true
+  },
+  {
+    "id": 4,
+    "name": "Aoba Johsai",
+    "description": "Aumenta em 15% o Stat de Ataque Potente de TODOS os jogadores.",
+    "participants": [
+      27,
+      55,
+      58,
+      25,
+      24,
+      57,
+      26
+    ],
+    "is_team_bond": true
+  },
+  {
+    "id": 5,
+    "name": "Shiratorizawa",
+    "description": "Aumenta em 10% os Stats de Percepção e Força de TODOS os jogadores.",
+    "participants": [
+      32,
+      31,
+      33,
+      29,
+      30,
+      28,
+      34
+    ],
+    "is_team_bond": true
+  },
+  {
+    "id": 6,
+    "name": "Fukurodani",
+    "description": "A Moral do Time aumenta em 20.",
+    "participants": [
+      39,
+      40,
+      37,
+      35,
+      36,
+      41
+    ],
+    "is_team_bond": true
+  },
+  {
+    "id": 7,
+    "name": "Inarizaki",
+    "description": "Aumenta em 5% os Stats de Força e Defesa de TODOS os jogadores.",
+    "participants": [
+      43,
+      49,
+      48,
+      44,
+      47,
+      46,
+      45
+    ],
+    "is_team_bond": true
+  },
+  {
+    "id": 8,
+    "name": "Dupla Excêntrica",
+    "description": "Aumenta o poder de Ataque Rápido e a Percepção de Hinata e Kageyama.",
+    "participants": [
+      1,
+      3,
+      4
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 9,
+    "name": "Gênios Karasuno",
+    "description": "Aumenta o Reflexo e a Recepção de Nishinoya SP. Quando Nishinoya usa o especial, Kageyama UR ganha um acúmulo de Competitive Spirit*. Se o especial for PERFECT, o primeiro corte (Power ou Quick) depois disso tem poder aumentado em 20% do Power do atacante.",
+    "participants": [
+      1,
+      5
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 10,
+    "name": "Observação de flores de cerejeira",
+    "description": "Aumenta o Percepção de Kenma SP. Aumenta o Ataque Rápido de Hinata SP quando a jogada for PERFECT.",
+    "participants": [
+      3,
+      13
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 11,
+    "name": "Sol vs Lua",
+    "description": "Quando um aliado faz um levantamento (Passe), a [Percepção] dele aumenta em 10%.Dura até a bola atravessar a rede 2 vezes.Se o Ataque Rápido do Shoyo Hinata (Hanami) virar um PERFECT, o tempo de recarga de 〈Pulo Alto〉 é reduzido em 2 contagens de atravessar a rede.Kei Tsuki (Festival de Fogos) recebe [Percepção] igual a 50% da [Percepção] do Hinata (Hanami), até +50%.Esse efeito dura até a bola atravessar a rede 4 vezes.",
+    "participants": [
+      8,
+      3
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 12,
+    "name": "Depois da Escola",
+    "description": "Aumenta o Reflexo de Nishinoya SP; quando a Stamina dele estiver baixa, aumenta ainda mais.",
+    "participants": [
+      12,
+      5
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 13,
+    "name": "Deus Guardião e Ponta",
+    "description": "Quando Nishinoya SSR ou Azumane SSR usam habilidade, ambos aumentam Técnica de Ataque e Técnica de Defesa.",
+    "participants": [
+      11,
+      6
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 14,
+    "name": "Esquadrão de Kiyoko",
+    "description": "Ao pontuar, aumenta a Moral do Time.",
+    "participants": [
+      7,
+      6
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 15,
+    "name": "Cérebro e Comandante",
+    "description": "Quando Kenma SSR faz o passe, Kuroo UR realiza um Ataque Rápido fortalecido.",
+    "participants": [
+      14,
+      17
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 16,
+    "name": "Orientação Educacional",
+    "description": "Aumenta a Recepção de Yaku SSR e o Ataque Rápido de Lev SSR.",
+    "participants": [
+      18,
+      15
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 17,
+    "name": "Natação",
+    "description": "Aumenta a Moral do Time. Com Moral ativa, aumenta o Reflexo dos aliados em bloqueios duplos ou triplos.",
+    "participants": [
+      19,
+      37,
+      36
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 18,
+    "name": "O Silencioso e o Sarcástico",
+    "description": "Permite que Aone SSR e Futakuchi SSR usem a habilidade [Bloqueio Duplo]*.",
+    "participants": [
+      21,
+      20
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 19,
+    "name": "O Novo Capitão e o Novato Altão",
+    "description": "Aumenta o Bloqueio dos jogadores na linha de frente.",
+    "participants": [
+      23,
+      21
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 20,
+    "name": "Harmonia Perfeita",
+    "description": "Quando Oikawa UR faz o passe, Iwaizumi SSR realiza um corte com Ataque Potente aumentado. Ganha 2 acúmulos de [Ritmo de Ataque]*, cada um aumentando o Percepção da equipe em 1% (máx. 10).",
+    "participants": [
+      24,
+      26
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 21,
+    "name": "A Matilha",
+    "description": "Aumenta o Ataque Potente de Iwaizumi SSR e Kentaro SSR.",
+    "participants": [
+      27,
+      26
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 22,
+    "name": "Bests para a vida",
+    "description": "Aumenta o Ataque Potente de Ushijima UR e o Técnica de Defesa de Tendo SSR.",
+    "participants": [
+      29,
+      28
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 23,
+    "name": "Campeão Absoluto e Levantador Sólido",
+    "description": "Quando Shirabu SSR faz o passe, Ushijima UR realiza um corte com 10% mais poder.",
+    "participants": [
+      31,
+      28
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 24,
+    "name": "WS de Shiratorizawa",
+    "description": "Aumenta o Ataque Potente de TODOS os jogadores presentes.",
+    "participants": [
+      33,
+      30
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 25,
+    "name": "Ás Milagroso e Levantador Carinhoso",
+    "description": "Bokuto UR sai da depressão. Quando Akaashi SSR faz o passe e Bokuto UR spika, aumenta o Ataque Potente desse golpe em 20% e eleva a Moral do Time em 15.",
+    "participants": [
+      38,
+      35
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 26,
+    "name": "Ace Milagroso e Levantador Carinhoso",
+    "description": "Aumenta o Passe de Akaashi SP. Com Moral ativa, aumenta o Ataque Potente de Bokuto SP em 18% e o Passe de Akaashi SP em 5%.",
+    "participants": [
+      37,
+      36
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 27,
+    "name": "A força dos Gêmeos",
+    "description": "Quando Atsumu UR faz o passe e Osamu UR faz um Ataque Rápido Minus Tempo, aumenta o Ataque Rápido dessa jogada. Aumenta o Técnica de Ataque em 15%. O ataque não pode ser bloqueado.",
+    "participants": [
+      43,
+      44
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 28,
+    "name": "Cabeça dos Gêmeos",
+    "description": "Aumenta o Técnica de Ataque de Osamu UR. Aumenta os Stats de Kita SSR. No início da partida, Atsumu ganha 3 acúmulos de Perfect Hit* (+2% de Passe cada, máx. 10). Kita SSR ganha bônus similar em Recepção (máx. 3). O primeiro Ataque Rápido dos gêmeos em cada set recebe +[Ataque Rápido] × 12%.",
+    "participants": [
+      43,
+      44,
+      45
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 29,
+    "name": "Amigos de longa data",
+    "description": "Aumenta os Stats de Hoshiumi UR. Aumenta o Bloqueio para os jogadores da linha de frente. Hoshiumi UR e Hirugami UR recebem um buff (sem info).",
+    "participants": [
+      50,
+      51
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 30,
+    "name": "Top Spiker e Top Libero",
+    "description": "Sakusa UR aumenta seu Ataque Potente. Komori UR aumenta seu Recepção. Aumenta a Recepção dos aliados em 20%.",
+    "participants": [
+      52,
+      53
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 31,
+    "name": "Cérebro e Comandante SP",
+    "description": "Quando Kenma SP e Kuroo SP estão em quadra, podem usar a habilidade de ataque rápido Cérebro e Comandante*",
+    "participants": [
+      13,
+      54
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 32,
+    "name": "Festival Fogos de Artificio",
+    "description": "Atributos principais dos aliados aumentam em 6%.Ao fim de cada rali, aplica [Raiva] na linha de frente do oponente (os [Cortada Potente]/[Ataque Rápido] deles ficam –10%).Dura até a bola atravessar a rede 8 vezes.Se o alvo já tiver [Raiva], aplica [Distração] em vez disso (os [Cortada Potente]/[Ataque Rápido] ficam –20%).Também dura até a bola atravessar a rede 8 vezes.[Distração] não pode ser removido.",
+    "participants": [
+      8,
+      54
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 33,
+    "name": "Festival de Esporte",
+    "description": "Quando um aliado tocar na bola, consome 1 de [Stamina] e aumenta os atributos principais desse membro em 3%/3,5%/4%/4,5%/5% por 2 cruzamentos de rede.Se esse toque de bola for um [Bloqueio], o [Bloqueio] desse membro aumenta em +5% adicionais por 2 cruzamentos de rede.",
+    "participants": [
+      55,
+      56
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 34,
+    "name": "Aliados no Campo de Treinamento",
+    "description": "Aliados em quadra que possuam habilidade de [Bloqueio] recebem +6%/7%/8%/9%/10% [Bloqueio].O tempo de recarga de <Block System> é reduzido em 2 cruzamentos de rede.Quando um aliado ativa uma habilidade de [Saque], aplica [Raiva] na linha de trás do oponente ([Ataque Potente]/[Ataque Rápido] −10%) por 8 cruzamentos de rede.",
+    "participants": [
+      56,
+      8
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 35,
+    "name": "Parede de Ferro",
+    "description": "Quando Koganegawa estiver em quadra, se pelo menos 2 membros incluídos neste Vínculo estiverem presentes, a Habilidade de Vínculo é ativada.Quando os aliados executarem um bloqueio duplo/triplo, os aliados da linha de frente recebem [Técnica de Defesa] +3%/4%/5%/6%/7% por 1 cruzamento de rede.Quando um aliado ativa uma habilidade de [Saque], o saque não falhará.Durante ralis em que um aliado ativa uma habilidade de [Saque], se os aliados executarem bloqueio duplo/triplo, ganha 1 acúmulo de [Poderoso Bloqueio] e [Criar Muralha de Ferro] (só ativa se o membro correspondente estiver em quadra).",
+    "participants": [
+      56,
+      21,
+      19
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 36,
+    "name": "Rei e Grande Rei",
+    "description": "Kageyama e Oikawa disputam pelo direito do Saque, o primeiro a ativar uma habilidade de Saque vence. Caso o Oikawa vença, Kageyama recebe o efeito 'Performance'. Esse efeito permanece por por 1 set. Caso o Kageyama vença, a cada vez que Oikawa tocar na bola, Kageyama recebe 1 acúmulo do efeito 'Competitivo'. Quando Oikawa ativa uma habilidade, Kageyama recebe mais 1 acúmulo do efeito 'Competitivo'.",
+    "participants": [
+      57,
+      1
+    ],
+    "is_team_bond": false
+  },
+  {
+    "id": 37,
+    "name": "Respiração em Harmonia",
+    "description": "Quando Iwaizumi corta a bola levantada por Oikawa, esse ataque terá a força de [Ataque Potente] do Iwaizumi x 360%. 2 - Iwaizumi recebe o efeito [Performance] (skill 1 Oikawa). Esse efeito permanece por 1 set.",
+    "participants": [
+      58,
+      57
+    ],
+    "is_team_bond": false
+  }
+]

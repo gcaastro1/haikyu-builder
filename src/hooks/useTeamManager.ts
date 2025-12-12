@@ -1,10 +1,10 @@
-import { useTeamStore } from "@/stores/useTeamStore";
 import { useSavedTeamsStore } from "@/stores/useSavedTeamsStore";
+import { useTeamStore } from "@/stores/useTeamStore";
 import { useUIStore } from "@/stores/useUIStore";
-import { TeamSlots, SavedTeam, ExportedTeam, Character } from "@/types";
+import { Character, ExportedTeam, SavedTeam, TeamSlots } from "@/types";
 
 export function useTeamManager() {
-  const { setTeam, setBench, clearTeam } = useTeamStore();
+  const { setTeam, clearTeam } = useTeamStore();
   const { saveCurrentTeam, loadTeam, deleteTeam } = useSavedTeamsStore();
   const { showFeedback, closeModals } = useUIStore();
 
@@ -40,25 +40,27 @@ export function useTeamManager() {
   const handleImport = (importKey: string, allCharacters: Character[]) => {
     try {
       const json = JSON.parse(atob(importKey.trim())) as ExportedTeam;
-      if (!json?.c || !Array.isArray(json.b)) throw new Error("Chave inválida.");
+      if (!json?.c) throw new Error("Chave inválida.");
 
       const newTeam: TeamSlots = { ...useTeamStore.getState().team };
-      const newBench = Array(6).fill(null) as (Character | null)[];
+
+      // Otimização: criar Map de characters por id para lookup O(1)
+      const characterMap = new Map<number, Character>(
+        allCharacters.map((c) => [c.id, c])
+      );
 
       for (const [key, id] of Object.entries(json.c)) {
-        const found = allCharacters.find((c) => c.id === id);
+        if (id == null) {
+          newTeam[key as keyof TeamSlots] = null;
+          continue;
+        }
+        const found = characterMap.get(Number(id));
         newTeam[key as keyof TeamSlots] = found || null;
       }
 
-      json.b.forEach((id, idx) => {
-        const found = allCharacters.find((c) => c.id === id);
-        if (found) newBench[idx] = found;
-      });
-
       setTeam(newTeam);
-      setBench(newBench);
       showFeedback("Time importado com sucesso.");
-    } catch (err) {
+    } catch {
       showFeedback("Erro ao importar time.", "error");
     }
   };

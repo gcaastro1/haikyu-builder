@@ -1,1 +1,0 @@
-import { School } from "@/types";

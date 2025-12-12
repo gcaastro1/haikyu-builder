@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useCharacterStore } from "@/stores/useCharacterStore";
+import { calculateActiveBonds } from "@/app/lib/calculateActiveBonds";
 import {
   TeamSlots,
   Character,
@@ -52,41 +53,23 @@ export function useTeamAnalysis(team: TeamSlots, isPositionFree: boolean) {
   }, [team, isPositionFree]);
 
   // === Análise de vínculos ativos ===
+  // ✅ Otimização: Usa a função calculateActiveBonds que já existe e é otimizada
+  // Removido cálculo duplicado que estava sendo feito manualmente
   const activeBonds = useMemo(() => {
-    const bonds: Bond[] = [];
     const charactersOnCourt = Object.values(team).filter(Boolean) as Character[];
     if (!charactersOnCourt.length || !allBonds.length || !characterBondLinks.length)
-      return bonds;
+      return [];
 
-    const schoolCounts: Record<string, number> = {};
-    charactersOnCourt.forEach((char) => {
-      if (char.school)
-        schoolCounts[char.school] = (schoolCounts[char.school] || 0) + 1;
-    });
-
-    Object.entries(schoolCounts).forEach(([schoolName, count]) => {
-      if (count >= 4) {
-        const schoolBond = allBonds.find((bond) => bond.name === schoolName);
-        if (schoolBond) bonds.push(schoolBond);
-      }
-    });
-
-    const characterNames = new Set(charactersOnCourt.map((c) => c.name));
-    const nonSchoolBonds = allBonds.filter(
-      (bond) => !Object.keys(schoolCounts).includes(bond.name || "")
-    );
-
-    nonSchoolBonds.forEach((bond) => {
-      const links = characterBondLinks.filter((l) => l.bond_id === bond.id);
-      const requiredNames = links
-        .map((l) => allCharacters.find((c) => c.id === l.character_id)?.name)
-        .filter(Boolean) as string[];
-
-      if (requiredNames.every((name) => characterNames.has(name)))
-        bonds.push(bond);
-    });
-
-    return bonds;
+    const calculated = calculateActiveBonds(team, allCharacters, allBonds, characterBondLinks);
+    
+    // ✅ Otimização: Cria Map para lookup O(1) ao invés de find O(n)
+    const bondMap = new Map(allBonds.map((b) => [b.id, b]));
+    
+    // Retorna apenas os bonds ativos como Bond[] (sem os campos calculados)
+    return calculated
+      .filter((b) => b.isActive)
+      .map((b) => bondMap.get(b.id))
+      .filter((b): b is Bond => b !== undefined);
   }, [team, allBonds, characterBondLinks, allCharacters]);
 
   return { calculatedTeamType, styleCounts, activeBonds };

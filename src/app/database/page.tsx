@@ -1,20 +1,27 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { useCharacterStore } from "@/stores/useCharacterStore";
+import { Character, Position, School } from "@/types";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { CharacterCard } from "../components/CharacterCard";
-import { PositionFilter } from "../components/PositionFilter";
+import { CharacterModal } from "../components/CharacterModal";
 import { NameSearchInput } from "../components/NameSearchInput";
+import { PositionFilter } from "../components/PositionFilter";
 import { SchoolFilter } from "../components/SchoolFilter";
 import { SectionHeader } from "../components/SectionHeader";
-import { CharacterModal } from "../components/CharacterModal";
-import { Character, Position, School } from "@/types";
 
 
 export default function DatabasePage() {
-  const [allCharactersData, setAllCharactersData] = useState<Character[]>([]);
-  const [loadingCharacters, setLoadingCharacters] = useState(true);
-  const [fetchError, setFetchError] = useState<string | null>(null);
+  const { allCharacters, isLoading, fetchError, fetchInitialData, hasLoadedData } = useCharacterStore(
+    useShallow((s) => ({
+      allCharacters: s.allCharacters,
+      isLoading: s.isLoading,
+      fetchError: s.fetchError,
+      fetchInitialData: s.fetchInitialData,
+      hasLoadedData: s.hasLoadedData,
+    }))
+  );
 
   const [positionFilter, setPositionFilter] = useState<Position | "ALL">("ALL");
   const [schoolFilter, setSchoolFilter] = useState<School | "ALL">("ALL");
@@ -24,47 +31,16 @@ export default function DatabasePage() {
     null
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(32);
+  const [batchSize, setBatchSize] = useState(32);
+  const loaderRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const fetchCharacters = async () => {
-      setLoadingCharacters(true);
-      setFetchError(null);
-      try {
-        const { data, error } = await supabase
-          .from("Characters")
-          .select("*")
-          .order("name", { ascending: true });
-
-        if (error) throw error;
-
-        if (data) {
-          const formattedData = data.map((char: Character) => ({
-            ...char,
-            styles: Array.isArray(char.styles)
-              ? char.styles
-              : typeof char.styles === "string"
-              ? JSON.parse(char.styles)
-              : [],
-          })) as Character[];
-          setAllCharactersData(formattedData);
-        } else {
-          setAllCharactersData([]);
-        }
-      } catch (error: any) {
-        console.error("Erro ao buscar personagens:", error);
-        setFetchError(
-          `Erro ao carregar: ${error.message || "Erro desconhecido"}`
-        );
-        setAllCharactersData([]);
-      } finally {
-        setLoadingCharacters(false);
-      }
-    };
-    fetchCharacters();
-  }, []);
+    if (!hasLoadedData && !isLoading) fetchInitialData();
+  }, [hasLoadedData, isLoading, fetchInitialData]);
 
   const filteredCharacters = useMemo(() => {
-    return allCharactersData.filter((character) => {
+    return allCharacters.filter((character) => {
       if (positionFilter !== "ALL" && character.position !== positionFilter)
         return false;
       if (schoolFilter !== "ALL" && character.school !== schoolFilter)
@@ -76,7 +52,29 @@ export default function DatabasePage() {
         return false;
       return true;
     });
-  }, [allCharactersData, positionFilter, schoolFilter, nameSearch]);
+  }, [allCharacters, positionFilter, schoolFilter, nameSearch]);
+
+  const handleIntersect = useCallback((entries: IntersectionObserverEntry[]) => {
+    const [entry] = entries;
+    if (entry.isIntersecting) {
+      setVisibleCount((prev) => Math.min(prev + batchSize, filteredCharacters.length));
+    }
+  }, [filteredCharacters.length, batchSize]);
+
+  useEffect(() => {
+    const w = typeof window !== "undefined" ? window.innerWidth : 1024;
+    const size = w <= 640 ? 24 : w <= 1024 ? 32 : 36;
+    setBatchSize(size);
+    setVisibleCount(size);
+  }, [filteredCharacters]);
+
+  useEffect(() => {
+    if (!loaderRef.current) return;
+    const observer = new IntersectionObserver(handleIntersect, { rootMargin: "200px" });
+    observer.observe(loaderRef.current);
+    return () => observer.disconnect();
+  }, [handleIntersect]);
+
 
   const handleOpenModal = (character: Character) => {
     setSelectedCharacter(character);
@@ -114,7 +112,7 @@ export default function DatabasePage() {
       </div>
 
       <div className="database-page__grid">
-        {loadingCharacters && (
+        {isLoading && (
           <p className="database-page__status database-page__status--loading">
             Carregando personagens...
           </p>
@@ -126,7 +124,7 @@ export default function DatabasePage() {
           </p>
         )}
 
-        {!loadingCharacters &&
+        {!isLoading &&
           !fetchError &&
           filteredCharacters.length === 0 && (
             <p className="database-page__status database-page__status--empty">
@@ -134,9 +132,9 @@ export default function DatabasePage() {
             </p>
           )}
 
-        {!loadingCharacters &&
+        {!isLoading &&
           !fetchError &&
-          filteredCharacters.map((char) => (
+          filteredCharacters.slice(0, visibleCount).map((char) => (
             <CharacterCard
               key={char.id}
               character={char}
@@ -144,6 +142,10 @@ export default function DatabasePage() {
               originType={"list"}
             />
           ))}
+
+        {!isLoading && visibleCount < filteredCharacters.length && (
+          <div ref={loaderRef} className="database-page__loader">Carregando mais...</div>
+        )}
       </div>
 
       {isModalOpen && selectedCharacter && (

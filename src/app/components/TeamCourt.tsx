@@ -1,12 +1,11 @@
 "use client";
 
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { TeamSlot } from "./TeamSlot";
-import { CharacterCard } from "./CharacterCard";
-import type { TeamSlots, SlotKey } from "@/types";
-import { useUIStore } from "@/stores/useUIStore";
 import { useTeamStore } from "@/stores/useTeamStore";
+import { useUIStore } from "@/stores/useUIStore";
+import type { Position, SlotKey, TeamSlots } from "@/types";
+import { AnimatePresence, motion } from "framer-motion";
+import { CharacterCard } from "./CharacterCard";
+import { TeamSlot } from "./TeamSlot";
 
 const label = (slotKey: SlotKey) => {
   switch (slotKey) {
@@ -24,7 +23,7 @@ const label = (slotKey: SlotKey) => {
 export function TeamCourt({
   team,
   onRemoveCharacter,
-  isPositionFree,
+  isPositionFree: _isPositionFree,
 }: {
   team: TeamSlots;
   onRemoveCharacter: (key: keyof TeamSlots) => void;
@@ -43,7 +42,12 @@ export function TeamCourt({
   const renderSlot = (slotKey: SlotKey) => {
     const character = team[slotKey];
     const dndId = `court-${slotKey}`;
-    const dndData = { type: "court", slotKey };
+    const position = label(slotKey);
+    const dndData = { 
+      type: "court", 
+      slotKey,
+      acceptedPosition: position as Position,
+    };
 
     return (
       <AnimatePresence mode="wait" key={slotKey}>

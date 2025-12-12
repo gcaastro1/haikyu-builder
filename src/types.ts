@@ -19,6 +19,7 @@ export interface Skill {
   description: string | null;
   character_id: number;
   created_at?: string;
+  type?: string | null;
 }
 
 export interface Bond {
@@ -79,6 +80,14 @@ export interface Character {
   bondIds?: number[];
   bonds?: Bond[];
   statsBonds?: CharacterStatsBond[];
+  potential?: { "4slots": number | null; "2slots": number | null } | null;
+  resonance?: {
+    re1?: string;
+    re2?: string;
+    re3?: string;
+    re4?: string;
+    re5?: string;
+  };
 }
 
 export type TeamSlots = {
@@ -96,13 +105,11 @@ export type SlotKey = keyof TeamSlots;
 export interface SavedTeam {
   name: string;
   court: TeamSlots;
-  bench: (Character | null)[];
   savedAt: string;
 }
 
 export interface ExportedTeam {
   c: { [key in SlotKey]?: number | null };
-  b: (number | null)[];
 }
 
 export type DbStyle = "quick" | "power" | "receive" | "block" | string;
@@ -134,4 +141,24 @@ export const teamTypeStyles: Record<
 
 export type StyleCounts = Record<RelevantStyleDisplay, number>;
 
-export type DoubleClickOrigin = "list" | "court" | "bench";
+export type DoubleClickOrigin = "list" | "court";
+
+export interface Potential {
+  id: number;
+  name: string;
+  image_url: string;
+  catalog_id: string;
+  twoPiece: Record<string, { pct: number }>;
+  fourPiece: Record<string, { pct: number }>;
+  desc2: string;
+  desc4: string;
+}
+
+export interface Memory {
+  id: string;
+  name: string;
+  positions: string[];
+  bonus?: Record<string, { flat?: number; pct?: number }>;
+  desc: string;
+  image_url: string;
+}

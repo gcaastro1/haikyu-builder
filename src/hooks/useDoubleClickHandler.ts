@@ -1,17 +1,15 @@
-import { useCallback } from "react";
-import { Character, DoubleClickOrigin, SlotKey, TeamSlots } from "@/types";
-import { useUIStore } from "@/stores/useUIStore";
 import { useTeamStore } from "@/stores/useTeamStore";
+import { useUIStore } from "@/stores/useUIStore";
+import { Character, DoubleClickOrigin, SlotKey, TeamSlots } from "@/types";
+import { useCallback } from "react";
 
 export function useDoubleClickHandler(
   team: TeamSlots,
-  bench: (Character | null)[],
   isPositionFree: boolean,
   teamCharacterNames: Set<string>
 ) {
   const { showFeedback } = useUIStore();
-  const { setTeam, setBench, removeFromCourt, removeFromBench } =
-    useTeamStore();
+  const { setTeam, removeFromCourt } = useTeamStore();
 
   const findCourtSlotForDoubleClick = useCallback(
     (character: Character, currentTeam: TeamSlots, isFreeMode: boolean): SlotKey | null => {
@@ -42,10 +40,10 @@ export function useDoubleClickHandler(
   );
 
   const handleDoubleClickCharacter = useCallback(
-    (character: Character, origin: DoubleClickOrigin, originKey?: SlotKey | number) => {
+    (character: Character, origin: DoubleClickOrigin, originKey?: SlotKey) => {
       if (origin === "list") {
         if (teamCharacterNames.has(character.name)) {
-          showFeedback(`'${character.name}' já está no time ou banco.`, "error");
+          showFeedback(`'${character.name}' já está no time.`, "error");
           return;
         }
 
@@ -57,35 +55,13 @@ export function useDoubleClickHandler(
           showFeedback(`${character.name} adicionado à quadra.`);
           added = true;
         }
-
-        if (!added) {
-          const firstEmptyBenchSlot = bench.findIndex((slot) => slot === null);
-          if (firstEmptyBenchSlot !== -1) {
-            const newBench = [...bench];
-            newBench[firstEmptyBenchSlot] = character;
-            setBench(newBench);
-            showFeedback(`${character.name} adicionado ao banco.`);
-            added = true;
-          }
-        }
-
-        if (!added) showFeedback("Time e banco estão cheios!", "error");
+        if (!added) showFeedback("Time está cheio!", "error");
       } else if (origin === "court" && typeof originKey === "string") {
         removeFromCourt(originKey as SlotKey);
         showFeedback(`${character.name} removido da quadra.`);
-      } else if (origin === "bench" && typeof originKey === "number") {
-        const targetSlotKey = findCourtSlotForDoubleClick(character, team, isPositionFree);
-        if (targetSlotKey) {
-          setTeam({ ...team, [targetSlotKey]: character });
-          removeFromBench(originKey);
-          showFeedback(`${character.name} movido do banco para a quadra.`);
-        } else {
-          removeFromBench(originKey);
-          showFeedback(`${character.name} removido do banco (sem espaço na quadra).`);
-        }
       }
     },
-    [team, bench, isPositionFree, findCourtSlotForDoubleClick, showFeedback, teamCharacterNames, setTeam, setBench, removeFromCourt, removeFromBench]
+    [team, isPositionFree, findCourtSlotForDoubleClick, showFeedback, teamCharacterNames, setTeam, removeFromCourt]
   );
 
   return { handleDoubleClickCharacter };

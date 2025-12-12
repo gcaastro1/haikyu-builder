@@ -1,0 +1,1042 @@
+[
+  {
+    "id": 1,
+    "name": "Kageyama Tobio",
+    "position": "S",
+    "rarity": "UR",
+    "school": "Karasuno",
+    "image_url": "/images/characters/Kageyama_Tobio.png",
+    "styles": [
+      "quick",
+      "serve",
+      "setter"
+    ],
+    "serve": 1782,
+    "attack": 1948,
+    "set": 1911,
+    "receive": 1625,
+    "block": 1709,
+    "defense": 1539
+  },
+  {
+    "id": 2,
+    "name": "Kageyama Tobio",
+    "position": "S",
+    "rarity": "SSR",
+    "school": "Karasuno",
+    "image_url": "/images/characters/Tobio_Kageyama_(Practice).png",
+    "styles": [
+      "quick",
+      "serve",
+      "setter"
+    ],
+    "serve": 1314,
+    "attack": 1246,
+    "set": 1378,
+    "receive": 1115,
+    "block": 1246,
+    "defense": 1047
+  },
+  {
+    "id": 3,
+    "name": "Shoyo Hinata",
+    "position": "MB",
+    "rarity": "SP",
+    "school": "Karasuno",
+    "image_url": "/images/characters/Hinata_Shoyo_(Hanami).png",
+    "styles": [
+      "quick",
+      "receive"
+    ],
+    "serve": 1673,
+    "attack": 1950,
+    "set": 1656,
+    "receive": 1913,
+    "block": 1774,
+    "defense": 1656
+  },
+  {
+    "id": 4,
+    "name": "Shoyo Hinata",
+    "position": "MB",
+    "rarity": "SSR",
+    "school": "Karasuno",
+    "image_url": "/images/characters/Shoyo_Hinata.png",
+    "styles": [
+      "quick"
+    ],
+    "serve": 1173,
+    "attack": 1383,
+    "set": 1118,
+    "receive": 1195,
+    "block": 1250,
+    "defense": 1253
+  },
+  {
+    "id": 5,
+    "name": "Yu Nishinoya",
+    "position": "L",
+    "rarity": "SP",
+    "school": "Karasuno",
+    "image_url": "/images/characters/Nishinoya_Yu_(After_School).png",
+    "styles": [
+      "receive",
+      "setter"
+    ],
+    "serve": 1615,
+    "attack": 1615,
+    "set": 1851,
+    "receive": 1969,
+    "block": 1577,
+    "defense": 1854
+  },
+  {
+    "id": 6,
+    "name": "Yu Nishinoya",
+    "position": "L",
+    "rarity": "SSR",
+    "school": "Karasuno",
+    "image_url": "/images/characters/Yu_Nishinoya.png",
+    "styles": [
+      "receive"
+    ],
+    "serve": 1131,
+    "attack": 1131,
+    "set": 1254,
+    "receive": 1389,
+    "block": 1098,
+    "defense": 1327
+  },
+  {
+    "id": 7,
+    "name": "Ryunosuke Tanaka",
+    "position": "WS",
+    "rarity": "SSR",
+    "school": "Karasuno",
+    "image_url": "/images/characters/Ryunosuke_Tanaka.png",
+    "styles": [
+      "power"
+    ],
+    "serve": 1190,
+    "attack": 1385,
+    "set": 1120,
+    "receive": 1316,
+    "block": 1248,
+    "defense": 1129
+  },
+  {
+    "id": 8,
+    "name": "Kei Tsukishima",
+    "position": "MB",
+    "rarity": "SP",
+    "school": "Karasuno",
+    "image_url": "/images/characters/Tsukishima_Kei_(Hanabi).png",
+    "styles": [
+      "quick",
+      "block"
+    ],
+    "serve": 1685,
+    "attack": 1968,
+    "set": 1669,
+    "receive": 1759,
+    "block": 1789,
+    "defense": 1774
+  },
+  {
+    "id": 9,
+    "name": "Kei Tsukishima",
+    "position": "MB",
+    "rarity": "SSR",
+    "school": "Karasuno",
+    "image_url": "/images/characters/Kei_Tsukushima.png",
+    "styles": [
+      "quick",
+      "block"
+    ],
+    "serve": 1210,
+    "attack": 1314,
+    "set": 1153,
+    "receive": 1173,
+    "block": 1389,
+    "defense": 1102
+  },
+  {
+    "id": 10,
+    "name": "Daichi Sawamura",
+    "position": "OP",
+    "rarity": "SSR",
+    "school": "Karasuno",
+    "image_url": "/images/characters/Daichi_Sawamura.png",
+    "styles": [
+      "receive"
+    ],
+    "serve": 1182,
+    "attack": 1250,
+    "set": 1123,
+    "receive": 1385,
+    "block": 1248,
+    "defense": 1191
+  },
+  {
+    "id": 11,
+    "name": "Asahi Azumane",
+    "position": "WS",
+    "rarity": "SSR",
+    "school": "Karasuno",
+    "image_url": "/images/characters/Asahi_Azumane.png",
+    "styles": [
+      "power",
+      "serve"
+    ],
+    "serve": 1322,
+    "attack": 1387,
+    "set": 1118,
+    "receive": 1254,
+    "block": 1190,
+    "defense": 1122
+  },
+  {
+    "id": 12,
+    "name": "Koshi Sugawara",
+    "position": "S",
+    "rarity": "SP",
+    "school": "Karasuno",
+    "image_url": "/images/characters/Sugawara_Koshi_(After_School).png",
+    "styles": [
+      "block",
+      "serve",
+      "setter"
+    ],
+    "serve": 1849,
+    "attack": 1758,
+    "set": 1950,
+    "receive": 1667,
+    "block": 1774,
+    "defense": 1605
+  },
+  {
+    "id": 13,
+    "name": "Kenma Kozume",
+    "position": "S",
+    "rarity": "SP",
+    "school": "Nekoma",
+    "image_url": "/images/characters/Kozume_Kenma_(Hanami).png",
+    "styles": [
+      "receive",
+      "setter"
+    ],
+    "serve": 1580,
+    "attack": 1700,
+    "set": 1990,
+    "receive": 1710,
+    "block": 1600,
+    "defense": 1590
+  },
+  {
+    "id": 14,
+    "name": "Kenma Kozume",
+    "position": "S",
+    "rarity": "SSR",
+    "school": "Nekoma",
+    "image_url": "/images/characters/Kenma_Kozumi.png",
+    "styles": [
+      "receive",
+      "setter"
+    ],
+    "serve": 1182,
+    "attack": 1387,
+    "set": 1387,
+    "receive": 1122,
+    "block": 1303,
+    "defense": 1060
+  },
+  {
+    "id": 15,
+    "name": "Morisuke Yaku",
+    "position": "L",
+    "rarity": "SSR",
+    "school": "Nekoma",
+    "image_url": "/images/characters/Morisuke_Yaku.png",
+    "styles": [
+      "receive"
+    ],
+    "serve": 1131,
+    "attack": 1131,
+    "set": 1253,
+    "receive": 1391,
+    "block": 1098,
+    "defense": 1323
+  },
+  {
+    "id": 16,
+    "name": "Kuro Tetsuroo",
+    "position": "MB",
+    "rarity": "SSR",
+    "school": "Nekoma",
+    "image_url": "/images/characters/Tetsuro_Kuroo_(Practice).png",
+    "styles": [
+      "block",
+      "quick"
+    ],
+    "serve": 1221,
+    "attack": 1318,
+    "set": 1149,
+    "receive": 1186,
+    "block": 1389,
+    "defense": 1123
+  },
+  {
+    "id": 17,
+    "name": "Kuro Tetsuroo",
+    "position": "MB",
+    "rarity": "UR",
+    "school": "Nekoma",
+    "image_url": "/images/characters/Tetsuro_Kuroo.png",
+    "styles": [
+      "quick",
+      "block"
+    ],
+    "serve": 1558,
+    "attack": 1673,
+    "set": 1551,
+    "receive": 1581,
+    "block": 1740,
+    "defense": 1533
+  },
+  {
+    "id": 18,
+    "name": "Lev Haiba",
+    "position": "MB",
+    "rarity": "SSR",
+    "school": "Nekoma",
+    "image_url": "/images/characters/Lev_Haiba.png",
+    "styles": [
+      "quick",
+      "block"
+    ],
+    "serve": 1206,
+    "attack": 1318,
+    "set": 1138,
+    "receive": 1166,
+    "block": 1378,
+    "defense": 1100
+  },
+  {
+    "id": 19,
+    "name": "Takanobu Aone",
+    "position": "MB",
+    "rarity": "SP",
+    "school": "Date Tech",
+    "image_url": "/images/characters/Aone_(Beach).png",
+    "styles": [
+      "block",
+      "serve"
+    ],
+    "serve": 1848,
+    "attack": 1788,
+    "set": 1754,
+    "receive": 1667,
+    "block": 1904,
+    "defense": 1605
+  },
+  {
+    "id": 20,
+    "name": "Takanobu Aone",
+    "position": "MB",
+    "rarity": "SSR",
+    "school": "Date Tech",
+    "image_url": "/images/characters/Takanobu_Aone.png",
+    "styles": [
+      "quick",
+      "block"
+    ],
+    "serve": 1219,
+    "attack": 1316,
+    "set": 1146,
+    "receive": 1173,
+    "block": 1389,
+    "defense": 1102
+  },
+  {
+    "id": 21,
+    "name": "Kenji Futakuchi",
+    "position": "WS",
+    "rarity": "SSR",
+    "school": "Date Tech",
+    "image_url": "/images/characters/Kenji_Futakuchi.png",
+    "styles": [
+      "block",
+      "serve"
+    ],
+    "serve": 1217,
+    "attack": 1316,
+    "set": 1147,
+    "receive": 1184,
+    "block": 1385,
+    "defense": 1122
+  },
+  {
+    "id": 22,
+    "name": "Takehito Sasaya",
+    "position": "OP",
+    "rarity": "SSR",
+    "school": "Date Tech",
+    "image_url": "/images/characters/Takehito_Sasaya.png",
+    "styles": [
+      "power"
+    ],
+    "serve": 1184,
+    "attack": 1378,
+    "set": 1120,
+    "receive": 1314,
+    "block": 1255,
+    "defense": 1127
+  },
+  {
+    "id": 23,
+    "name": "Kanji Koganegawa",
+    "position": "S",
+    "rarity": "SSR",
+    "school": "Date Tech",
+    "image_url": "/images/characters/Kanji_Koganegawa.png",
+    "styles": [
+      "block",
+      "setter"
+    ],
+    "serve": 1166,
+    "attack": 1302,
+    "set": 1365,
+    "receive": 1100,
+    "block": 1306,
+    "defense": 1031
+  },
+  {
+    "id": 24,
+    "name": "Toru Oikawa",
+    "position": "S",
+    "rarity": "UR",
+    "school": "Aoba Johsai",
+    "image_url": "/images/characters/Toru_Oikawa.png",
+    "styles": [
+      "power",
+      "serve",
+      "setter"
+    ],
+    "serve": 1705,
+    "attack": 1533,
+    "set": 1627,
+    "receive": 1378,
+    "block": 1530,
+    "defense": 1290
+  },
+  {
+    "id": 25,
+    "name": "Toru Oikawa",
+    "position": "S",
+    "rarity": "SSR",
+    "school": "Aoba Johsai",
+    "image_url": "/images/characters/Toru_Oikawa_(Practice).png",
+    "styles": [
+      "power",
+      "serve",
+      "setter"
+    ],
+    "serve": 1391,
+    "attack": 1327,
+    "set": 1327,
+    "receive": 1125,
+    "block": 1248,
+    "defense": 1054
+  },
+  {
+    "id": 26,
+    "name": "Hajime Iwaizumi",
+    "position": "WS",
+    "rarity": "SSR",
+    "school": "Aoba Johsai",
+    "image_url": "/images/characters/Hajime_Iwaizumi.png",
+    "styles": [
+      "power"
+    ],
+    "serve": 1190,
+    "attack": 1385,
+    "set": 1118,
+    "receive": 1314,
+    "block": 1248,
+    "defense": 1129
+  },
+  {
+    "id": 27,
+    "name": "Kentaro Kyotani",
+    "position": "OP",
+    "rarity": "SSR",
+    "school": "Aoba Johsai",
+    "image_url": "/images/characters/Kentaro_Kyotani.png",
+    "styles": [
+      "power",
+      "serve"
+    ],
+    "serve": 1320,
+    "attack": 1383,
+    "set": 1106,
+    "receive": 1235,
+    "block": 1179,
+    "defense": 1109
+  },
+  {
+    "id": 28,
+    "name": "Wakatoshi Ushijima",
+    "position": "OP",
+    "rarity": "UR",
+    "school": "Shiratorizawa",
+    "image_url": "/images/characters/Wakatoshi_Ushijima.png",
+    "styles": [
+      "power",
+      "serve"
+    ],
+    "serve": 1499,
+    "attack": 1574,
+    "set": 1261,
+    "receive": 1417,
+    "block": 1345,
+    "defense": 1261
+  },
+  {
+    "id": 29,
+    "name": "Satori Tendo",
+    "position": "MB",
+    "rarity": "SSR",
+    "school": "Shiratorizawa",
+    "image_url": "/images/characters/Satori_Tendo.png",
+    "styles": [
+      "block"
+    ],
+    "serve": 1214,
+    "attack": 1314,
+    "set": 1140,
+    "receive": 1177,
+    "block": 1387,
+    "defense": 1100
+  },
+  {
+    "id": 30,
+    "name": "Tsutomu Goshiki",
+    "position": "WS",
+    "rarity": "SSR",
+    "school": "Shiratorizawa",
+    "image_url": "/images/characters/Tsutomu_Goshiki.png",
+    "styles": [
+      "power",
+      "serve"
+    ],
+    "serve": 1188,
+    "attack": 1383,
+    "set": 1115,
+    "receive": 1314,
+    "block": 1240,
+    "defense": 1122
+  },
+  {
+    "id": 31,
+    "name": "Kenjiro Shirabu",
+    "position": "S",
+    "rarity": "SSR",
+    "school": "Shiratorizawa",
+    "image_url": "/images/characters/Kenjiro_Shirabu.png",
+    "styles": [
+      "power",
+      "setter"
+    ],
+    "serve": 1303,
+    "attack": 1382,
+    "set": 1242,
+    "receive": 1118,
+    "block": 1239,
+    "defense": 1041
+  },
+  {
+    "id": 32,
+    "name": "Eita Semi",
+    "position": "S",
+    "rarity": "SSR",
+    "school": "Shiratorizawa",
+    "image_url": "/images/characters/Eita_Semi.png",
+    "styles": [
+      "power",
+      "serve",
+      "setter"
+    ],
+    "serve": 1476,
+    "attack": 1329,
+    "set": 1406,
+    "receive": 1184,
+    "block": 1329,
+    "defense": 1111
+  },
+  {
+    "id": 33,
+    "name": "Ohira Reon",
+    "position": "WS",
+    "rarity": "SSR",
+    "school": "Shiratorizawa",
+    "image_url": "/images/characters/Ohira_Reon.png",
+    "styles": [
+      "receive"
+    ],
+    "serve": 1272,
+    "attack": 1477,
+    "set": 1188,
+    "receive": 1399,
+    "block": 1332,
+    "defense": 1197
+  },
+  {
+    "id": 34,
+    "name": "Yamagata Hayato",
+    "position": "L",
+    "rarity": "SSR",
+    "school": "Shiratorizawa",
+    "image_url": "/images/characters/Yamagata_Hayato.png",
+    "styles": [
+      "receive"
+    ],
+    "serve": 1,
+    "attack": 1,
+    "set": 1,
+    "receive": 1,
+    "block": 1,
+    "defense": 1
+  },
+  {
+    "id": 35,
+    "name": "Kotaro Bokuto",
+    "position": "WS",
+    "rarity": "UR",
+    "school": "Fukurodani",
+    "image_url": "/images/characters/Kotaro_Bokuto.png",
+    "styles": [
+      "power",
+      "serve"
+    ],
+    "serve": 1495,
+    "attack": 1572,
+    "set": 1262,
+    "receive": 1417,
+    "block": 1347,
+    "defense": 1268
+  },
+  {
+    "id": 36,
+    "name": "Kotaro Bokuto",
+    "position": "WS",
+    "rarity": "SP",
+    "school": "Fukurodani",
+    "image_url": "/images/characters/Kotaro_Bokuto_(Beach_Boy).png",
+    "styles": [
+      "power",
+      "receive"
+    ],
+    "serve": 1673,
+    "attack": 1950,
+    "set": 1574,
+    "receive": 1856,
+    "block": 1760,
+    "defense": 1572
+  },
+  {
+    "id": 37,
+    "name": "Keiji Akaashi",
+    "position": "S",
+    "rarity": "SP",
+    "school": "Fukurodani",
+    "image_url": "/images/characters/Keiji_Akaashi_(Beach_Boy).png",
+    "styles": [
+      "power",
+      "setter"
+    ],
+    "serve": 1848,
+    "attack": 1754,
+    "set": 1949,
+    "receive": 1581,
+    "block": 1758,
+    "defense": 1489
+  },
+  {
+    "id": 38,
+    "name": "Keiji Akaashi",
+    "position": "S",
+    "rarity": "SSR",
+    "school": "Fukurodani",
+    "image_url": "/images/characters/Keiji_Akaashi.png",
+    "styles": [
+      "power",
+      "setter"
+    ],
+    "serve": 1396,
+    "attack": 1331,
+    "set": 1476,
+    "receive": 1191,
+    "block": 1334,
+    "defense": 1123
+  },
+  {
+    "id": 39,
+    "name": "Akinori Konoha",
+    "position": "OP",
+    "rarity": "SSR",
+    "school": "Fukurodani",
+    "image_url": "/images/characters/Akinori_Konoha.png",
+    "styles": [
+      "receive"
+    ],
+    "serve": 1256,
+    "attack": 1462,
+    "set": 1196,
+    "receive": 1274,
+    "block": 1333,
+    "defense": 1335
+  },
+  {
+    "id": 40,
+    "name": "Haruki Komi",
+    "position": "L",
+    "rarity": "SSR",
+    "school": "Fukurodani",
+    "image_url": "/images/characters/Haruki_Komi.png",
+    "styles": [
+      "receive"
+    ],
+    "serve": 1,
+    "attack": 1,
+    "set": 1,
+    "receive": 1,
+    "block": 1,
+    "defense": 1
+  },
+  {
+    "id": 41,
+    "name": "Tatsuki Washio",
+    "position": "MB",
+    "rarity": "SSR",
+    "school": "Fukurodani",
+    "image_url": "/images/characters/Tatsuki_Washio.png",
+    "styles": [
+      "quick",
+      "block"
+    ],
+    "serve": 1,
+    "attack": 1,
+    "set": 1,
+    "receive": 1,
+    "block": 1,
+    "defense": 1
+  },
+  {
+    "id": 42,
+    "name": "Terushima Yuji",
+    "position": "WS",
+    "rarity": "SSR",
+    "school": "Johzenji",
+    "image_url": "/images/characters/Terushima_Yuji.png",
+    "styles": [
+      "power",
+      "serve"
+    ],
+    "serve": 1401,
+    "attack": 1470,
+    "set": 1196,
+    "receive": 1335,
+    "block": 1263,
+    "defense": 1196
+  },
+  {
+    "id": 43,
+    "name": "Atsumu Miya",
+    "position": "S",
+    "rarity": "UR",
+    "school": "Inarizaki",
+    "image_url": "/images/characters/Miya_Atsumu.png",
+    "styles": [
+      "quick",
+      "serve",
+      "setter"
+    ],
+    "serve": 1705,
+    "attack": 1539,
+    "set": 1629,
+    "receive": 1376,
+    "block": 1530,
+    "defense": 1290
+  },
+  {
+    "id": 44,
+    "name": "Osamu Miya",
+    "position": "OP",
+    "rarity": "UR",
+    "school": "Inarizaki",
+    "image_url": "/images/characters/Miya_Osamu.png",
+    "styles": [
+      "quick",
+      "serve"
+    ],
+    "serve": 1621,
+    "attack": 1685,
+    "set": 1426,
+    "receive": 1459,
+    "block": 1428,
+    "defense": 1373
+  },
+  {
+    "id": 45,
+    "name": "Shinsuke Kita",
+    "position": "WS",
+    "rarity": "SSR",
+    "school": "Inarizaki",
+    "image_url": "/images/characters/Shinsuke_Kita.png",
+    "styles": [
+      "receive"
+    ],
+    "serve": 1238,
+    "attack": 1219,
+    "set": 1333,
+    "receive": 1476,
+    "block": 1198,
+    "defense": 1409
+  },
+  {
+    "id": 46,
+    "name": "Rintaro Suna",
+    "position": "MB",
+    "rarity": "SSR",
+    "school": "Inarizaki",
+    "image_url": "/images/characters/Rintaro_Suna.png",
+    "styles": [
+      "quick",
+      "block"
+    ],
+    "serve": 1266,
+    "attack": 1476,
+    "set": 1186,
+    "receive": 1258,
+    "block": 1324,
+    "defense": 1318
+  },
+  {
+    "id": 47,
+    "name": "Oshiro Aran",
+    "position": "WS",
+    "rarity": "SSR",
+    "school": "Inarizaki",
+    "image_url": "/images/characters/Oshiro_Aran.png",
+    "styles": [
+      "power",
+      "serve"
+    ],
+    "serve": 1,
+    "attack": 1,
+    "set": 1,
+    "receive": 1,
+    "block": 1,
+    "defense": 1
+  },
+  {
+    "id": 48,
+    "name": "Michinari Akagi",
+    "position": "L",
+    "rarity": "SSR",
+    "school": "Inarizaki",
+    "image_url": "/images/characters/Michinari_Akagi.png",
+    "styles": [
+      "receive"
+    ],
+    "serve": 1,
+    "attack": 1,
+    "set": 1,
+    "receive": 1,
+    "block": 1,
+    "defense": 1
+  },
+  {
+    "id": 49,
+    "name": "Hitoshi Ginjima",
+    "position": "WS",
+    "rarity": "SSR",
+    "school": "Inarizaki",
+    "image_url": "/images/characters/Yuto_Kosaku.png",
+    "styles": [
+      "power",
+      "receive"
+    ],
+    "serve": 1,
+    "attack": 1,
+    "set": 1,
+    "receive": 1,
+    "block": 1,
+    "defense": 1
+  },
+  {
+    "id": 50,
+    "name": "Hoshiumi Korai",
+    "position": "WS",
+    "rarity": "UR",
+    "school": "Kamomedai",
+    "image_url": "/images/characters/Hoshiumi_Korai.png",
+    "styles": [
+      "power",
+      "serve",
+      "block",
+      "receive"
+    ],
+    "serve": 1621,
+    "attack": 1704,
+    "set": 1341,
+    "receive": 1541,
+    "block": 1581,
+    "defense": 1305
+  },
+  {
+    "id": 51,
+    "name": "Hirugami Sachiro",
+    "position": "MB",
+    "rarity": "UR",
+    "school": "Kamomedai",
+    "image_url": "/images/characters/Hirugami_Sachiro.png",
+    "styles": [
+      "serve",
+      "block"
+    ],
+    "serve": 1660,
+    "attack": 1630,
+    "set": 1629,
+    "receive": 1540,
+    "block": 1742,
+    "defense": 1493
+  },
+  {
+    "id": 52,
+    "name": "Kiyoomi Sakusa",
+    "position": "WS",
+    "rarity": "UR",
+    "school": "Itachiyama",
+    "image_url": "/images/characters/Kiyoomi_Sakusa.png",
+    "styles": [
+      "receive",
+      "power"
+    ],
+    "serve": 1774,
+    "attack": 2012,
+    "set": 1667,
+    "receive": 1928,
+    "block": 1699,
+    "defense": 1656
+  },
+  {
+    "id": 53,
+    "name": "Motoya Komori",
+    "position": "L",
+    "rarity": "UR",
+    "school": "Itachiyama",
+    "image_url": "/images/characters/Motoya_Komori.png",
+    "styles": [
+      "receive",
+      "setter"
+    ],
+    "serve": 1580,
+    "attack": 1579,
+    "set": 1904,
+    "receive": 2012,
+    "block": 1580,
+    "defense": 1866
+  },
+  {
+    "id": 54,
+    "name": "Kuro Tetsuroo",
+    "position": "MB",
+    "rarity": "SP",
+    "school": "Nekoma",
+    "image_url": "/images/characters/Kuroo_Tetsuro_(Hanabi).png",
+    "styles": [
+      "receive",
+      "block"
+    ],
+    "serve": 1,
+    "attack": 1,
+    "set": 1,
+    "receive": 1,
+    "block": 1,
+    "defense": 1
+  },
+  {
+    "id": 55,
+    "name": "Akira Kunimi",
+    "position": "OP",
+    "rarity": "SP",
+    "school": "Aoba Johsai",
+    "image_url": "/images/characters/Akira_Kunimi_(Sports).png",
+    "styles": [
+      "receive",
+      "power"
+    ],
+    "serve": 1674,
+    "attack": 1950,
+    "set": 1573,
+    "receive": 1857,
+    "block": 1762,
+    "defense": 1570
+  },
+  {
+    "id": 56,
+    "name": "Kanji Koganegawa",
+    "position": "S",
+    "rarity": "SP",
+    "school": "Date Tech",
+    "image_url": "/images/characters/Kanji_Koganegawa_(Festival).png",
+    "styles": [
+      "block",
+      "setter"
+    ],
+    "serve": 1766,
+    "attack": 1661,
+    "set": 1882,
+    "receive": 1661,
+    "block": 1970,
+    "defense": 1573
+  },
+  {
+    "id": 57,
+    "name": "Toru Oikawa",
+    "position": "S",
+    "rarity": "SP",
+    "school": "Aoba Johsai",
+    "image_url": "/images/characters/Toru_Oikawa_(Halloween).png",
+    "styles": [
+      "power",
+      "setter",
+      "serve"
+    ],
+    "serve": 1862,
+    "attack": 1766,
+    "set": 1950,
+    "receive": 1577,
+    "block": 1748,
+    "defense": 1476
+  },
+  {
+    "id": 58,
+    "name": "Hajime Iwaizumi",
+    "position": "WS",
+    "rarity": "SP",
+    "school": "Aoba Johsai",
+    "image_url": "/images/characters/Hajime_Iwaizume_(Halloween).png",
+    "styles": [
+      "power",
+      "receive"
+    ],
+    "serve": 1665,
+    "attack": 1766,
+    "set": 1577,
+    "receive": 1947,
+    "block": 1753,
+    "defense": 1670
+  }
+]

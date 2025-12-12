@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
-import type { SavedTeam, ExportedTeam, SlotKey, TeamSlots, Character } from "@/types";
-import { Upload, Trash2, X, Copy } from "lucide-react";
-import { useUIStore } from "@/stores/useUIStore";
+import { useCharacterStore } from "@/stores/useCharacterStore";
 import { useSavedTeamsStore } from "@/stores/useSavedTeamsStore";
 import { useTeamStore } from "@/stores/useTeamStore";
-import { useCharacterStore } from "@/stores/useCharacterStore";
+import { useUIStore } from "@/stores/useUIStore";
+import type { ExportedTeam, SavedTeam, SlotKey, TeamSlots } from "@/types";
+import { Copy, Trash2, Upload, X } from "lucide-react";
+import { useCallback, useState } from "react";
 
 const initialTeamState: TeamSlots = {
   pos5_mb: null,
@@ -33,7 +33,6 @@ export function SavedTeamsModal() {
   const storeSaveCurrentTeam = useSavedTeamsStore((s) => s.saveCurrentTeam);
 
   const setTeam = useTeamStore((s) => s.setTeam);
-  const setBench = useTeamStore((s) => s.setBench);
   const allCharacters = useCharacterStore((s) => s.allCharacters);
 
   const handleLoadTeam = useCallback(
@@ -63,12 +62,11 @@ export function SavedTeamsModal() {
   const handleExportTeam = useCallback(
     (team: SavedTeam): string | null => {
       try {
-        const exported: ExportedTeam = { c: {}, b: [] };
+        const exported: ExportedTeam = { c: {} };
         for (const key in team.court) {
           const typed = key as SlotKey;
           exported.c[typed] = team.court[typed]?.id ?? null;
         }
-        exported.b = team.bench.map((c) => c?.id ?? null);
         return btoa(JSON.stringify(exported));
       } catch {
         showFeedback("Erro ao gerar chave.", "error");
@@ -106,17 +104,19 @@ export function SavedTeamsModal() {
 
     try {
       const data = JSON.parse(atob(importKey.trim())) as ExportedTeam;
-      if (!data?.c || !Array.isArray(data.b)) throw new Error("Formato inválido.");
+      if (!data?.c) throw new Error("Formato inválido.");
 
       const newTeam: TeamSlots = { ...initialTeamState };
-      const newBench: (Character | null)[] = Array(6).fill(null);
       let foundAll = true;
       const missing: string[] = [];
+
+      // Otimização: Map para lookup O(1) de characters por ID
+      const characterMap = new Map(allCharacters.map((c) => [c.id, c]));
 
       for (const key in data.c) {
         const typed = key as SlotKey;
         const charId = data.c[typed];
-        const found = allCharacters.find((c) => c.id === charId) ?? null;
+        const found = characterMap.get(Number(charId)) ?? null;
         newTeam[typed] = found;
         if (!found && charId) {
           missing.push(`${charId}`);
@@ -124,17 +124,7 @@ export function SavedTeamsModal() {
         }
       }
 
-      data.b.forEach((id, i) => {
-        const found = allCharacters.find((c) => c.id === id) ?? null;
-        newBench[i] = found;
-        if (!found && id) {
-          missing.push(`${id}`);
-          foundAll = false;
-        }
-      });
-
       setTeam(newTeam);
-      setBench(newBench);
       setImportKey("");
 
       const name = prompt(
@@ -154,7 +144,7 @@ export function SavedTeamsModal() {
     } catch (err: any) {
       showFeedback(`Erro ao importar: ${err.message}`, "error");
     }
-  }, [importKey, allCharacters, setTeam, setBench, storeSaveCurrentTeam, showFeedback, onClose]);
+  }, [importKey, allCharacters, setTeam, storeSaveCurrentTeam, showFeedback, onClose]);
 
   if (!isOpen) return null;
 

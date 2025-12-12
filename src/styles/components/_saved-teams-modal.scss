@@ -1,4 +1,5 @@
 @use "../variables" as *;
+@use "sass:color";
 
 .modal-overlay {
   position: fixed;
@@ -155,9 +156,9 @@
     &.yellow { background: #d7a13b; color: #fff; }
     &.red { background: #c83c3c; color: #fff; }
 
-    &:hover.blue { background: lighten(#2d6cd9, 5%); }
-    &:hover.yellow { background: lighten(#d7a13b, 5%); }
-    &:hover.red { background: lighten(#c83c3c, 5%); }
+    &:hover.blue { background: color.adjust(#2d6cd9, $lightness: 5%); }
+    &:hover.yellow { background: color.adjust(#d7a13b, $lightness: 5%); }
+    &:hover.red { background: color.adjust(#c83c3c, $lightness: 5%); }
   }
 
   &__import {
@@ -188,7 +189,7 @@
       padding: 0.4rem 0.8rem;
       cursor: pointer;
       transition: background 0.2s ease;
-      &:hover { background: lighten(#d78b3a, 6%); }
+      &:hover { background: color.adjust(#d78b3a, $lightness: 6%); }
     }
   }
 }

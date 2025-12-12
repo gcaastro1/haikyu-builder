@@ -2,11 +2,14 @@
   "name": "haikyu-builder",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:mock": "cross-env NEXT_PUBLIC_USE_MOCK=1 next dev --turbopack",
     "build": "next build --turbopack --no-lint",
     "start": "next start",
-    "lint": "eslint"
+    "start:mock": "cross-env NEXT_PUBLIC_USE_MOCK=1 next start",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --ignore-pattern .next --ignore-pattern node_modules"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -39,6 +42,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cross-env": "^7.0.3",
     "eslint": "^9",
     "eslint-config-next": "15.5.6",
     "typescript": "^5"

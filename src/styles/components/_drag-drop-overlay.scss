@@ -1,0 +1,35 @@
+@use "../variables" as *;
+
+.drag-overlay {
+  &__container {
+    width: 120px;
+    height: 160px;
+    position: relative;
+    opacity: 0.9;
+    transform: rotate(5deg) scale(1.05);
+    cursor: grabbing;
+    pointer-events: none;
+  }
+
+  &__image {
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  &__label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    padding: 0.5rem;
+    border-radius: 0 0 8px 8px;
+  }
+
+  &__name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  }
+}

@@ -1,6 +1,6 @@
+import { Character, SlotKey, TeamSlots } from "@/types";
 import { create, StoreApi, UseBoundStore } from "zustand";
 import { persist } from "zustand/middleware";
-import { Character, TeamSlots, SlotKey } from "@/types";
 import { useCharacterStore } from "./useCharacterStore";
 
 const initialTeamState: TeamSlots = {
@@ -24,7 +24,6 @@ const clockwiseOrder: SlotKey[] = [
 
 export type TeamStoreState = {
   team: TeamSlots;
-  bench: (Character | null)[];
   isPositionFree: boolean;
 
   slotOrder: SlotKey[];
@@ -37,7 +36,6 @@ export type TeamStoreState = {
   triggerRotation: () => void;
 
   setTeam: (newTeam: TeamSlots) => void;
-  setBench: (newBench: (Character | null)[]) => void;
 
   setCharacterInSlot: (
     slotIdentifier: string,
@@ -45,14 +43,13 @@ export type TeamStoreState = {
   ) => void;
 
   removeFromCourt: (slotKey: SlotKey) => void;
-  removeFromBench: (index: number) => void;
 
   togglePositionMode: () => void;
 
   rotateTeam: () => void;
 
   clearTeam: () => void;
-  loadTeam: (team: TeamSlots, bench: (Character | null)[]) => void;
+  loadTeam: (team: TeamSlots) => void;
 };
 
 export const useTeamStore: UseBoundStore<StoreApi<TeamStoreState>> =
@@ -60,7 +57,6 @@ export const useTeamStore: UseBoundStore<StoreApi<TeamStoreState>> =
     persist(
       (set, get) => ({
         team: initialTeamState,
-        bench: Array(6).fill(null),
         isPositionFree: false,
 
         slotOrder: [...clockwiseOrder],
@@ -76,8 +72,6 @@ export const useTeamStore: UseBoundStore<StoreApi<TeamStoreState>> =
 
         toggleJPMode: () => set((state) => ({ isJPMode: !state.isJPMode })),
 
-        setBench: (newBench) => set({ bench: newBench }),
-
         setCharacterInSlot: (slotIdentifier, character) =>
           set((state) => {
             if (slotIdentifier.startsWith("court-")) {
@@ -85,15 +79,6 @@ export const useTeamStore: UseBoundStore<StoreApi<TeamStoreState>> =
               const updatedTeam = { ...state.team, [slotKey]: character };
               useCharacterStore.getState().calculateBondsForTeam(updatedTeam);
               return { team: updatedTeam };
-            }
-
-            if (slotIdentifier.startsWith("bench-")) {
-              const index = parseInt(slotIdentifier.replace("bench-", ""), 10);
-              if (!isNaN(index) && index >= 0 && index < 6) {
-                const bench = [...state.bench];
-                bench[index] = character;
-                return { bench };
-              }
             }
 
             return {};
@@ -104,13 +89,6 @@ export const useTeamStore: UseBoundStore<StoreApi<TeamStoreState>> =
             const updatedTeam = { ...state.team, [slotKey]: null };
             useCharacterStore.getState().calculateBondsForTeam(updatedTeam);
             return { team: updatedTeam };
-          }),
-
-        removeFromBench: (index) =>
-          set((state) => {
-            const bench = [...state.bench];
-            bench[index] = null;
-            return { bench };
           }),
 
         togglePositionMode: () =>
@@ -141,20 +119,20 @@ export const useTeamStore: UseBoundStore<StoreApi<TeamStoreState>> =
         },
 
         clearTeam: () => {
-          set({ team: initialTeamState, bench: Array(6).fill(null) });
+          set({ team: initialTeamState });
           useCharacterStore.getState().calculateBondsForTeam(initialTeamState);
         },
 
-        loadTeam: (team, bench) => {
-          set({ team, bench });
+        loadTeam: (team) => {
+          set({ team });
           useCharacterStore.getState().calculateBondsForTeam(team);
         },
       }),
       {
         name: "haikyu-team-storage",
+        skipHydration: true, // ✅ Evita hidratação automática que causa mismatch SSR/CSR
         partialize: (state) => ({
           team: state.team,
-          bench: state.bench,
           isPositionFree: state.isPositionFree,
           slotOrder: state.slotOrder,
         }),

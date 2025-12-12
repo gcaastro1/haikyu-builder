@@ -64,4 +64,68 @@
     color: rgba($color-secondary, 0.95);
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
   }
+
+  // ✅ Feedback visual para drop válido
+  &--valid {
+    border-color: rgba(125, 211, 252, 0.8) !important;
+    background: linear-gradient(
+      to bottom,
+      rgba(125, 211, 252, 0.15),
+      rgba(24, 24, 27, 0.95)
+    );
+    box-shadow: 0 0 20px rgba(125, 211, 252, 0.4),
+      0 4px 10px rgba(0, 0, 0, 0.4) !important;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 1rem;
+      padding: 2px;
+      background: linear-gradient(
+        135deg,
+        rgba(125, 211, 252, 0.6),
+        rgba(59, 130, 246, 0.6)
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      z-index: -1;
+      animation: pulse-glow 1.5s ease-in-out infinite;
+    }
+
+    .team-slot__label {
+      color: rgba(125, 211, 252, 1);
+      text-shadow: 0 0 8px rgba(125, 211, 252, 0.8);
+    }
+  }
+
+  // ✅ Feedback visual para drop inválido
+  &--invalid {
+    border-color: rgba(239, 68, 68, 0.6) !important;
+    background: linear-gradient(
+      to bottom,
+      rgba(239, 68, 68, 0.1),
+      rgba(24, 24, 27, 0.95)
+    );
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3),
+      0 4px 10px rgba(0, 0, 0, 0.4) !important;
+
+    .team-slot__label {
+      color: rgba(239, 68, 68, 0.9);
+      text-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
+    }
+  }
+}
+
+// ✅ Animação de pulso para feedback válido
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }

@@ -1,11 +1,10 @@
 "use client";
 
-import { useFormState } from "react-dom";
-import { createCharacter } from "../lib/actions";
-import { SectionHeader } from "../components/SectionHeader";
-import { StyleSelector } from "../components/StyleSelector";
 import { useState } from "react";
 import { ImageSelector } from "../components/ImageSelector";
+import { SectionHeader } from "../components/SectionHeader";
+import { StyleSelector } from "../components/StyleSelector";
+import { createCharacterLocal } from "../lib/actions";
 
 const positions = ["OP", "MB", "WS", "S", "L"];
 const rarities = ["SR", "SSR", "UR", "SP"];
@@ -24,94 +23,82 @@ const schools = [
 ];
 
 export default function CadastroPage() {
-  const initialState = { message: "" };
-  const [state, formAction] = useFormState(createCharacter, initialState);
-
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [uploadStatus, setUploadStatus] = useState<
-    "idle" | "uploading" | "success" | "error"
-  >("idle");
+  const [message, setMessage] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
-  const [uploadError, setUploadError] = useState<string>("");
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "saving" | "success" | "error">("idle");
 
-  const handleFileUpload = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!selectedFile || uploadStatus === "uploading") return;
+    setSubmitStatus("saving");
+    setMessage("");
+    const fd = new FormData(event.currentTarget);
+    const name = (fd.get("name") as string) || "";
+    const position = (fd.get("position") as string) || "";
+    const rarity = (fd.get("rarity") as string) || "";
+    const school = (fd.get("school") as string) || "";
+    const styles = ((fd.get("styles") as string) || "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter((s) => s);
+    const serve = Number(fd.get("serve") || 0);
+    const attack = Number(fd.get("attack") || 0);
+    const setVal = Number(fd.get("set") || 0);
+    const receive = Number(fd.get("receive") || 0);
+    const block = Number(fd.get("block") || 0);
+    const defense = Number(fd.get("defense") || 0);
 
-    if (
-      !process.env.CLOUDINARY_CLOUD_NAME ||
-      !process.env.CLOUDINARY_UPLOAD_PRESET
-    ) {
-      setUploadStatus("error");
-      setUploadError("ERRO: Cloudinary não configurado.");
+    const img = imageUrl || "/images/placeholder.png";
+
+    if (!name || !position || !rarity || !school) {
+      setSubmitStatus("error");
+      setMessage("Erro: Campos obrigatórios (Nome, Posição, Raridade, Escola) estão faltando.");
       return;
     }
 
-    setUploadStatus("uploading");
-    setUploadError("");
-    setImageUrl("");
+    const result = await createCharacterLocal({
+      name,
+      position,
+      rarity,
+      school,
+      image_url: img,
+      styles,
+      serve,
+      attack,
+      set: setVal,
+      receive,
+      block,
+      defense,
+    } as any);
 
-    try {
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-      formData.append("upload_preset", process.env.CLOUDINARY_UPLOAD_PRESET);
-
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      const data = await response.json();
-
-      if (response.ok && data.secure_url) {
-        setUploadStatus("success");
-        setImageUrl(data.secure_url);
-        setUploadError("");
-        formAction(new FormData(event.currentTarget));
-      } else {
-        setUploadStatus("error");
-        setUploadError(
-          data.error?.message || "Falha no upload da imagem."
-        );
-      }
-    } catch (error) {
-      setUploadStatus("error");
-      setUploadError("Erro de rede durante o upload.");
-    }
+    setSubmitStatus(result.success ? "success" : "error");
+    setMessage(result.message);
+    if (result.success) event.currentTarget.reset();
   };
 
   return (
     <main className="cadastro-page">
       <SectionHeader title="Cadastro de Personagem" />
 
-      {state.message && (
+      {message && (
         <p
           className={`cadastro-page__message ${
-            state.message.startsWith("Erro") || state.message.startsWith("Falha")
+            message.startsWith("Erro") || message.startsWith("Falha")
               ? "error"
               : "success"
           }`}
         >
-          {state.message}
+          {message}
         </p>
       )}
 
-      <form
-        action={formAction}
-        className="cadastro-page__form"
-      >
+      <form onSubmit={handleSubmit} className="cadastro-page__form">
         <div className="cadastro-page__field cadastro-page__field--wide">
           <label>Nome</label>
           <input type="text" name="name" required />
         </div>
 
         <div className="cadastro-page__field cadastro-page__field--wide">
-          <ImageSelector name="image_url" onChange={function (newUrl: string): void {
-                      throw new Error("Function not implemented.");
-                  } } />
+          <ImageSelector name="image_url" initialValue={imageUrl} onChange={setImageUrl} />
         </div>
 
         <div className="cadastro-page__field">
@@ -182,13 +169,8 @@ export default function CadastroPage() {
         </div>
 
         <div className="cadastro-page__submit">
-          <button
-            type="submit"
-            disabled={uploadStatus === "uploading"}
-          >
-            {uploadStatus === "uploading"
-              ? "Aguarde o Upload..."
-              : "Cadastrar Personagem"}
+          <button type="submit" disabled={submitStatus === "saving"}>
+            {submitStatus === "saving" ? "Salvando..." : "Cadastrar Personagem"}
           </button>
         </div>
       </form>

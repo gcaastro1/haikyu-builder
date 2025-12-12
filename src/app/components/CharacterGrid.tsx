@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Character } from "@/types";
 import { CharacterCard } from "./CharacterCard";
@@ -50,7 +50,21 @@ export function CharacterGrid({
 
   useEffect(() => {
     setVisibleCount(BATCH_SIZE);
-  }, [characters]);
+  }, [characters.length]); // ✅ Otimização: depende apenas do length
+
+  // ✅ Otimização: Memoiza lista visível para evitar recálculos
+  const visibleCharacters = useMemo(
+    () => characters.slice(0, visibleCount),
+    [characters, visibleCount]
+  );
+
+  // ✅ Otimização: Memoiza callback para evitar re-renders
+  const handleSelect = useCallback(
+    (character: Character) => {
+      onSelect(character);
+    },
+    [onSelect]
+  );
 
   if (isLoading)
     return (
@@ -73,8 +87,6 @@ export function CharacterGrid({
       </p>
     );
 
-  const visibleCharacters = characters.slice(0, visibleCount);
-
   return (
     <div className="database-character-grid">
       <div className="database-character-grid__counter">
@@ -95,7 +107,7 @@ export function CharacterGrid({
                 character={char}
                 isDisabled={currentTeamNames.has(char.name)}
                 originType="list"
-                onClick={() => onSelect(char)}
+                onClick={() => handleSelect(char)}
               />
             </motion.div>
           ))}

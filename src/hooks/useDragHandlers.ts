@@ -1,45 +1,111 @@
-import { useCallback, useState } from "react";
-import { DragEndEvent, DragStartEvent } from "@dnd-kit/core";
-import { Character, Position, SlotKey, TeamSlots } from "@/types";
 import { useTeamStore } from "@/stores/useTeamStore";
 import { useUIStore } from "@/stores/useUIStore";
+import { Character, Position, SlotKey, TeamSlots } from "@/types";
+import { DragEndEvent, DragOverEvent, DragStartEvent } from "@dnd-kit/core";
+import { useCallback, useRef, useState } from "react";
 
 type ActiveDragData = {
   character: Character;
-  type: "list" | "court" | "bench";
+  type: "list" | "court";
   [key: string]: any;
 };
 
 type OverDragData = {
-  type: "court" | "bench" | "list";
+  type: "court" | "list";
   acceptedPosition?: Position;
   slotKey?: SlotKey;
-  index?: number;
   [key: string]: any;
 };
 
 export function useDragHandlers(
   team: TeamSlots,
-  bench: (Character | null)[],
   teamCharacterNames: Set<string>,
   isPositionFree: boolean
 ) {
   const [activeDragItem, setActiveDragItem] = useState<Character | null>(null);
+  const [overId, setOverId] = useState<string | null>(null);
+  
+  // ✅ Otimização: Usa refs para evitar dependências desnecessárias nos callbacks
+  const teamRef = useRef(team);
+  const isPositionFreeRef = useRef(isPositionFree);
+  const teamCharacterNamesRef = useRef(teamCharacterNames);
+
+  // Atualiza refs quando valores mudam
+  teamRef.current = team;
+  isPositionFreeRef.current = isPositionFree;
+  teamCharacterNamesRef.current = teamCharacterNames;
 
   const setTeam = useTeamStore((s) => s.setTeam);
-  const setBench = useTeamStore((s) => s.setBench);
   const showFeedback = useUIStore((s) => s.showFeedback);
+
+  // ✅ Função para validar se um slot é válido para o personagem
+  const isValidDrop = useCallback((draggedCharacter: Character, overData: OverDragData): boolean => {
+    if (!overData) return false;
+
+    // Validação para slots da quadra
+    if (overData.type === "court") {
+      const targetSlotKey = overData.slotKey as SlotKey;
+      const targetPosition = overData.acceptedPosition as Position;
+
+      // Slot de líbero
+      if (targetSlotKey === "libero") {
+        return draggedCharacter.position === "L";
+      }
+
+      // Líberos só podem ir para slot de líbero
+      if (draggedCharacter.position === "L") {
+        return false;
+      }
+
+      // Modo posição livre: qualquer posição exceto L pode ir em qualquer slot exceto líbero
+      if (isPositionFreeRef.current) {
+        return true;
+      }
+
+      // Modo restrito: posição deve corresponder
+      return draggedCharacter.position === targetPosition;
+    }
+
+    return false;
+  }, []);
 
   const handleDragStart = useCallback((event: DragStartEvent) => {
     const { active } = event;
     if (active.data.current?.character) {
       setActiveDragItem(active.data.current.character as Character);
+      setOverId(null);
     }
   }, []);
 
+  // ✅ Handler para rastrear quando está sobre um slot
+  const handleDragOver = useCallback((event: DragOverEvent) => {
+    const { active, over } = event;
+    if (!over || !active.data.current?.character) {
+      setOverId(null);
+      return;
+    }
+
+    const draggedCharacter = active.data.current.character as Character;
+    const overData = over.data.current as OverDragData;
+
+    // Valida se o drop é válido
+    if (isValidDrop(draggedCharacter, overData)) {
+      setOverId(over.id as string);
+    } else {
+      setOverId(null);
+    }
+  }, [isValidDrop]);
+
+  const handleDragCancel = useCallback(() => {
+    setActiveDragItem(null);
+    setOverId(null);
+  }, []);
+
+  // ✅ Otimização: Callback sem dependências usando refs
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
       setActiveDragItem(null);
+      setOverId(null);
       const { active, over } = event;
       if (!over || active.id === over.id) return;
 
@@ -48,18 +114,22 @@ export function useDragHandlers(
       const draggedCharacter = activeData.character;
       if (!draggedCharacter) return;
 
-      const newTeam = { ...team };
-      const newBench = [...bench];
+      // ✅ Usa refs para valores atuais sem causar re-renders
+      const currentTeam = teamRef.current;
+      
+      const currentIsPositionFree = isPositionFreeRef.current;
+      const currentTeamCharacterNames = teamCharacterNamesRef.current;
+
+      const newTeam = { ...currentTeam };
+      
 
       let charFromTargetSlot: Character | null = null;
       if (overData?.type === "court")
-        charFromTargetSlot = team[overData.slotKey as SlotKey];
-      else if (overData?.type === "bench")
-        charFromTargetSlot = bench[overData.index as number];
+        charFromTargetSlot = currentTeam[overData.slotKey as SlotKey];
 
       const isSubstituting = charFromTargetSlot?.name === draggedCharacter.name;
 
-      if (teamCharacterNames.has(draggedCharacter.name) && !isSubstituting) {
+      if (currentTeamCharacterNames.has(draggedCharacter.name) && !isSubstituting) {
         showFeedback(
           `'${draggedCharacter.name}' já está no time. Só pode substituir.`,
           "error"
@@ -80,7 +150,7 @@ export function useDragHandlers(
           return;
         }
         if (
-          isPositionFree &&
+          currentIsPositionFree &&
           targetSlotKey !== "libero" &&
           draggedCharacter.position === "L"
         ) {
@@ -88,7 +158,7 @@ export function useDragHandlers(
           return;
         }
         if (
-          !isPositionFree &&
+          !currentIsPositionFree &&
           targetSlotKey !== "libero" &&
           draggedCharacter.position !== targetPosition
         ) {
@@ -103,27 +173,26 @@ export function useDragHandlers(
       // === Atualização de estado ===
       if (overData?.type === "court")
         newTeam[overData.slotKey as SlotKey] = draggedCharacter;
-      else if (overData?.type === "bench")
-        newBench[overData.index as number] = draggedCharacter;
+      
 
       if (activeData?.type === "court")
         newTeam[activeData.slotKey as SlotKey] = isSubstituting
           ? null
           : charFromTargetSlot;
-      else if (activeData?.type === "bench")
-        newBench[activeData.index as number] = isSubstituting
-          ? null
-          : charFromTargetSlot;
+      
 
       setTeam(newTeam);
-      setBench(newBench);
     },
-    [team, bench, isPositionFree, showFeedback, teamCharacterNames, setTeam, setBench]
+    [showFeedback, setTeam] // ✅ Apenas dependências estáveis
   );
 
   return {
     activeDragItem,
+    overId,
     handleDragStart,
+    handleDragOver,
     handleDragEnd,
+    handleDragCancel,
+    isValidDrop,
   };
 }

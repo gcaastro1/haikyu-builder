@@ -1,72 +1,66 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
-import { supabase } from "../lib/supabaseClient";
+import { useCharacterStore } from "@/stores/useCharacterStore";
+import { useTeamStore } from "@/stores/useTeamStore";
+import { useUIStore } from "@/stores/useUIStore";
 import type { Character, Position, School } from "@/types";
+import { AnimatePresence, motion, Variants } from "framer-motion";
+import { X } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { CharacterCard } from "./CharacterCard";
 import { NameSearchInput } from "./NameSearchInput";
 import { SchoolFilter } from "./SchoolFilter";
-import { X } from "lucide-react";
-import { useUIStore } from "@/stores/useUIStore";
-import { useTeamStore } from "@/stores/useTeamStore";
 
 export function CharacterSelectionModal() {
-  const isSelectionModalOpen = useUIStore((s) => s.isSelectionModalOpen);
-  const targetSlotIdentifier = useUIStore((s) => s.targetSlotIdentifier);
-  const modalPosition = useUIStore((s) => s.modalPosition);
-  const closeModals = useUIStore((s) => s.closeModals);
-  const showFeedback = useUIStore((s) => s.showFeedback);
+  const { 
+    isSelectionModalOpen, 
+    targetSlotIdentifier, 
+    modalPosition, 
+    closeModals, 
+    showFeedback 
+  } = useUIStore(
+    useShallow((s) => ({
+      isSelectionModalOpen: s.isSelectionModalOpen,
+      targetSlotIdentifier: s.targetSlotIdentifier,
+      modalPosition: s.modalPosition,
+      closeModals: s.closeModals,
+      showFeedback: s.showFeedback,
+    }))
+  );
 
-  const setCharacterInSlot = useTeamStore((s) => s.setCharacterInSlot);
-  const team = useTeamStore((s) => s.team);
-  const bench = useTeamStore((s) => s.bench);
+  const { setCharacterInSlot, team } = useTeamStore(
+    useShallow((s) => ({
+      setCharacterInSlot: s.setCharacterInSlot,
+      team: s.team,
+    }))
+  );
 
-  const [allCharacters, setAllCharacters] = useState<Character[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // ✅ Otimização: Usa dados do store ao invés de fetch duplicado
+  const { allCharacters, isLoading, fetchError, fetchInitialData, hasLoadedData } = useCharacterStore(
+    useShallow((s) => ({
+      allCharacters: s.allCharacters,
+      isLoading: s.isLoading,
+      fetchError: s.fetchError,
+      fetchInitialData: s.fetchInitialData,
+      hasLoadedData: s.hasLoadedData,
+    }))
+  );
+
+  useEffect(() => {
+    if (!hasLoadedData && !isLoading) fetchInitialData();
+  }, [hasLoadedData, isLoading, fetchInitialData]);
+
   const [schoolFilter, setSchoolFilter] = useState<School | "ALL">("ALL");
   const [nameSearch, setNameSearch] = useState<string>("");
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
+  const [visibleCount, setVisibleCount] = useState(24);
+  const [batchSize, setBatchSize] = useState(24);
+  const loaderRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    if (isSelectionModalOpen && allCharacters.length === 0) {
-      const fetchCharacters = async () => {
-        setLoading(true);
-        try {
-          const { data, error } = await supabase
-            .from("Characters")
-            .select("*")
-            .order("name", { ascending: true });
-
-          if (error) throw error;
-
-          const formatted = data.map((char) => ({
-            ...char,
-            styles: Array.isArray(char.styles)
-              ? char.styles
-              : typeof char.styles === "string"
-              ? JSON.parse(char.styles)
-              : [],
-          }));
-
-          setAllCharacters(formatted);
-        } catch (err: any) {
-          console.error("Erro ao buscar personagens:", err);
-          setError(err.message);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchCharacters();
-    }
-  }, [isSelectionModalOpen, allCharacters.length]);
-
-  const clickedFromBench = targetSlotIdentifier?.startsWith("bench");
   const autoPosition = useMemo(() => {
-    if (clickedFromBench) return "ALL";
     return modalPosition as Position | "ALL";
-  }, [modalPosition, clickedFromBench]);
+  }, [modalPosition]);
 
   const positionNames: Record<string, string> = {
     S: "Levantador",
@@ -80,14 +74,38 @@ export function CharacterSelectionModal() {
 
   const isJPMode = useTeamStore((s) => s.isJPMode);
 
+  // Otimização: memoizar searchTerm normalizado
+  const normalizedNameSearch = nameSearch.toLowerCase();
+
   const filteredCharacters = useMemo(() => {
     return allCharacters.filter((c) => {
       if (!isJPMode && autoPosition !== "ALL" && c.position !== autoPosition) return false;
       if (schoolFilter !== "ALL" && c.school !== schoolFilter) return false;
-      if (nameSearch && !c.name.toLowerCase().includes(nameSearch.toLowerCase())) return false;
+      if (nameSearch && !c.name.toLowerCase().includes(normalizedNameSearch)) return false;
       return true;
     });
-  }, [allCharacters, autoPosition, schoolFilter, nameSearch, isJPMode]);
+  }, [allCharacters, autoPosition, schoolFilter, nameSearch, normalizedNameSearch, isJPMode]);
+
+  const handleIntersect = useCallback((entries: IntersectionObserverEntry[]) => {
+    const [entry] = entries;
+    if (entry.isIntersecting) {
+      setVisibleCount((prev) => Math.min(prev + batchSize, filteredCharacters.length));
+    }
+  }, [filteredCharacters.length, batchSize]);
+
+  useEffect(() => {
+    const w = typeof window !== "undefined" ? window.innerWidth : 1024;
+    const size = w <= 640 ? 18 : w <= 1024 ? 24 : 30;
+    setBatchSize(size);
+    setVisibleCount(size);
+  }, [filteredCharacters]);
+
+  useEffect(() => {
+    if (!loaderRef.current) return;
+    const observer = new IntersectionObserver(handleIntersect, { rootMargin: "200px" });
+    observer.observe(loaderRef.current);
+    return () => observer.disconnect();
+  }, [handleIntersect]);
 
   // === NOVO: cria um set de nomes que já estão na quadra ===
   const inCourtNames = useMemo(() => {
@@ -101,12 +119,11 @@ export function CharacterSelectionModal() {
   const handleConfirm = () => {
     if (!selectedCharacter || !targetSlotIdentifier) return;
 
-    const currentNames = new Set([
-      ...Object.values(team)
+    const currentNames = new Set(
+      Object.values(team)
         .filter(Boolean)
-        .map((c) => c!.name),
-      ...bench.filter(Boolean).map((c) => c!.name),
-    ]);
+        .map((c) => c!.name)
+    );
 
     if (currentNames.has(selectedCharacter.name)) {
       showFeedback(`${selectedCharacter.name} já está no seu time.`, "error");
@@ -156,11 +173,7 @@ export function CharacterSelectionModal() {
             className="character-modal"
           >
             <header className="character-modal__header">
-              <h3>
-                {clickedFromBench
-                  ? "Selecionar Personagem para o Banco"
-                  : `Selecionar ${positionTitle}`}
-              </h3>
+              <h3>{`Selecionar ${positionTitle}`}</h3>
               <button onClick={closeModals} aria-label="Fechar">
                 <X size={24} />
               </button>
@@ -175,14 +188,14 @@ export function CharacterSelectionModal() {
             </section>
 
             <main className="character-modal__list">
-              {loading && <p>Carregando...</p>}
-              {error && <p className="error">{error}</p>}
-              {!loading && !error && filteredCharacters.length === 0 && (
+              {isLoading && <p>Carregando...</p>}
+              {fetchError && <p className="error">{fetchError}</p>}
+              {!isLoading && !fetchError && filteredCharacters.length === 0 && (
                 <p className="empty">Nenhum personagem encontrado.</p>
               )}
 
               <div className="character-modal__grid">
-                {filteredCharacters.map((char) => {
+                {filteredCharacters.slice(0, visibleCount).map((char) => {
                   const isSelected = selectedCharacter?.id === char.id;
                   const isDisabled = inCourtNames.has(char.name); // 🔒 bloqueado se já está na quadra
                   return (
@@ -203,6 +216,9 @@ export function CharacterSelectionModal() {
                     </motion.div>
                   );
                 })}
+                {visibleCount < filteredCharacters.length && (
+                  <div ref={loaderRef} className="list-loader">Carregando mais...</div>
+                )}
               </div>
             </main>
 

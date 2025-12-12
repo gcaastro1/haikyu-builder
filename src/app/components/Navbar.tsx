@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useI18nStore } from "@/stores/useI18nStore";
 import { Menu, X } from "lucide-react";
-import { DonateModal } from "./DonateModal"; 
+import Link from "next/link";
+import { useState } from "react";
+import { DonateModal } from "./DonateModal";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDonateOpen, setIsDonateOpen] = useState(false);
+  const { lang, setLang } = useI18nStore();
 
   const navLinks = [
     { href: "/", label: "Builder" },
@@ -39,6 +41,16 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <select
+              value={lang}
+              onChange={(e) => setLang(e.target.value as any)}
+              className="navbar__lang-select"
+              aria-label="Selecionar idioma"
+            >
+              <option value="pt">PT</option>
+              <option value="en">EN</option>
+              <option value="es">ES</option>
+            </select>
           </div>
 
           <div className="navbar__desktop-donate">
@@ -70,6 +82,19 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              <div className="navbar__mobile-lang">
+                <label htmlFor="lang-select">Idioma</label>
+                <select
+                  id="lang-select"
+                  value={lang}
+                  onChange={(e) => setLang(e.target.value as any)}
+                  className="navbar__lang-select"
+                >
+                  <option value="pt">PT</option>
+                  <option value="en">EN</option>
+                  <option value="es">ES</option>
+                </select>
+              </div>
 
               <div className="navbar__mobile-divider"></div>
 

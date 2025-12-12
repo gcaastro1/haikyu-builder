@@ -1,6 +1,6 @@
+import { SavedTeam } from "@/types";
 import { create, StoreApi, UseBoundStore } from "zustand";
 import { persist } from "zustand/middleware";
-import { SavedTeam } from "@/types";
 import { useTeamStore } from "./useTeamStore";
 
 export type SavedTeamsState = {
@@ -21,7 +21,7 @@ export const useSavedTeamsStore: UseBoundStore<StoreApi<SavedTeamsState>> =
           const trimmedName = teamName.trim();
           if (!trimmedName) return;
 
-          const { team, bench } = useTeamStore.getState();
+          const { team } = useTeamStore.getState();
 
           const existing = get().savedTeamsList.find(
             (t) => t.name.toLowerCase() === trimmedName.toLowerCase()
@@ -34,7 +34,6 @@ export const useSavedTeamsStore: UseBoundStore<StoreApi<SavedTeamsState>> =
           const newSavedTeam: SavedTeam = {
             name: trimmedName,
             court: { ...team },
-            bench: [...bench],
             savedAt: new Date().toISOString(),
           };
 
@@ -43,12 +42,12 @@ export const useSavedTeamsStore: UseBoundStore<StoreApi<SavedTeamsState>> =
         },
 
         loadTeam: (teamToLoad) => {
-          if (!teamToLoad.court || !teamToLoad.bench) {
+          if (!teamToLoad.court) {
             console.error("Dados de time corrompidos.");
             return false;
           }
 
-          useTeamStore.getState().loadTeam(teamToLoad.court, teamToLoad.bench);
+          useTeamStore.getState().loadTeam(teamToLoad.court);
           return true;
         },
 
@@ -61,6 +60,7 @@ export const useSavedTeamsStore: UseBoundStore<StoreApi<SavedTeamsState>> =
       }),
       {
         name: "haikyu-saved-teams",
+        skipHydration: true, // ✅ Evita hidratação automática que causa mismatch SSR/CSR
         partialize: (state) => ({
           savedTeamsList: state.savedTeamsList,
         }),

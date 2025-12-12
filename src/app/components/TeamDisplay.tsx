@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useMemo } from "react";
-import { useTeamStore } from "@/stores/useTeamStore";
 import { useCharacterStore } from "@/stores/useCharacterStore";
+import { useTeamStore } from "@/stores/useTeamStore";
 import {
-  TeamType,
-  RelevantStyleDisplay,
-  dbStyleToTeamTypeMap,
-  teamTypeStyles,
+    RelevantStyleDisplay,
+    TeamType,
+    dbStyleToTeamTypeMap,
+    teamTypeStyles,
 } from "@/types";
+import { useMemo } from "react";
 
 const displayOrder: RelevantStyleDisplay[] = [
   "Ataque Rápido",
@@ -36,10 +36,13 @@ export function TeamTypeDisplay() {
       Recepção: 0,
     };
 
+    // ✅ Otimização: Cria um Map para lookup O(1) ao invés de find O(n)
+    const characterMap = new Map(allCharacters.map((c) => [c.id, c]));
+
     Object.values(team)
       .filter(Boolean)
       .forEach((member) => {
-        const found = allCharacters.find((c) => c.id === member?.id);
+        const found = characterMap.get(member!.id);
         if (found && Array.isArray(found.styles)) {
           found.styles.forEach((style: string) => {
             const translated =

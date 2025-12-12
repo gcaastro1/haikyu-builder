@@ -25,11 +25,19 @@ export function calculateActiveBonds(
   if (team.length === 0) return [];
 
   const calculated: CalculatedBond[] = [];
+  const teamIdsSet = new Set<number>(team.map((c) => c.id));
+
+  // ✅ Agrupa os links por bond_id para evitar filter repetidos
+  const linksByBond = new Map<number, CharacterBondLink[]>();
+  for (const l of allLinks) {
+    const arr = linksByBond.get(l.bond_id);
+    if (arr) arr.push(l);
+    else linksByBond.set(l.bond_id, [l]);
+  }
 
   // -- Helpers
   const norm = (s: string) => s.toLowerCase().trim();
   const schoolSet = new Set(SCHOOL_NAMES.map(norm));
-  const teamNames = team.map((c) => normalizeName(c.name));
   const teamSchoolsCount: Record<string, number> = {};
   for (const c of team) {
     const sc = c.school ? norm(String(c.school)) : "";
@@ -73,23 +81,13 @@ export function calculateActiveBonds(
     const isTeamBond = schoolSet.has(norm(bond.name));
     if (isTeamBond) continue; // já tratamos acima
 
-    const links = allLinks.filter((l) => l.bond_id === bond.id);
+    const links = linksByBond.get(bond.id) || [];
     if (links.length === 0) continue;
 
-    // Regra de "versões": computa por NOME normalizado
-    const bondNames = links
-      .map((lnk) => {
-        const ch = allCharacters.find((c) => c.id === lnk.character_id);
-        return ch ? normalizeName(ch.name) : "";
-      })
-      .filter(Boolean);
-
-    const uniqueRequiredNames = Array.from(new Set(bondNames));
-    const currentCount = uniqueRequiredNames.filter((nm) =>
-      teamNames.includes(nm)
-    ).length;
-
-    const totalRequired = uniqueRequiredNames.length;
+    // ✅ Novo critério: avalia exclusivamente por IDs de personagem
+    const requiredIds = Array.from(new Set(links.map((lnk) => lnk.character_id)));
+    const currentCount = requiredIds.filter((id) => teamIdsSet.has(id)).length;
+    const totalRequired = requiredIds.length;
     const hasAnyMemberOnCourt = currentCount > 0;
     const isActive = currentCount === totalRequired;
 
@@ -110,11 +108,4 @@ export function calculateActiveBonds(
   return unique.sort((a, b) => Number(b.isActive) - Number(a.isActive));
 }
 
-// remove sufixos/variações de versão no nome do personagem
-function normalizeName(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/\(.*?\)/g, "") // remove qualquer coisa entre parênteses
-    .replace(/-sp| ur| sr| ssr| sp/gi, "")
-    .trim();
-}
+// Utilidades de string (mantidas para bonds de time por escola)
