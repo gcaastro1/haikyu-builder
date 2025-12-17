@@ -36,6 +36,8 @@ export function CharacterList({ className = "" }: CharacterListProps) {
       const navHeight = nav ? (nav as HTMLElement).getBoundingClientRect().height : 0;
       setTopOffset(Math.round(navHeight));
       setIsMobile(window.innerWidth < 992);
+      document.documentElement.style.setProperty("--navbar-height", `${Math.round(navHeight)}px`);
+      document.documentElement.style.setProperty("--drawer-height-mobile", `${DRAWER_HEIGHT_MOBILE}px`);
     };
 
     updateLayout();
@@ -136,18 +138,6 @@ export function CharacterList({ className = "" }: CharacterListProps) {
           : { x: isExpanded ? 0 : BUTTON_COLLAPSED_OFFSET }
         }
         transition={{ duration: 0.32, ease: "easeInOut" }}
-        style={{
-          ...(isMobile
-            ? {
-                width: "100%",
-                height: isExpanded ? DRAWER_HEIGHT_MOBILE : BUTTON_WIDTH,
-                bottom: 0,
-              }
-            : {
-                top: topOffset,
-                height: `calc(100vh - ${topOffset}px)`,
-              }),
-        }}
       >
       {/* Header com controles */}
       <div className="character-list__header">
@@ -156,20 +146,19 @@ export function CharacterList({ className = "" }: CharacterListProps) {
           onClick={() => setIsExpanded(!isExpanded)}
           aria-label={isExpanded ? "Recolher lista" : "Expandir lista"}
         >
-          <span style={isMobile ? { writingMode: "horizontal-tb" as const } : { writingMode: "vertical-rl" as const, transform: "rotate(180deg)" }}>
+          <span>
             {isExpanded ? (isMobile ? "▼ Fechar" : "Fechar") : (isMobile ? "▲ Personagens" : "Personagens")}
           </span>
         </button>
       </div>
       {/* Filtros e lista (animação horizontal) */}
       <motion.div
-        className={`character-list__content ${isMobile ? "character-list__content--mobile" : "character-list__content--desktop"}`}
+        className={`${isMobile ? "character-list__content character-list__content--mobile" : "character-list__content character-list__content--desktop"} ${
+          isExpanded ? "is-interactive" : "is-disabled"
+        }`}
         initial={false}
         animate={{ opacity: isExpanded ? 1 : 0, x: isMobile ? 0 : (isExpanded ? 0 : 8) }}
         transition={{ duration: 0.22 }}
-        style={{
-          pointerEvents: isExpanded ? "auto" : "none",
-        }}
       >
         <div className="character-list__filters">
           <div className="character-list__filters-row">
@@ -188,14 +177,7 @@ export function CharacterList({ className = "" }: CharacterListProps) {
         </div>
 
         <div 
-          className="character-list__grid" 
-          style={{ 
-            overflowY: "auto", 
-            maxHeight: isMobile 
-              ? `calc(${DRAWER_HEIGHT_MOBILE}px - 120px)` 
-              : `calc(100vh - ${topOffset + 220}px)`,
-            willChange: "transform",
-          }}
+          className="character-list__grid"
         >
           <AnimatePresence mode="popLayout">
             {filteredCharacters.map((character) => {

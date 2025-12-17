@@ -112,6 +112,10 @@
       max-height: none;
       width: 100%;
     }
+
+    @media (min-width: 992px) {
+      height: var(--bonds-height, auto);
+    }
   }
 
   &__right {

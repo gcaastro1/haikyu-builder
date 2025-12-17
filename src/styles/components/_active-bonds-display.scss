@@ -155,6 +155,12 @@
     will-change: width;
   }
 
+  @for $i from 0 through 100 {
+    .w-p#{$i} {
+      width: #{$i}%;
+    }
+  }
+
   .bond-members {
     display: flex;
     align-items: center;

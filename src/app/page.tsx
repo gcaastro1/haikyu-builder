@@ -69,12 +69,16 @@ export default function Home() {
         const h = Math.round(entry.contentRect.height);
         if (h >= 240 && h <= 1400) {
           setBondsHeight(h);
+          document.documentElement.style.setProperty("--bonds-height", `${h}px`);
         }
       }
     });
     ro.observe(el);
     const initialH = Math.round(el.getBoundingClientRect().height);
-    if (initialH >= 240 && initialH <= 1400) setBondsHeight(initialH);
+    if (initialH >= 240 && initialH <= 1400) {
+      setBondsHeight(initialH);
+      document.documentElement.style.setProperty("--bonds-height", `${initialH}px`);
+    }
     return () => ro.disconnect();
   }, [isDesktop]);
 
@@ -131,7 +135,6 @@ export default function Home() {
           <section className="home__right">
             <div
               className="home__bonds"
-              style={{ height: isDesktop && bondsHeight ? `${bondsHeight}px` : undefined }}
             >
               <ActiveBondsDisplay bonds={bonds} loading={loadingBonds} />
             </div>

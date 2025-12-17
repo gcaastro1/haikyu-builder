@@ -160,13 +160,10 @@ export function ActiveBondsDisplay({ bonds, loading }: ActiveBondsDisplayProps) 
               </div>
               <div className="bond-progress-bar">
                 <div
-                  className="bond-progress-fill"
-                  style={{
-                    width: `${Math.min(
-                      (bond.currentCount / bond.totalRequired) * 100,
-                      100
-                    )}%`,
-                  }}
+                  className={`bond-progress-fill w-p${Math.min(
+                    Math.round((bond.currentCount / bond.totalRequired) * 100),
+                    100
+                  )}`}
                 ></div>
               </div>
               <p className="bond-description">{bond.description || "Sem descrição."}</p>
