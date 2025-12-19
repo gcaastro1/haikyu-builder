@@ -9,7 +9,7 @@ export const fetchAndValidate = async <T>(url: string, schema: z.ZodType<T>): Pr
     return schema.parse(data);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const issues = (error as any).issues || error.errors;
+      const issues = error.issues;
       console.error(`Validation error for ${url}:`, issues);
       throw new Error(`Dados inválidos em ${url}: ${error.message}`);
     }

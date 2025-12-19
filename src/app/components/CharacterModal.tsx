@@ -298,7 +298,7 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                     )}
                   </>
                 )}
-                {activeTab === "Laços" && (
+                {activeTab === "Vínculos" && (
                   <>
                     {loadingRelatedData ? (
                       <p className={styles.loading}>Carregando...</p>
@@ -342,7 +342,7 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                     )}
                   </>
                 )}
-                {activeTab === "Ressonância" && (
+                {activeTab === "Ressonâncias" && (
                   <>
                     {character.resonance ? (
                       <div className={styles.resonanceTimeline}>

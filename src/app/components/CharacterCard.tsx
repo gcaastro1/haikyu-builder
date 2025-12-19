@@ -18,6 +18,7 @@ export const CharacterCard = React.memo(function CharacterCard({
   originType,
   className = "",
   variant = "default",
+  isSelected = false,
 }: CharacterCardProps) {
   const PLACEHOLDER =
     "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='420'><rect width='100%' height='100%' fill='black'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='16'>Sem imagem</text></svg>";

@@ -123,7 +123,7 @@ export default function Home() {
             <div
               className="home__bonds"
             >
-              <ActiveBondsDisplay bonds={bonds} loading={loadingBonds} />
+              <ActiveBondsDisplay />
             </div>
           </section>
         </div>
