@@ -57,13 +57,7 @@ export function useDragHandlers(
         return false;
       }
 
-      // Modo posição livre: qualquer posição exceto L pode ir em qualquer slot exceto líbero
-      if (isPositionFreeRef.current) {
-        return true;
-      }
-
-      // Modo restrito: posição deve corresponder
-      return draggedCharacter.position === targetPosition;
+      return true;
     }
 
     return false;
@@ -150,22 +144,10 @@ export function useDragHandlers(
           return;
         }
         if (
-          currentIsPositionFree &&
           targetSlotKey !== "libero" &&
           draggedCharacter.position === "L"
         ) {
           showFeedback("Líberos só podem ir para o slot de Líbero!", "error");
-          return;
-        }
-        if (
-          !currentIsPositionFree &&
-          targetSlotKey !== "libero" &&
-          draggedCharacter.position !== targetPosition
-        ) {
-          showFeedback(
-            `Personagem (${draggedCharacter.position}) não pode ir para slot ${targetPosition}! (Modo Global)`,
-            "error"
-          );
           return;
         }
       }

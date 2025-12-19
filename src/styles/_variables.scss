@@ -31,6 +31,14 @@ $style-block: #2dd4bf;
 $style-receive: #facc15;  
 $style-none: #71717a;
 
+// Rarity Colors
+$rarity-sp: rgb(198, 227, 255);
+$rarity-ur: rgb(224, 68, 68);
+$rarity-ssr: rgb(235, 172, 67);
+$rarity-sr: #a1a1aa; // Fallback/Default for SR if needed (using zinc-400 equivalent or similar)
+$rarity-r: #71717a;  // Fallback for R
+$rarity-n: #52525b;  // Fallback for N
+
 $max-w-7xl: 80rem;
 
 
@@ -46,4 +54,3 @@ $font-inter: "Inter", sans-serif;
   --font-poppins: #{$font-poppins};
   --font-inter: #{$font-inter};
 }
-

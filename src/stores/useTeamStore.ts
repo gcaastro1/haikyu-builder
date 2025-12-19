@@ -30,9 +30,6 @@ export type TeamStoreState = {
 
   isRotating: boolean;
 
-  isJPMode: boolean;
-  toggleJPMode: () => void;
-
   triggerRotation: () => void;
 
   setTeam: (newTeam: TeamSlots) => void;
@@ -65,19 +62,13 @@ export const useTeamStore: UseBoundStore<StoreApi<TeamStoreState>> =
 
         setTeam: (newTeam) => {
           set({ team: newTeam });
-          useCharacterStore.getState().calculateBondsForTeam(newTeam);
         },
-
-        isJPMode: false,
-
-        toggleJPMode: () => set((state) => ({ isJPMode: !state.isJPMode })),
 
         setCharacterInSlot: (slotIdentifier, character) =>
           set((state) => {
             if (slotIdentifier.startsWith("court-")) {
               const slotKey = slotIdentifier.replace("court-", "") as SlotKey;
               const updatedTeam = { ...state.team, [slotKey]: character };
-              useCharacterStore.getState().calculateBondsForTeam(updatedTeam);
               return { team: updatedTeam };
             }
 
@@ -87,7 +78,6 @@ export const useTeamStore: UseBoundStore<StoreApi<TeamStoreState>> =
         removeFromCourt: (slotKey) =>
           set((state) => {
             const updatedTeam = { ...state.team, [slotKey]: null };
-            useCharacterStore.getState().calculateBondsForTeam(updatedTeam);
             return { team: updatedTeam };
           }),
 
@@ -95,9 +85,6 @@ export const useTeamStore: UseBoundStore<StoreApi<TeamStoreState>> =
           set((state) => {
             const newMode = !state.isPositionFree;
             if (state.isPositionFree && !newMode) {
-              useCharacterStore
-                .getState()
-                .calculateBondsForTeam(initialTeamState);
               return { isPositionFree: newMode, team: initialTeamState };
             }
             return { isPositionFree: newMode };
@@ -112,8 +99,8 @@ export const useTeamStore: UseBoundStore<StoreApi<TeamStoreState>> =
         rotateTeam: () => {
           const { slotOrder } = get();
           const rotated = [
-            slotOrder[slotOrder.length - 1],
-            ...slotOrder.slice(0, -1),
+            ...slotOrder.slice(1),
+            slotOrder[0],
           ];
           set({ slotOrder: rotated });
         },

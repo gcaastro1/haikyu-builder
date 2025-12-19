@@ -1,18 +1,15 @@
+import { useActiveBonds } from "@/hooks/useActiveBonds";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { useTeamStore } from "@/stores/useTeamStore";
-import { CalculatedBond, Character, CharacterBondLink } from "@/types";
+import { Character, CharacterBondLink } from "@/types";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-type ActiveBondsDisplayProps = {
-  bonds: CalculatedBond[];
-  loading: boolean;
-};
-
-export function ActiveBondsDisplay({ bonds, loading }: ActiveBondsDisplayProps) {
+export function ActiveBondsDisplay() {
   const [activeTab, setActiveTab] = useState<"ativos" | "pendentes">("ativos");
-  const { characterBondLinks, allCharacters } = useCharacterStore();
+  const { allCharacters, characterBondLinks, loadingBonds } = useCharacterStore();
   const { team } = useTeamStore();
+  const bonds = useActiveBonds();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [hoveredBondId, setHoveredBondId] = useState<number | null>(null);
   const [hoverPlacement, setHoverPlacement] = useState<"top" | "bottom">("bottom");
@@ -35,13 +32,14 @@ export function ActiveBondsDisplay({ bonds, loading }: ActiveBondsDisplayProps) 
   }, []);
 
   const teamMembers = useMemo(() => Object.values(team).filter(Boolean) as Character[], [team]);
+  const norm = (s: string) => s.toLowerCase().trim();
   const normalizeName = (name: string) =>
     name
       .toLowerCase()
       .replace(/\(.*?\)/g, "")
       .replace(/-sp| ur| sr| ssr| sp/gi, "")
       .trim();
-  const norm = (s: string) => s.toLowerCase().trim();
+
   const linksByBond = useMemo(() => {
     const m = new Map<number, CharacterBondLink[]>();
     characterBondLinks.forEach((l) => {
@@ -51,11 +49,13 @@ export function ActiveBondsDisplay({ bonds, loading }: ActiveBondsDisplayProps) 
     });
     return m;
   }, [characterBondLinks]);
+
   const characterById = useMemo(() => {
     const m = new Map<number, Character>();
     allCharacters.forEach((ch) => m.set(ch.id, ch));
     return m;
   }, [allCharacters]);
+
   const uniqueByName = (arr: Character[]) => {
     const seen = new Set<string>();
     const out: Character[] = [];
@@ -68,7 +68,7 @@ export function ActiveBondsDisplay({ bonds, loading }: ActiveBondsDisplayProps) 
     return out;
   };
 
-  if (loading) {
+  if (loadingBonds) {
     return (
       <div className="active-bonds-display">
         <p className="loading-text">Carregando vínculos...</p>

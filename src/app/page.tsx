@@ -94,16 +94,7 @@ export default function Home() {
     fetchInitialData();
   }, [fetchInitialData]);
 
-  useEffect(() => {
-    const hasTeamMembers = Object.values(team).some(
-      (member) => member !== null
-    );
-    const dataLoaded = allCharacters.length > 0 && allBonds.length > 0;
-
-    if (hasTeamMembers && dataLoaded) {
-      calculateBondsForTeam(team);
-    }
-  }, [team, allCharacters, allBonds, calculateBondsForTeam]);
+  // Removed old calculateBondsForTeam effect
 
   return (
     <DragDropProvider>

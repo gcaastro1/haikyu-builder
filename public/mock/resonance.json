@@ -1,0 +1,742 @@
+[
+  {
+    "character_id": 1,
+    "character": "Kageyama",
+    "rarity": "UR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "[Força] do Kageyama aumenta em 20%. 1 - Se o efeito \"Competitivo\" for consumido, aumenta em 15% o atibuto [Percepção] do aliado que for realizar um Saque/Largada/Ataque Rápido ou Potente, durando esse efeito até 2 cruzamentos de rede. 2 - Se em alguma jogada do Kageyama o efeito \"Competitivo\" for consumido, recebe 1 acúmulo desse efeito, aumentando a força dessa jogada em [Força do atributo do tipo da jogada, ex: Saque, Passe, etc.] x 15%. Aumenta em mais 20% de [Percepção]. Esse efeito dura até 2 passadas. 3 - Quando possui mais de 3 acúmulos do efeito \"Competitivo\", aumenta em 10% o atributo [Técnica de Ataque] do aliado que for realizar um Saque/Largada/Ataque Rápido ou Potente. Esse efeito dura até 2 cruzamentos de rede." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "O atributo [Passe] do Kageyama aumenta em 15%. Quando Kageyama está em quadra e o aliado for realizar um Ataque Rápido/Potente, a cada 500 de força do atributo [Passe] do Kageyama, aumenta em 6% o atributo [Força] do membro a atacar. O aumento ocorre até no máximo 60%. Quando Kageyama ativa uma habilidade, o CD de suas outras habilidades diminui 1 cruzamento de rede." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 2,
+    "character": "Kageyama",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "[Unexpected Attack] — Efeito adicional: No Two Attack desta jogada, Kageyama Tobio (Treino) recebe [Percepção] e [Poder] +10%. Pelas próximas 2 trocas, os aliados recebem [Percepção] e [Poder] +5%." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Quando o Spike de um aliado (Power Attack ou Quick Attack) for Nice Play, o tempo de recarga de [Unexpected Attack] é reduzido em 8 passagens de rede." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 3,
+    "character": "Hinata",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "[Técnica de Ataque] do Hinata aumenta em 20%. 1 - Se o Ataque Rápido do Hinata se tornar uma Jogada Crítica, esse Ataque não será bloqueado e os atributos [Percepção] e [Reflexo] dos adversários são reduzidos em 10%. Esse efeito permanece até 3 cruzamentos de rede. 2 - Se Hinata marcar ponto com esse Ataque Rápido, os atributos [Percepção] e [Reflexo] dos adversários são reduzidos em mais 10%. Esse efeito permanece até 3 cruzamentos de rede." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "O atributo [Força] do Hinata aumenta em 30%. 1 - Ao iniciar a partida, o atributo [Percepção] do Hinata é reduzido para 0% e a cada 1% diminuido, o atributo [Força] do Hinata aumenta em 2.5%. 2 - Se o Ataque Rápido do Hinata resultar em uma Jogada Rápida, seu atributo [Força] aumenta em [Percepção] x 40%, chegando até no máximo 60%." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 4,
+    "character": "Hinata",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Mudança de efeito — em Nice Play, o bônus de [Percepção] agora acumula até 3 (antes máx. 1)." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Se o Quick Attack do Shoyo Hinata for Nice Play, a recarga de <JOVEM ALADO> é redefinida." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 5,
+    "character": "Nishinoya",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "Mudança na habilidade 3 do Nishinoya: 1 - Ao invés de a condição ser >Jogada Crítica do aliado< para diminuir o CD da habilidade 4, vira >Jogada Crítica do aliado ou adversário<. 2 - Quando o Passe do Nishinoya for uma Jogada Crítica, diminui 1 passada da bola pela rede do CD da habilidade 4 e os atributos básicos dos aliados aumentam e 12%, permanecendo ese efeito por até 3 cruzamentos de rede." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "1 - Quando Nishinoya está em quadra, aumenta o atributo [Reflexo] dos aliados em 10%. 2 - Quando Nishinoya está em quadra e o Ataque Rápido/Potente do adversário resultar em uma Jogada Crítica, o atributo [Reflexo] dos aliados da Linha de Defesa/Atrás aumenta em 15%, permanecendo esse efeito por até 4 cruzamentos de rede." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 6,
+    "character": "Nishinoya",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "<Rolling Thunder> — Mudança e efeito adicional: o custo extra de Stamina ao ativar passa a ser 10; a força desta Recepção aumenta ainda mais em [Recepção] × 10%." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Para o Nishinoya, a primeira Recepção e Cobertura de cada set recebem bônus — Recepção +[Recepção] × 30%, Cobertura +[Cobertura] × 30%; essa jogada será sempre pelo menos NORMAL." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 7,
+    "character": "Tanaka",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "<Vanguard Leader> — Mudança de efeito: a jogada fortalecida muda de “o 1º Power Attack de cada set” para “até o 2º Power Attack de cada set”." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Se marcar ponto com <SUPERCORTADA INTERNA>, os aliados em quadra recebem [Power Attack] +40%. Ativa 1 vez por set." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 8,
+    "character": "Tsuki",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "Se Tsukishima possui o efeito [Ataque], seus atributos [Técncia de Ataque] aumenta em 15% e [Técnica de Defesa] aumenta em 20%. Se Tsukishima possui o efeito [Defesa], seus atributos [Técncia de Defesa] aumenta em 15% e [Técnica de Ataque] aumenta em 20%. Mudança na habilidade 1:- A condição para o aumento do [Ataque Rápido] altera de [Quando o aliado ativa uma habilidade de Bloqueio] para [Quando o aliado ativa uma habilidade de Bloqueio/Quando Tsukishima toca na bola/Quando o adversário sob efeito Debuff toca na bola]. A condição para o aumento do [Bloqueio] altera de [Quando o aliado ativa uma habilidade de Ataque Rápido] para [Quando o aliado ativa uma habilidade de Ataque Rápido/Quando Tsukishima toca na bola/Quando o adversário sob efeito Debuff toca na bola]" },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "Os atributos [Empenho] e [Força] do Tsukishima aumentam em 40%. Se o Bloqueio do Tsukishima resultar em uma Jogada Crítica, a força desse Bloqueio terá um aumento de atributo [Bloqueio] x 40%. Aplica efeito Debuff [Fúria] nos adversários da Linha de Ataque/Frente, reduzindo em 10% o atributo [Ataque Rápido/Potente] deles. Se o Ataque Rápido do Tsukishima resultar em uma Jogada Crítica, a força desse Ataque terá um aumento de [Ataque Rápido] x 40%. Esse Ataque não pode ser bloqueado." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 9,
+    "character": "Tsuki",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Quando o Tsukishima bloquear, os aliados que fizerem Recepção recebem [Recepção] +3% (acumula até 3)." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "<Saudações> — Efeito adicional: após ativar, aplica [Raiva] na linha de frente inimiga ([Power Attack]/[Quick Attack] −10%)." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 10,
+    "character": "Daichi",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "A recarga de <Steadfast Defense> passa a ser de 4 passagens de rede." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "<Steadfast Defense> — Efeito adicional: após esta jogada ativar, a primeira habilidade de Power Attack recebe poder extra igual a [Power Attack] × 25%, e o consumo de Stamina é reduzido em 50%." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 11,
+    "character": "Azumane",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "PROFICIENT DEFENSE: consumo de Stamina reduzido para 0; CHARGED SPIKE modificado: consumo adicional de Stamina reduzido para 20." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "CHARGED SPIKE — Novo Efeito: cada acúmulo do Buff “Power Charge” aumenta o poder deste Power Spike em +60% do atributo Power Attack." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 12,
+    "character": "Sugawara",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "Se Sugawara estiver com menos de 80 de Vigor, ao tocar na bola ele recupera 5 de Vigor. Quando Sugawara está em quadra e o time aliado pontuar, o aliado que pontuar recupera 10 de Vigor e seus atributos [Reflexo] e [Percepção] aumentam em 8%, esse efeito acumula até 2 vezes." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "1- Quando Sugawara está em quadra, aumenta os atributos básicos dos aliados em 10%. 2 - Quando Sugawara está em quadra e o time aliado pontua, aumenta em 4% o atributo [Técnica de Ataque] dos aliados, permanecendo o efeito por 8 passadas e acumula até 3 vezes. 3 - Quando Sugawara está em quadra e o time adversário pontua, aumenta em 4% o atributo [Técnica de Defesa] dos aliados, permanecendo o efeito por 8 cruzamentos de rede e acumula até 3 vezes. 4 - Se no rally em que o time adversário pontuou a bola tiver passado menos de 5 vezes pela rede, aumenta em mais 4% o atributo [Técnica de Defesa] dos aliados, permanecendo o efeito por 8 cruzamentos de rede e acumula até 3 vezes." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 13,
+    "character": "Kenma",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "Quando Kenma for realizar um Passe/Largada, o próximo Ataque Rápido ou Potente/Largada que um aliado for fazer, aumentará o atributo [Força] desse aliado em atributo [Reflexo do Kenma] x 100%. Esse efeito permanece até 2 cruzamentos de rede." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "A cada 1 acúmulo do efeito [Defesa que Elimina Chances], diminui 1% do atributo [Percepção] dos adversários e diminui 2% do atributo [Força] dos adversários. 1 - Se o número de acúmulos disponível passar de 8, diminui em mais 5% do atributo [Percepção] e diminui em mais 10% do atributo [Força] do adversário. 2 - Quando Kenma está em quadra e o tima adversário pontua, Kenma recebe 3 acúmulos do efeito [Defesa que Elimina Chances]." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 14,
+    "character": "Kenma",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Ao ativar <Tricky Play>, recebe 2 acúmulos de [Conectar]." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "No início de cada set, se o Kozume Kenma estiver em quadra, recebe 4 acúmulos de [Conectar]." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 15,
+    "character": "Yaku",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "<Recepção Imponente> — Efeito adicional: o poder desta Recepção aumenta em [Recepção] × 20%." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Quando o adversário estiver em match point, [Recepção] e [Cobertura] do Morisuke Yaku +10%." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 16,
+    "character": "Kuro",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "<Stable Attack> — Mudança de efeito: o efeito de [Charge] não tem limite de acúmulos." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Após <Full Block> ativar, aplica [Raiva] aos inimigos que fizerem Spike (Power Attack/Quick Attack): [Power Attack]/[Quick Attack] −10%." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 17,
+    "character": "Kuro",
+    "rarity": "UR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "O CD da habilidade 2 é reduzido para 0 cruzamentos de rede." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "Mudança na habilidade 3: Para ativar essa habilidade a condição [se o Bloqueio de Kuroo for PERFECT] é alterada para [Quando Kuroo for bloquear]. Esse bloqueio é aumentado em força do atributo [Bloqueio] x 25%." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 18,
+    "character": "Lev",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Quando o Lev Haiba bloquear, se o inimigo que fez o Spike (Power Attack/Quick Attack) estiver com um debuff, o [Bloqueio] do Lev Haiba +5%." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "<High-Point Spike> — Efeito adicional: se o resultado do Toss de um aliado for PERFECT, o poder deste Quick Attack aumenta em [Quick] × 12%." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 19,
+    "character": "Aone",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "1 - Quando Aone está em quadra e o time adversário pontuar, todos os oponentes em quadra recebem 1 acúmulo do efeito \"Foco\". 2 - Quando possui 6 acúmulos do efeito \"Bloqueio Resistente\", o CD da habilidade 4 do Aone é resetado. Isso ocorre 1 vez por rally." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "1 - Quando Aone está no Banco, os aliados da Linha de Ataque/Frente recebem aumento de 25% no atributo [Bloqueio]. 2 - Quando o atributo [Reflexo] do Aone passar de 100%, a cada 1% a mais, aumenta 1% o seu atributo [Empenho], podendo aumentar até no máximo 60%." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 20,
+    "character": "Aone",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "<Lock On> — Mudança de efeito: a condição muda de “quando o resultado do bloqueio do Aone Takanobu for PERFECT” para “quando Aone Takanobu bloquear”." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Quando Aone Takanobu bloquear, se o inimigo que fez o Spike (Power Attack/Quick Attack) estiver com Stamina ≤ 30%, o resultado deste bloqueio será garantido como pelo menos NORMAL." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 21,
+    "character": "Futakuchi",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "[Saque] do Futakuchi Kenji +10%." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Quando Futakuchi Kenji bloquear, aplica [Raiva] no inimigo que realizou o Spike (Power Attack/Quick Attack): [Power Attack]/[Quick Attack] −10%." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 22,
+    "character": "Sasaya",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Takehito Sasaya não sofre efeitos negativos (debuffs). Se o time estiver atrás no placar, [Bloqueio] e [Power Attack] do Sasaya +10%." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "As recargas de <Seamless Defense> e <Powerful Attack> são reduzidas em 2 passagens de rede." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 23,
+    "character": "Koganegawa",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Quando Kanji Koganegawa estiver na linha de frente, os inimigos em quadra têm [Power Attack] −4%." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "<New Secret Weapon> — Efeito adicional: se todos os aliados da linha de frente forem membros de Bloqueio, o poder deste Two Attack aumenta em [Toss] × 15%." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 24,
+    "character": "Oikawa",
+    "rarity": "UR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "[Saque] do Oikawa aumenta em 18%. Cada vez que o efeito \"Tempo do Ataque\" é consumido aumenta o atributo [Saque Potente] dos aliados em 5%, acumulando até 5 vezes." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "Quando é a vez de Oikawa sacar, os aliados em quadra recebem aumento dos atributos [Percepção] e [Força] em 15%, durando até 3 passadas da bola pela rede. Após o saque de Oikawa, se até o período de 2 cruzamentos de rede o time aliado tiver pontuado, é resetado o CD da habilidade 4 do Oikawa." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 25,
+    "character": "Oikawa",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "<Saque Quase-Certo> — Efeito adicional: Oikawa Tooru (Treino) não erra Saques. Enquanto Oikawa (Treino) estiver sacando, [Percepção] +15% e [Poder] +20%." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "<Saque Quase-Certo> — Efeito adicional: ao ativar, recebe 2 acúmulos de [Ritmo de Ataque]. Se esse Saque marcar ponto, a recarga é redefinida." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 26,
+    "character": "Iwazumi",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Se o Hajime Iwaizumi estiver em quadra, os aliados em quadra recebem [Poder] +15%." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "<Confronto Direto> — Efeito adicional: neste Power Attack, o poder de Bloqueio do oponente é reduzido em [Bloqueio] × 20% (com base no membro que bloquear)." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 27,
+    "character": "Kentaro MAD DOG",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Se o Power Attack do Kentaro Kyotani for Nice Play, o bloqueador e o recebedor inimigos perdem +5 de Stamina cada." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "<Explosive Power Attack> — Efeito adicional: se o inimigo que Receber este Power Attack estiver com ≤50% de Stamina, o [Recepção] desse membro −18%." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 28,
+    "character": "Ushijima",
+    "rarity": "UR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "O CD da habilidade4 é reduzido para 4 passadas da bola pela rede. Se o aliado realizar uma Jogada Crítica, reduz 1 cruzamento de rede do CD da habilidade 4." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "Dobra o valor do atributo [Percepção] de Ushijima. Quando Ushijima realiza uma Jogada Crítica, ele recupera 2 de Vigor." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 29,
+    "character": "Tendo",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Se Satori Tendou estiver em quadra, no início da partida aplica [Raiva] aos inimigos ([Power Attack]/[Quick Attack] −10%)." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "[Bloqueio] do Satori Tendou +10%. Quando o Tendou bloquear, se o atacante inimigo estiver com debuff, neste bloqueio a [Reação] do Tendou +10%." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 30,
+    "character": "Goshiki",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "<Próximo Ace> — Efeito adicional: para cada acúmulo de [Precisão], [Percepção] +2%." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Quando um aliado ativar a Moral da Equipe, redefine a recarga de <Fazer um Milagre>. Enquanto a Moral da Equipe estiver ativa, <Fazer um Milagre> não exige recarga após a ativação." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 31,
+    "character": "Shirabu",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Quando um aliado ativa uma habilidade de Power Attack, todos os aliados recebem [Percepção] +1% e [Reação] +2%, acumulando até 5 vezes." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Na primeira vez de cada set que você ativar o Toss “Valorizar o Spiker”, ele não exige recarga após a ativação e esse Toss será garantido como Nice Play." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 32,
+    "character": "Semi",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Se Eita Semi marcar um Service Ace, redefine a recarga de <This One Is Free>." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "O [Saque] do Eita Semi aumenta em [Percepção] × 50%." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 33,
+    "character": "Ohira",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Se a Recepção ou o Power Attack do Shion Ohira for Nice Play, quando o Setter aliado fizer o próximo Toss ele recebe [Percepção] +8% e [Poder] +15%." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Se a Recepção ou o Power Attack do Shion Ohira for Nice Play, as habilidades Ultimate dos aliados têm a recarga reduzida em 2 passagens de rede." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 34,
+    "character": "Yamagata",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Se Hayato Yamagata estiver em quadra, no início da partida os aliados da linha de trás recebem [Recepção] +10% por 3 trocas." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Quando um aliado fizer uma Nice Play, a recarga de <Recepção Sólida> é reduzida em 2 passagens de rede." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 35,
+    "character": "Bokuto",
+    "rarity": "UR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "Enquanto Bokuto estiver com o efeito [Desanimado] ativo, os membros aliados recebem o efeito [Ânimo do Time], aumentando seus atributos básicos em 12%." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "Atributo [Ataque Potente] do Bokuto aumenta em 16%. Se a jogada de Ataque Potente do Bokuto não for BAD, é resetado o CD da habilidade 4 do Bokuto." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 36,
+    "character": "Bokuto",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "A cada 1 acúmulo do efeito [União], o atributo [Percepção] do Bokuto aumenta em 0.4%, podendo chegar máximo até 15% de aumento. Ao ativar a habilidade 4 do Bokuto, o atributo [Força] aumenta em [Percepção] x 85%, podendo chegar até no máximo 100% de aumento." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "Quando o Reforço de Moral do Time aliado encerrar, Bokuto recebe 8 acúmulos do efeito [União]. Quando Bokuto possui o efeito [Excelente Condição], a cada 1 acúmulo do efeito [União] aumenta em 3% o atributo [Força] dele, podendo aumentar no máximo até 150%." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 37,
+    "character": "Akaashi",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "Atributo [Força] do Akaashi aumenta em 30%. 1 - Quando Akaashi está em quadra, a cada término de rally aumenta 40 de Moral do time aliado. 2 - Quando Akaashi está em quadra e enquanto o Reforço de Moral do Time não está ativado, os atributos [Recepção] e [Bloqueio] dos aliados aumentam em 25%." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "1 - Ao ativar a habilidade 2, juntamente com os buffs dessa habilidade, a cada 1 acúmulo do efeito [Percepção Calma], aumenta 0.3% do atributo [Força] do membro a realizar um Ataque Rápido/Potente, podendo aumentar no máximo até 40% e permanecendo esse efeito por 2 cruzamentos de rede. 2 - Se esse Ataque for do tipo Potente, aumenta em mais 0.8% o atributo [Força] desse aliado, podendo aumentar no máximo até 80% e permanecendo o efeito por 2 cruzamentos de rede. 3 - Para cada 1 acúmulo do efeito [Percepção Calma], o aumento da força de Larga da habilidade 4 aumenta em mais [Passe] x 0.6%, podendo aumentar até no máximo 100%. 4 - Enquanto o time aliado está com o Reforço da Moral do Time ativado, a cada 5 de aumento da Moral aumenta em 1% do atributo [Força] do primeiro aliado a ativar a habilidade 4 após o término do Reforço da Moral do Time, podendo aumentar até no máximo 30%." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 38,
+    "character": "Akaashi",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Se Keiji Akaashi estiver em quadra, sempre que a bola atravessar a rede a Moral da Equipe +10. Quando um aliado ativar a Moral da Equipe, redefine a recarga de <Toss Habitual>." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Se o resultado do Toss do Akaashi não for BAD, após esta jogada o primeiro aliado a realizar um Spike (Power Attack/Quick Attack) remove todos os debuffs e recebe [Power Attack]/[Quick Attack] +4%, acumulando até 3 vezes por 3 trocas." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 39,
+    "character": "Konoha",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Se o resultado da Recepção do Akinori Konoha não for BAD, após esta jogada o primeiro aliado que fizer o Toss recebe [Toss] +10% e [Percepção] +8%." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Enquanto a Moral da Equipe estiver ativa e Akinori Konoha estiver em quadra, se o resultado da sua Recepção não for BAD, esta jogada não consome a duração da Moral da Equipe." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 40,
+    "character": "Haruki",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "<Centro da Defesa> — A recarga passa a ser de 6 passagens de rede. Quando <Centro da Defesa> ativar, os aliados recebem [Power Attack] +3%, acumulando até 5 vezes." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Quando seu time marcar um ponto, o poder da próxima Recepção do aliado da linha de trás aumenta em [Recepção] × 30% (do próprio aliado)." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 41,
+    "character": "Tatsuo",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Se este personagem estiver em quadra, sempre que seu time marcar ponto a Moral da Equipe +10. Enquanto a Moral da Equipe estiver ativa, sempre que o time marcar ponto, o [Bloqueio] deste personagem +5%, acumulando até 3 vezes." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Se o resultado do Bloqueio deste personagem não for BAD, após esta jogada o primeiro aliado que fizer um Bloqueio recebe [Bloqueio] +15%." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 42,
+    "character": "Terushima",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Se Yuuji Terushima estiver em quadra, para cada membro de função Recepção no seu time em quadra, os aliados da linha de trás recebem [Recepção] e [Cobertura] +6%." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Se o Terushima tiver 4 acúmulos de <Motto Motto Meisou>, redefine a recarga de <Painfully Satisfying Spike>. Quando o Terushima realizar um Spike Normal, consome 4 acúmulos: o poder deste Quick aumenta em [Quick] × 35%. Além disso, por acúmulo de <Motto Motto Meisou>, [Quick]/[Quick Attack] +2,5% (máx. 4 acúmulos)." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 43,
+    "character": "Atsumu",
+    "rarity": "UR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "[Força] do Atsumu aumenta em 30%. Quando Atsumu está presente recebe 5 acúmulos do efeito [Jogada Perfeita/Precisa]. A cada acúmulo, aumenta 2% do atributo [Passe], acumulando até 10 vezes." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "A cada 1 acúmulo do efeito [Jogada Perfeita/Precisa], aumenta em 3% o atributo [Passe] do Atsumu. Quando Atsumu utiliza o efeito [Jogada Perfeita/Precisa], recebe 5 acúmulos do efeito. A cada acúmulo, o atributo [Passe] aumenta em 2%, podendo acumular até 10 vezes." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 44,
+    "character": "Osamu",
+    "rarity": "UR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "Quando Osamu for realizar um Ataque Rápido e o inimigo que for realizar a Recepção estiver sob o efeito debuff [Controle], esse Ataque será com uma força de [Ataque Rápido] x 60%." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "Após Osamu pontuar com um Ataque Rápido, nas próximas 2 vezes que um aliado ativar uma habilidade Suprema (skill 4), os atributos [Técnica de Ataque] e [Técnica de Defesa] desse aliado aumentam em 20% ." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 45,
+    "character": "Kita",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "<“Faça do Jeito Certo”> — Mudança de efeito: a condição para obter [Ação Segura] muda de “quando a Recepção do Kita Shinsuke não for Nice Play” para “quando a Recepção de um aliado não for Nice Play”." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Se o Kita Shinsuke não errar a Recepção, Moral da Equipe +10. Enquanto o Kita estiver em quadra, quando um aliado ativar o Ultimate, esse aliado recupera 10 de Stamina." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 46,
+    "character": "Rintaro",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "Quando o Ultimate do Rintaro Suna ativar, aplica 1 acúmulo de [Confusão] na linha de frente inimiga. Para cada acúmulo de [Confusão], o [Bloqueio] deles −10%. Dura por 8 passagens de rede." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Quando o Rintaro Suna marcar com um Quick Attack, [Técnica de Ataque] +7%, acumulando até 5 vezes." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 47,
+    "character": "Oshiro",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "No início de cada troca, Ojiro Aran recebe 3 acúmulos de [Breather Time]. Para cada acúmulo, [Técnica de Ataque] aumenta." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Até 2 vezes por troca, se Ojiro Aran estiver em quadra, sempre que um aliado recuperar Stamina, Ojiro Aran também recupera 8 de Stamina." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 48,
+    "character": "Akagi",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "[Recepção] do Akagi Michinari +14%. Se o Akagi estiver em quadra e a jogada de um aliado da linha de trás não for Nice Play, as habilidades de Recepção dos aliados da linha de trás têm a recarga reduzida em 1 passagem de rede." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "[Técnica de Defesa] do Akagi Michinari +15%. Se o resultado da Recepção ou Cobertura do Akagi não for BAD, após esta jogada o primeiro aliado a realizar um Spike (Power Attack/Quick Attack) recebe [Técnica de Ataque] +15% por 2 passagens de rede." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 49,
+    "character": "Yui",
+    "rarity": "SSR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S2", "descricao": "[Recepção] do Tsumu Ginjima +15%. Além disso, a primeira Recepção do Ginjima em cada set não erra (não concede ponto)." },
+      { "nivel": "S3", "descricao": "Atributos básicos +10%." },
+      { "nivel": "S4", "descricao": "Enquanto o Ginjima estiver em quadra, quando a Recepção de um aliado não for BAD, a [Percepção] do Ginjima +12% por 1 troca." },
+      { "nivel": "S5", "descricao": "Atributos básicos +10%." }
+    ]
+  },
+  {
+    "character_id": 50,
+    "character": "Hoshiumi",
+    "rarity": "UR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "Quando Korai for realizar um Ataque Potente, aumenta esse ataque em [Ataque Rápido] x 100%. Quando Korai estiver em quadra e o aliado for realizar um Saque ou Bloqueio, aumenta em 10% os atributos [Força] e [Empenho] dele. Esse efeito dura até 5 vezes." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "Ao iniciar a partida, os atributos [Percepção] e [Empenho] do Korai aumentam em 85% do valor total da soma desses atributos. Se a jogada da habilidade 2 do Korai resultar em uma Jogada Crítica, reseta o CD dessa habilidade e Korai recupera 10 de vigor." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 51,
+    "character": "Hirugami",
+    "rarity": "UR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "Enquanto o time adversário está com o efeito Reforço de Moral do Time ativo, quando Hirugami for sacar, aumenta o atributo [Percepção] em 20% e recebe 1 acúmulo do efeito [Bloqueio Forte]. Quando o time adversário pontua, recebe 1 acúmulo do efeito [Bloqueio Forte] e os atributos básicos do Hirugami aumentam em 10%, esse efeito dura até 4 cruzamentos de rede. Se o time aliado pontuar, o CD da habilidade 4 é reduzida para 6 cruzamentos de rede." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "O atributo [Técnica de Defesa] do Hirugami aumenta em 20%. Quando Hirugami está em quadra, aplica 1 acúmulo da penalidade [Perturbar] ao adversário que for realizar um Ataque Rápido/Potente. A cada 1 acúmulo de [Pertubar], reduz em 5% o atributo [Ataque Rápido/Potente]. Esse efeito permanece até 4 cruzamentos de rede." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 52,
+    "character": "Sakusa",
+    "rarity": "UR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "Ao iniciar a partida, Sakusa recebe 5 acúmulos do efeito [Perfeccionismo]. A cada 1 acúmulo do efeito [Perfeccionismo], aumenta seus atributos [Recepção] x 6% e [Ataque Potente] x 6%. Esse efeito ocorre até 20 vezes." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "Quando Sakusa está em quadra e as jogadas Recepção/Defesa/Bloqueio dos aliados são uma Jogada Crítica, a cada 10% do atributo [Reflex] do aliado que realizou uma Recepção/Defesa/Bloqueio Crítico, Sakusa recebe 1 acúmulo do efeito [Atravessar]. A cada 1 acúmulo do efeito [Atravessar], aumenta 10% do atributo [Força] do Sakusa, podendo ocorrer esse efeito até no máximo 15 vezes. O efeito permanece até o próximo Ataque Potente do Sakusa." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 53,
+    "character": "Komori",
+    "rarity": "UR",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "1 - Quando Komori está em quadra e ele possui mais que 5 acúmulos do efeito [Conectar ao Próximo], a cada 1 acúmulo do efeito [Conectar ao Próximo], aumenta a força de Recepção das habilidades de Recepção (apenas skill 1, 2 ou 3) em atributo [Recepção do aliado a receber] x 4% e aumenta a força de Passe do Komori em [Passe] x 5%." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "1 - Quando Komori está em quadra, aumenta em 15% o atributo [Reflexo] dos aliados da Linha de Defesa/Trás. 2 - Quando Komori está em quadra e o aliado realiza uma Recepção, o atributo [Força] do aliado que realizou uma Recepção aumenta em [Reflexo do aliado que recebeu] x 50%, podendo aumentar até 60%. Esse efeito permanece por 2 cruzamentos de rede." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 54,
+    "character": "Kuro",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "1 - Logo após Kuroo tocar na bola, o próximo aliado a realizar Ataque Rápido/Potente terá a força de seu atributo [Ataque Rápido/Potente] aumentado em atributo [Bloqueio do Kuroo] x 20%, podendo aumentar no máximo até 1600 de força. 2 - Se o aliado a realizar o Ataque estiver na Linha de Defesa/Trás, o atributo [Técnica de Ataque] desse aliado é aumentado em 20%. Esse efeito permanece por 2 cruzamentos de rede." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "1 - Quando Kuroo realiza um Saque, o atributo [Ataque Rápido/Potente] dos aliados aumenta em 40% e o atributo [Recepção] dos aliados da Linha de Defesa/Trás aumenta em 30%. Esse efeito permanece por 1 rally. 2 - O atributo [Técncia de Defesa] do Kuroo aumenta em 15%. Se Kuroo estiver na Linha de Defesa/Trás, aumenta em mais 15% seu atributo [Técnica de Defesa]." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 55,
+    "character": "Kunimi",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "Mudança na habilidade 3: A condição para o aumento do [Ataque Potente] altera de [A cada vez que Kunimi restaura Vigor] para [Quando Kunimi está em quadra e os aliados restauram Vigor]. 1 - Ao possuir o efeito [Momento Crucial] e ativar a habilidade 4, restaura 3 de Vigor dos aliados e o aliado com menor Vigor disponível recebe 8 a mais de Vigor. 2 - Quando Kunimi está como Jogador de Banco, a cada término de rally, os aliados recuperam 8 de Vigor." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "1 - Se o Kunimi está posicionado na Escalação do Time inicial, os atributos principais dos aliados aumentam em 5%. 2 - Quando Kunimi está em quadra, ao iniciar a partida seu limite de Vigor reduz para 80 e a cada 1 de redução, o atributo [Força] do Kunimi aumenta em 1%, podendo aumentar no máximo até 120%. 3 - A cada término de rally, Kunimi recupera 15 de Vigor. Se Kunimi estiver com menos de 40 de Vigor, ele recupera mais 15 de Vigor." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 56,
+    "character": "Koganegawa",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "1 - Quando  Koganegawa está em quadra, se o Bloqueio do aliado não resultar em PERFECT, reduz o atributo [Ataque Rápido/Ataque Potente] do adversário em 16%. Esse efeito permanece por 2 cruzamentos de rede. 2 - Quando a habilidade 4 entra em CD,  o CD da habilidade 2 diminui em 4 cruzamentos de rede. Koganegawa recupera 2 de Vigor. 3 - Koganegawa realiza um Saque com força de [Saque] x 180% e aumenta o atributo [Técnica de Defesa] dos aliados em 10%. Esse efeito permanece por 1 set." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "1 - Quando Koganegawa está na Linha de Ataque/Frente, o CD da habilidade 4 reduz para 4 cruzamentos de rede. 2 - Quando o aliado ativa a habilidade 4 (Suprema), aumenta os atributos [Força] e [Empenho] desse alaido em 2%, até no máximo 10%. Se esse aliado possui uma habilidade de Bloqueio, aumenta em mais 35% os atributos [Força] e [Empenho] dele." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 57,
+    "character": "Oikawa",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "1 - Atributo [Força] do Oikawa aumenta em 20%. 2 - Os toques do Oikawa serão todos Críticos. 3 - Quando um aliado realizar uma Jogada Crítica, o tempo de recarga da habilidade Suprema do Oikawa é reduzido em 1 cruzamente de rede. 4 - A cada 1 acúmulo do efeito [Tempo do Ataque] adquirido pelos aliados, o levantador aliado que tocar na bola terá seus atributos [Passe] e [Saque] aumentado em 2%, até 20%. Esse efeito permanece por 2 cruzamentos de rede." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "1 - Atributo [Força] do Oikawa aumenta em 40%. 2 - O membro que possuir acúmulo do efeito [Performance] terá seus atributos de Ataque (Ataque Rápido/Potente, Passe, Saque, Percepção, Força e Técnica de Ataque) aumentados em 50% dos atributos correspondentes do Oikawa. Aumenta no máximo até 1500 dos atributo básicos (Ataque Rápido/Potente, Passe e Saque), 100% do atributo [Força] e 10% do atributo [Técnica de Ataque]" },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 58,
+    "character": "Iwaizumi",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "Quando Iwaizumi está em quadra, aumenta o atributo [Força] dos aliados em 20%. Ao ativar a habilidade Suprema, os aliados recuperam 5 de vigor e o time aliado recebe 20 de Moral. A Moral recebida durante a ativação da habilidade Suprema é resetada ao final do rally." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "Ao ativar a habilidade Suprema, o atributo [Recepção] do Iwaizumi aumenta em 15%. Até 3 acúmulos. Esse efeito permanece por 2 cruzamentos de rede. Se o atributo [Percepção] do Iwaizumi estiver passado de 100%, a cada 1% a mais o atributo [Empenho] é aumentado em 1%. Máximo de 80% de aumento." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 60,
+    "character": "Ushijima",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "O tempo de recarga de [Poder de Classe Canhão] (Skill 4) é reduzido em 4 cruzamentos de rede.Quando Ushijima [Festival Cultural] realiza um ataque de poder e o resultado excede [Ataque Potente] x 300%, o poder desse ataque aumenta em 30% x [Ataque Potente]." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "No início da partida, a [Percepção] de Ushijima [Festival Cultural] aumenta em 100%.Ao final de cada rali, a [Percepção] de Ushijima [Festival Cultural] é reduzido em 20% e o [Ataque Potente] aumenta em 6%. Acumula até 5 vezes." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 61,
+    "character": "Tendo",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "[Percepção] do Tendo SP +25% e [Empenho] do Tendo + (Força × 60%), até um máximo de 60%" },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "Quando o Tendo está em quadra e um aliado usa a Ultimate, todos os aliados recebem +1% no atributo principal, acumulando até 20 stacks.Esse efeito dura um set.Na primeira vez que o Tendo sair da quadra, o jogador que entrar no lugar dele recebe +15% em [Técnica de Defesa] por 1 rally.A próxima recepção realizada se tornará automaticamente uma Jogada Superior e não causará ponto perdido." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 59,
+    "character": "Ginjima",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "S1", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S2", "descricao": "Ginjima não é afetado por efeitos negativos. Quando o ataque potente de Ginjima resulta em um acerto crítico, o próximo power spike é executado com +60% do seu [Ataque Potente]." },
+      { "nivel": "S3", "descricao": "Aumenta os atributos básicos em 13%." },
+      { "nivel": "S4", "descricao": "O cooldown da ultimate dele é alterado para 4 cruzamentos de rede.Mudança no efeito de [Ataque Ilimitado]:A condição para aumentar [Percepção] e [Força] muda de [duas primeiras investidas por set] para [três primeiras investidas por set]. Quando Ginjima realiza um ataque potente, o próximo aliado a realizar uma cortada (Potente ou Rápida) executará o golpe com +50% adicional do seu respectivo [Ataque Potente] / [Ataque Rápido]." },
+      { "nivel": "S5", "descricao": "Aumenta os atributos básicos em 13%." }
+    ]
+  },
+  {
+    "character_id": 62,
+    "character": "Atsumu",
+    "rarity": "SP",
+    "ressonancias": [
+      { "nivel": "Indefinido", "descricao": "xxx" }
+    ]
+  }
+]

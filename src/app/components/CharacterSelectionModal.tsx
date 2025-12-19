@@ -72,19 +72,17 @@ export function CharacterSelectionModal() {
   };
   const positionTitle = positionNames[autoPosition] || "Todos";
 
-  const isJPMode = useTeamStore((s) => s.isJPMode);
-
   // Otimização: memoizar searchTerm normalizado
   const normalizedNameSearch = nameSearch.toLowerCase();
 
   const filteredCharacters = useMemo(() => {
     return allCharacters.filter((c) => {
-      if (!isJPMode && autoPosition !== "ALL" && c.position !== autoPosition) return false;
+      if (autoPosition !== "ALL" && c.position !== autoPosition) return false;
       if (schoolFilter !== "ALL" && c.school !== schoolFilter) return false;
       if (nameSearch && !c.name.toLowerCase().includes(normalizedNameSearch)) return false;
       return true;
     });
-  }, [allCharacters, autoPosition, schoolFilter, nameSearch, normalizedNameSearch, isJPMode]);
+  }, [allCharacters, autoPosition, schoolFilter, nameSearch, normalizedNameSearch]);
 
   const handleIntersect = useCallback((entries: IntersectionObserverEntry[]) => {
     const [entry] = entries;

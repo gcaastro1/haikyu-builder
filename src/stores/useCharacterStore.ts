@@ -1,12 +1,11 @@
-import { calculateActiveBonds } from "@/app/lib/calculateActiveBonds";
 import {
     Bond,
     CalculatedBond,
     Character,
     CharacterBondLink,
+    CharacterStatsBond,
     DbStyle,
     Memory,
-    Position,
     Potential,
     RelevantStyleDisplay,
     SlotKey,
@@ -16,12 +15,16 @@ import {
 import { create, StoreApi, UseBoundStore } from "zustand";
 import { persist } from "zustand/middleware";
 // Dados passam a ser carregados 100% dos JSON em /public/mock
+import { fetchAndValidate } from "@/app/lib/api";
+import { BondSchema, CharacterBondLinkSchema, CharacterSchema, CharacterStatsBondSchema, MemorySchema, PotentialSchema } from "@/app/lib/schemas";
+import z from "zod";
 import { Lang } from "./useI18nStore";
 
 export type CharacterStoreState = {
   allCharacters: Character[];
   allBonds: Bond[];
   characterBondLinks: CharacterBondLink[];
+  characterStatsBondLinks: CharacterStatsBond[];
   activeBonds: CalculatedBond[];
   allPotentials: Potential[];
   allMemories: Memory[];
@@ -30,13 +33,12 @@ export type CharacterStoreState = {
   fetchError: string | null;
   hasLoadedData: boolean;
 
-  fetchInitialData: () => Promise<void>;
+  fetchInitialData: (force?: boolean) => Promise<void>;
   calculateBondsForTeam: (team: TeamSlots) => void;
 
   suggestTeam: (
     targetType: TeamType,
-    currentTeam: TeamSlots,
-    isJPMode: boolean
+    currentTeam: TeamSlots
   ) => TeamSlots;
   refreshBondsLanguage: (lang: Lang) => void;
 };
@@ -48,6 +50,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
         allCharacters: [],
         allBonds: [],
         characterBondLinks: [],
+        characterStatsBondLinks: [],
         activeBonds: [],
         allPotentials: [],
         allMemories: [],
@@ -56,31 +59,40 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
         fetchError: null,
         hasLoadedData: false,
 
-        fetchInitialData: async () => {
+        fetchInitialData: async (force = false) => {
           const { isLoading, hasLoadedData } = get();
-          if (isLoading || hasLoadedData) return;
+          if (isLoading || (hasLoadedData && !force)) return;
 
           set({ isLoading: true, fetchError: null });
 
           try {
-            const fetchJson = async (url: string) => {
-              const res = await fetch(url);
-              if (!res.ok) throw new Error(`Falha ao carregar ${url}: ${res.status}`);
-              return res.json();
-            };
-
-            const [charactersJson, bondsJson, linksJson, potentialsJson, memoriesJson] = await Promise.all([
-              fetchJson("/mock/characters.json"),
-              fetchJson("/mock/bonds.json"),
-              fetchJson("/mock/character_bonds.json"),
-              fetchJson("/mock/potentials.json"),
-              fetchJson("/mock/memories.json"),
+            const [
+              charactersJson,
+              bondsJson,
+              linksJson,
+              statsBondLinksJson,
+              potentialsJson,
+              memoriesJson,
+            ] = await Promise.all([
+              fetchAndValidate("/mock/characters.json", z.array(CharacterSchema)),
+              fetchAndValidate("/mock/bonds.json", z.array(BondSchema)),
+              fetchAndValidate("/mock/character_bonds.json", z.array(CharacterBondLinkSchema)),
+              fetchAndValidate("/mock/character_stats_bonds.json", z.array(CharacterStatsBondSchema)),
+              fetchAndValidate("/mock/potentials.json", z.array(PotentialSchema)),
+              fetchAndValidate("/mock/memories.json", z.array(MemorySchema)),
             ]);
 
-            const formattedCharacters: Character[] = (charactersJson as any[]).map((c: any) => {
-              const supabaseUrl: string | null = c.image_url ?? null;
-              const fileName = typeof supabaseUrl === "string" ? supabaseUrl.split("/").pop() ?? null : null;
-              const localImageUrl = fileName ? `/images/characters/${fileName}` : null;
+            const formattedCharacters: Character[] = charactersJson.map((c) => {
+              // Se já tiver caminho completo local, usa ele. Se não, tenta construir.
+              // Isso permite que o characters.json tenha "/images/characters_lg/..." ou "/images/characters/..."
+              let localImageUrl = c.image_url;
+              
+              if (!localImageUrl || (!localImageUrl.startsWith("/images/") && !localImageUrl.startsWith("http"))) {
+                  // Fallback para comportamento antigo se não tiver path
+                const supabaseUrl: string | null = c.image_url ?? null;
+                const fileName = typeof supabaseUrl === "string" ? supabaseUrl.split("/").pop() ?? null : null;
+                localImageUrl = fileName ? `/images/characters_lg/${fileName}` : null;
+            }
 
               return {
                 id: c.id,
@@ -97,21 +109,33 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
                 block: c.block ?? null,
                 defense: c.defense ?? null,
                 potential: c.potential ?? null,
+                recommended_stats: c.recommended_stats ?? null,
               };
             });
 
-            const bonds: Bond[] = (bondsJson as any[]).map((b: any) => ({
+            const bonds: Bond[] = bondsJson.map((b) => ({
               id: b.id,
               name: b.name ?? null,
               description: b.description ?? null,
+              is_team_bond: b.is_team_bond,
+              participants: b.participants,
             }));
 
-            const links: CharacterBondLink[] = (linksJson as any[]).map((l: any) => ({
+            const links: CharacterBondLink[] = linksJson.map((l) => ({
               character_id: l.character_id,
               bond_id: l.bond_id,
             }));
 
-            const potentials: Potential[] = (potentialsJson as any[]).map((p: any) => ({
+            const statsBondLinks: CharacterStatsBond[] = statsBondLinksJson.map((l) => ({
+              id: l.id,
+              stats_bond_id: l.stats_bond_id,
+              character_id: l.character_id,
+              buff_description: l.buff_description,
+              created_at: l.created_at,
+              stats_bond_name: l.stats_bond_name
+            }));
+
+            const potentials: Potential[] = potentialsJson.map((p) => ({
               id: p.id,
               name: p.name,
               image_url: p.image_url,
@@ -122,19 +146,20 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
               desc4: p.desc4 ?? "",
             }));
 
-            const memories: Memory[] = (memoriesJson as any[]).map((m: any) => ({
+            const memories: Memory[] = memoriesJson.map((m) => ({
               id: m.id,
               name: m.name,
               positions: Array.isArray(m.positions) ? m.positions : [],
               bonus: m.bonus ?? {},
               desc: m.desc ?? "",
-              image_url: m.image_url ?? m.img ?? "",
+              image_url: m.image_url ?? (m as any).img ?? "",
             }));
 
             set({
               allCharacters: formattedCharacters,
               allBonds: bonds,
               characterBondLinks: links,
+              characterStatsBondLinks: statsBondLinks,
               allPotentials: potentials,
               allMemories: memories,
               isLoading: false,
@@ -156,34 +181,76 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
 
         refreshBondsLanguage: async (_lang) => {
           try {
-            const res = await fetch("/mock/bonds.json");
-            if (res.ok) {
-              const bondsJson = await res.json();
-              const bonds: Bond[] = (bondsJson as any[]).map((b: any) => ({
-                id: b.id,
-                name: b.name ?? null,
-                description: b.description ?? null,
-              }));
-              set({ allBonds: bonds });
-            }
+            const bondsJson = await fetchAndValidate("/mock/bonds.json", z.array(BondSchema));
+            const bonds: Bond[] = bondsJson.map((b) => ({
+              id: b.id,
+              name: b.name ?? null,
+              description: b.description ?? null,
+              is_team_bond: b.is_team_bond,
+              participants: b.participants,
+            }));
+            set({ allBonds: bonds });
           } catch {}
         },
 
-        calculateBondsForTeam: (team) => {
-          const { allCharacters, allBonds, characterBondLinks } = get();
-          if (!allCharacters.length || !allBonds.length) return;
-
-          set({ loadingBonds: true });
-          const active = calculateActiveBonds(
-            team,
-            allCharacters,
-            allBonds,
-            characterBondLinks
+        calculateBondsForTeam: (team: TeamSlots) => {
+          const { allBonds, characterBondLinks } = get();
+          const teamIds = new Set(
+            Object.values(team)
+              .filter((c): c is Character => c !== null)
+              .map((c) => c.id)
           );
-          set({ activeBonds: active, loadingBonds: false });
+
+          // Build a map of bond_id -> Set<character_id> from characterBondLinks
+          const bondParticipantsMap = new Map<number, Set<number>>();
+          characterBondLinks.forEach((link) => {
+            if (!bondParticipantsMap.has(link.bond_id)) {
+              bondParticipantsMap.set(link.bond_id, new Set());
+            }
+            bondParticipantsMap.get(link.bond_id)!.add(link.character_id);
+          });
+
+          const calculatedBonds: CalculatedBond[] = allBonds.map((bond) => {
+             const participantsSet = bondParticipantsMap.get(bond.id) || new Set(bond.participants || []);
+             const participants = Array.from(participantsSet);
+
+             const totalRequired = participants.length;
+             let currentCount = 0;
+             participants.forEach(pid => {
+                 if (teamIds.has(pid)) {
+                     currentCount++;
+                 }
+             });
+
+             const isActive = totalRequired > 0 && currentCount === totalRequired;
+             const hasAnyMemberOnCourt = currentCount > 0;
+
+             return {
+                 id: bond.id,
+                 name: bond.name,
+                 description: bond.description,
+                 totalRequired,
+                 currentCount,
+                 isActive,
+                 hasAnyMemberOnCourt,
+                 isTeamBond: bond.is_team_bond
+             };
+          });
+
+          const relevantBonds = calculatedBonds.filter(b => b.hasAnyMemberOnCourt);
+          
+          relevantBonds.sort((a, b) => {
+              if (a.isActive && !b.isActive) return -1;
+              if (!a.isActive && b.isActive) return 1;
+              const ratioA = a.totalRequired > 0 ? a.currentCount / a.totalRequired : 0;
+              const ratioB = b.totalRequired > 0 ? b.currentCount / b.totalRequired : 0;
+              return ratioB - ratioA;
+          });
+
+          set({ activeBonds: relevantBonds });
         },
 
-        suggestTeam: (targetType, currentTeam, isJPMode) => {
+        suggestTeam: (targetType, currentTeam) => {
           const { allCharacters, characterBondLinks } = get();
           if (!allCharacters.length) return { ...currentTeam };
 
@@ -287,35 +354,16 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
               getCharacterScore(a, currentTeam)
           );
 
-          const positionSlots: Record<Position, SlotKey[]> = {
-            S: ["pos1_s"],
-            MB: ["pos2_mb", "pos5_mb"],
-            WS: ["pos3_ws", "pos6_ws"],
-            OP: ["pos4_op"],
-            L: ["libero"],
-          };
-
           const newTeam = { ...currentTeam };
           const requiredOfType = requiredCounts[targetType];
           let addedOfType = 0;
 
-          // ✅ Otimização: Cria Set de IDs já no time para lookup O(1)
-          const teamIdsInNewTeam = new Set(
+          // ✅ Otimização: Cria Set de NOMES já no time para evitar duplicatas do mesmo personagem
+          const teamNamesInNewTeam = new Set(
             Object.values(newTeam)
               .filter(Boolean)
-              .map((c) => c!.id)
+              .map((c) => c!.name)
           );
-
-          // ✅ Otimização: Cria Map reverso de slot -> positions válidas
-          const slotToPositionsMap = new Map<SlotKey, Set<Position>>();
-          Object.entries(positionSlots).forEach(([pos, slots]) => {
-            slots.forEach((slot) => {
-              if (!slotToPositionsMap.has(slot)) {
-                slotToPositionsMap.set(slot, new Set());
-              }
-              slotToPositionsMap.get(slot)!.add(pos as Position);
-            });
-          });
 
           for (const slotKey of Object.keys(newTeam) as SlotKey[]) {
             if (newTeam[slotKey]) continue;
@@ -323,20 +371,16 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
 
             const isLiberoSlot = slotKey === "libero";
             const candidate = sortedPreferred.find((c) => {
-              if (teamIdsInNewTeam.has(c.id)) return false;
+              if (teamNamesInNewTeam.has(c.name)) return false;
               if (isLiberoSlot) return c.position === "L";
-
-              if (!isJPMode) {
-                const validPositions = slotToPositionsMap.get(slotKey);
-                return validPositions?.has(c.position as Position) ?? false;
-              } else if (c.position === "L") return false;
+              if (c.position === "L") return false;
 
               return true;
             });
 
             if (candidate) {
               newTeam[slotKey] = candidate;
-              teamIdsInNewTeam.add(candidate.id);
+              teamNamesInNewTeam.add(candidate.name);
               addedOfType++;
             }
           }
@@ -346,13 +390,9 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
 
             const isLiberoSlot = slotKey === "libero";
             const availableCandidates = [...sortedOthers].filter((c) => {
-              if (teamIdsInNewTeam.has(c.id)) return false;
+              if (teamNamesInNewTeam.has(c.name)) return false;
               if (isLiberoSlot) return c.position === "L";
-
-              if (!isJPMode) {
-                const validPositions = slotToPositionsMap.get(slotKey);
-                return validPositions?.has(c.position as Position) ?? false;
-              } else if (c.position === "L") return false;
+              if (c.position === "L") return false;
 
               return true;
             });
@@ -365,7 +405,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
                 return currentScore > bestScore ? current : best;
               });
               newTeam[slotKey] = bestCandidate;
-              teamIdsInNewTeam.add(bestCandidate.id);
+              teamNamesInNewTeam.add(bestCandidate.name);
             }
           }
 
@@ -392,6 +432,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
 
       {
         name: "haikyu-character-cache",
+        version: 1, // Bump version to force re-fetch with new validation
         skipHydration: true, // ✅ Evita hidratação automática que causa mismatch SSR/CSR
         partialize: (state) => ({
           allCharacters: state.allCharacters,

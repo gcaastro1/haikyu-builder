@@ -1,4 +1,6 @@
-  .active-bonds-display {
+@use "sass:math";
+
+.active-bonds-display {
     width: 100%;
     font-family: var(--font-bricolage, "Bricolage Grotesque", sans-serif);
     color: #fff;
@@ -296,5 +298,12 @@
     .bond-description {
       font-size: 0.85rem;
     }
+  }
+}
+
+// Generate percentage width classes
+@for $i from 0 through 100 {
+  .w-p#{$i} {
+    width: math.percentage(math.div($i, 100)) !important;
   }
 }

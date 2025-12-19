@@ -1,0 +1,176 @@
+export type Position = "OP" | "MB" | "WS" | "S" | "L";
+export type Rarity = "SR" | "SSR" | "UR" | "SP";
+export type School =
+  | "Shiratorizawa"
+  | "Nekoma"
+  | "Fukurodani"
+  | "Aoba Johsai"
+  | "Inarizaki"
+  | "Kamomedai"
+  | "Karasuno"
+  | "Date Tech"
+  | "Itachiyama"
+  | "Johzenji"
+  | "Kitagawa Daichi";
+
+export interface Skill {
+  id?: number | null;
+  name?: string | null;
+  description?: string | null;
+  character_id?: number;
+  created_at?: string;
+  type?: "Normal" | "Special" | string | null;
+  category?: "Active" | "Passive" | string | null;
+}
+
+export interface Bond {
+  id: number;
+  name: string | null;
+  description: string | null;
+  created_at?: string;
+  participants?: number[];
+  is_team_bond?: boolean;
+}
+
+export interface CalculatedBond {
+  id: number;
+  name: string | null;
+  description: string | null;
+  totalRequired: number;
+  currentCount: number;
+  isActive: boolean;
+  hasAnyMemberOnCourt: boolean;
+  isTeamBond?: boolean;
+}
+
+export interface CharacterBondLink {
+  character_id: number;
+  bond_id: number;
+}
+
+export interface StatsBondType {
+  id: number;
+  name: string | null;
+  created_at?: string;
+}
+
+export interface CharacterStatsBond {
+  id: number;
+  stats_bond_id: number;
+  character_id: number;
+  buff_description: string | null;
+  created_at?: string;
+  stats_bond_name?: string;
+}
+
+export interface Character {
+  id: number; //
+  name: string;
+  position: Position | string | null;
+  rarity: Rarity | null;
+  school: School | string | null;
+  image_url: string | null;
+  styles: string[] | null;
+  serve: number | null;
+  attack: number | null;
+  set: number | null;
+  receive: number | null;
+  block: number | null;
+  defense: number | null;
+  created_at?: string;
+
+  skills?: Skill[];
+  bondIds?: number[];
+  bonds?: Bond[];
+  statsBonds?: CharacterStatsBond[];
+  potential?: { "4slots": number | null; "2slots": number | null } | null;
+  recommended_stats?: {
+    slot1?: string;
+    slot2?: string;
+    slot3?: string;
+    slot4?: string;
+    slot5?: string;
+    slot6?: string;
+  } | null;
+  substats?: string | null;
+  resonance?: {
+    re1?: string;
+    re2?: string;
+    re3?: string;
+    re4?: string;
+    re5?: string;
+  };
+}
+
+export type TeamSlots = {
+  pos6_ws: Character | null;
+  pos5_mb: Character | null;
+  pos4_op: Character | null;
+  pos3_ws: Character | null;
+  pos2_mb: Character | null;
+  pos1_s: Character | null;
+  libero: Character | null;
+};
+
+export type SlotKey = keyof TeamSlots;
+
+export interface SavedTeam {
+  name: string;
+  court: TeamSlots;
+  savedAt: string;
+}
+
+export interface ExportedTeam {
+  c: { [key in SlotKey]?: number | null };
+}
+
+export type DbStyle = "quick" | "power" | "receive" | "block" | string;
+export type RelevantStyleDisplay =
+  | "Ataque Rápido"
+  | "Potente"
+  | "Bloqueio"
+  | "Recepção";
+export type TeamType = RelevantStyleDisplay | "Nenhum";
+
+export const dbStyleToTeamTypeMap: { [key in DbStyle]?: RelevantStyleDisplay } =
+  {
+    quick: "Ataque Rápido",
+    power: "Potente",
+    block: "Bloqueio",
+    receive: "Recepção",
+  };
+
+export const teamTypeStyles: Record<
+  TeamType,
+  { className: string; icon?: string }
+> = {
+  "Ataque Rápido": { className: "style-quick" },
+  Potente: { className: "style-power" },
+  Bloqueio: { className: "style-block" },
+  Recepção: { className: "style-receive" },
+  Nenhum: { className: "style-none" },
+};
+
+export type StyleCounts = Record<RelevantStyleDisplay, number>;
+
+export type DoubleClickOrigin = "list" | "court";
+
+export interface Potential {
+  id: number;
+  name: string;
+  image_url: string;
+  catalog_id: string;
+  twoPiece: Record<string, { pct: number }>;
+  fourPiece: Record<string, { pct: number }>;
+  desc2: string;
+  desc4: string;
+}
+
+export interface Memory {
+  id: string;
+  name: string;
+  positions: string[];
+  bonus?: Record<string, { flat?: number; pct?: number }>;
+  desc: string;
+  image_url: string;
+}

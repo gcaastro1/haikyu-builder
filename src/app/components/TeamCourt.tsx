@@ -9,12 +9,12 @@ import { TeamSlot } from "./TeamSlot";
 
 const label = (slotKey: SlotKey) => {
   switch (slotKey) {
-    case "pos1_s": return "S";
-    case "pos2_mb": return "MB";
-    case "pos3_ws": return "WS";
-    case "pos4_op": return "OP";
-    case "pos5_mb": return "MB";
-    case "pos6_ws": return "WS";
+    case "pos1_s": return "1";
+    case "pos2_mb": return "2";
+    case "pos3_ws": return "3";
+    case "pos4_op": return "4";
+    case "pos5_mb": return "5";
+    case "pos6_ws": return "6";
     case "libero":  return "L";
     default:        return "";
   }
@@ -34,9 +34,8 @@ export function TeamCourt({
   const isRotating = useTeamStore((s) => s.isRotating);
 
   const handleSlotClick = (slotKey: SlotKey) => {
-  const position = label(slotKey); 
-  openSelectionModal(`court-${slotKey}`, position);
-};
+    openSelectionModal(`court-${slotKey}`, "ALL");
+  };
 
 
   const renderSlot = (slotKey: SlotKey) => {
@@ -88,8 +87,8 @@ export function TeamCourt({
     );
   };
 
-  const top = [slotOrder[0], slotOrder[1], slotOrder[2]] as SlotKey[]; 
-  const bottom = ["libero" as SlotKey, slotOrder[5], slotOrder[4], slotOrder[3]]; 
+  const top = [slotOrder[0], slotOrder[5], slotOrder[4]] as SlotKey[]; 
+  const bottom = ["libero" as SlotKey, slotOrder[1], slotOrder[2], slotOrder[3]]; 
 
   return (
     <motion.div

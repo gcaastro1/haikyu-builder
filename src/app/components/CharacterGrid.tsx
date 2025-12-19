@@ -87,40 +87,51 @@ export function CharacterGrid({
       </p>
     );
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.2 } },
+  };
+
   return (
     <div className="database-character-grid">
       <div className="database-character-grid__counter">
         Mostrando {visibleCharacters.length} de {characters.length}
       </div>
 
-      <div className="database-character-grid__wrapper">
-        <AnimatePresence>
-          {visibleCharacters.map((char, index) => (
-            <motion.div
-              key={char.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25, delay: index * 0.015 }}
-            >
-              <CharacterCard
-                character={char}
-                isDisabled={currentTeamNames.has(char.name)}
-                originType="list"
-                onClick={() => handleSelect(char)}
-              />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
-
-      {visibleCount < characters.length && (
-        <div ref={loaderRef} className="database-character-grid__loader">
-          <span className="database-character-grid__loader-text">
-            Carregando mais...
-          </span>
-        </div>
-      )}
+      <motion.div
+        className="database-character-grid__wrapper"
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+      >
+        {visibleCharacters.map((char, index) => (
+          <motion.div
+            key={char.id}
+            className="database-character-grid__item"
+            variants={itemVariants}
+          >
+            <CharacterCard
+              character={char}
+              isSelected={currentTeamNames.has(char.name)}
+              onClick={() => handleSelect(char)}
+            />
+          </motion.div>
+        ))}
+        {visibleCount < characters.length && (
+          <div ref={loaderRef} style={{ height: "20px", width: "100%" }} />
+        )}
+      </motion.div>
     </div>
   );
 }

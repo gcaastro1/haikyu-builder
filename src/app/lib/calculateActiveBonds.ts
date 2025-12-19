@@ -1,20 +1,5 @@
 import { Bond, CalculatedBond, Character, CharacterBondLink, TeamSlots } from "@/types";
 
-// Lista oficial de escolas (case-insensitive)
-const SCHOOL_NAMES = [
-  "Aoba Johsai",
-  "Date Tech",
-  "Fukurodani",
-  "Inarizaki",
-  "Itachiyama",
-  "Johzenji",
-  "Kamomedai",
-  "Karasuno",
-  "Kitagawa Daichi",
-  "Nekoma",
-  "Shiratorizawa",
-];
-
 export function calculateActiveBonds(
   teamSlots: TeamSlots,
   allCharacters: Character[],
@@ -27,85 +12,76 @@ export function calculateActiveBonds(
   const calculated: CalculatedBond[] = [];
   const teamIdsSet = new Set<number>(team.map((c) => c.id));
 
-  // ✅ Agrupa os links por bond_id para evitar filter repetidos
-  const linksByBond = new Map<number, CharacterBondLink[]>();
+  // Otimização: Agrupa links por bond_id uma única vez
+  const linksByBond = new Map<number, Set<number>>();
   for (const l of allLinks) {
-    const arr = linksByBond.get(l.bond_id);
-    if (arr) arr.push(l);
-    else linksByBond.set(l.bond_id, [l]);
-  }
-
-  // -- Helpers
-  const norm = (s: string) => s.toLowerCase().trim();
-  const schoolSet = new Set(SCHOOL_NAMES.map(norm));
-  const teamSchoolsCount: Record<string, number> = {};
-  for (const c of team) {
-    const sc = c.school ? norm(String(c.school)) : "";
-    if (!sc) continue;
-    teamSchoolsCount[sc] = (teamSchoolsCount[sc] || 0) + 1;
-  }
-
-  // === 1) VÍNCULOS DE TIME (somente ATIVOS, nunca pendentes) ===
-  // Detecta bonds cujo nome é exatamente o nome de uma escola
-  const teamBondsBySchool = new Map<string, Bond>();
-  for (const b of allBonds) {
-    if (!b.name) continue;
-    const n = norm(b.name);
-    if (schoolSet.has(n)) {
-      teamBondsBySchool.set(n, b);
+    if (!linksByBond.has(l.bond_id)) {
+      linksByBond.set(l.bond_id, new Set());
     }
+    linksByBond.get(l.bond_id)!.add(l.character_id);
   }
 
-  // Para cada escola presente no time, se tiver >=4, ativa o bond dessa escola
-  for (const [schoolNorm, count] of Object.entries(teamSchoolsCount)) {
-    if (count >= 4 && teamBondsBySchool.has(schoolNorm)) {
-      const bond = teamBondsBySchool.get(schoolNorm)!;
+  for (const bond of allBonds) {
+    // 1. Identificar todos os participantes deste vínculo (fusão de JSON estático + Links dinâmicos)
+    const participants = new Set<number>();
+
+    // Adiciona participantes definidos no objeto do vínculo (ex: Team Bonds do JSON)
+    if (bond.participants && Array.isArray(bond.participants)) {
+      bond.participants.forEach((pid) => participants.add(pid));
+    }
+
+    // Adiciona participantes definidos na tabela de links (ex: Vínculos de Amizade/Específicos)
+    const dynamicLinks = linksByBond.get(bond.id);
+    if (dynamicLinks) {
+      dynamicLinks.forEach((pid) => participants.add(pid));
+    }
+
+    if (participants.size === 0) continue;
+
+    // 2. Contar quantos estão no time atual
+    let currentCount = 0;
+    participants.forEach((pid) => {
+      if (teamIdsSet.has(pid)) {
+        currentCount++;
+      }
+    });
+
+    const totalRequired = participants.size;
+    let isActive = false;
+    let description = bond.description;
+
+    // 3. Lógica de Ativação baseada no tipo de vínculo
+    if (bond.is_team_bond) {
+      // Regra de Time: Requer 4 ou mais membros
+      isActive = currentCount >= 4;
+      
+      // Ajusta descrição se necessário
+      if (!description && bond.name) {
+        description = `Aumenta as estatísticas de todos os jogadores de ${bond.name}.`;
+      }
+      
+      // Para Team Bonds, o total exibido na UI costuma ser o limiar (4) ou o total possível?
+      // Geralmente em UIs de gacha, mostra-se "X/4" para ativação.
+      // Vou manter a lógica anterior de exibir 4 como total necessário para ativação mínima.
+    } else {
+      // Regra Padrão: Requer todos os participantes
+      isActive = currentCount === totalRequired;
+    }
+
+    // Se tiver pelo menos um membro ou estiver ativo, adiciona à lista
+    if (currentCount > 0) {
       calculated.push({
         id: bond.id,
         name: bond.name,
-        description:
-          bond.description ??
-          `Aumenta as estatísticas de todos os jogadores de ${bond.name}.`,
-        totalRequired: 4,
-        currentCount: 4, // barra cheia
-        isActive: true,
-        hasAnyMemberOnCourt: true,
-        isTeamBond: true,
+        description: description,
+        totalRequired: bond.is_team_bond ? 4 : totalRequired, // Para times, o alvo é 4
+        currentCount: currentCount,
+        isActive,
+        hasAnyMemberOnCourt: currentCount > 0,
+        isTeamBond: bond.is_team_bond,
       });
     }
   }
 
-  // === 2) VÍNCULOS NORMAIS (via pivot); ignorar os que são de time
-  for (const bond of allBonds) {
-    if (!bond.name) continue;
-    const isTeamBond = schoolSet.has(norm(bond.name));
-    if (isTeamBond) continue; // já tratamos acima
-
-    const links = linksByBond.get(bond.id) || [];
-    if (links.length === 0) continue;
-
-    // ✅ Novo critério: avalia exclusivamente por IDs de personagem
-    const requiredIds = Array.from(new Set(links.map((lnk) => lnk.character_id)));
-    const currentCount = requiredIds.filter((id) => teamIdsSet.has(id)).length;
-    const totalRequired = requiredIds.length;
-    const hasAnyMemberOnCourt = currentCount > 0;
-    const isActive = currentCount === totalRequired;
-
-    calculated.push({
-      id: bond.id,
-      name: bond.name,
-      description: bond.description,
-      totalRequired,
-      currentCount,
-      isActive,
-      hasAnyMemberOnCourt,
-      isTeamBond: false,
-    });
-  }
-
-  // === Dedup + ordenação (ativos primeiro)
-  const unique = Array.from(new Map(calculated.map((b) => [b.id, b])).values());
-  return unique.sort((a, b) => Number(b.isActive) - Number(a.isActive));
+  return calculated;
 }
-
-// Utilidades de string (mantidas para bonds de time por escola)

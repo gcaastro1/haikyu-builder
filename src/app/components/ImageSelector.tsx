@@ -4,12 +4,7 @@ import "@/styles/components/_image-selector.scss";
 import { Search } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { getStorageImages } from '../lib/actions';
-
-interface StorageFile {
-  name: string;
-  publicUrl: string;
-}
+import { getStorageImages, StorageFile } from '../actions/getImages';
 
 type ImageSelectorProps = {
   name: string;

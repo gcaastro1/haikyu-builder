@@ -26,6 +26,7 @@
     "react-dom": "19.1.0",
     "sass": "^1.93.2",
     "uuid": "^13.0.0",
+    "zod": "^4.2.1",
     "zustand": "^5.0.8"
   },
   "compilerOptions": {

@@ -8,25 +8,26 @@ const rarityBackgroundMap: Record<Rarity, string> = {
   "SP": "/images/backgrounds/BackgroundSP.png",     
 };
 
-export const getRarityBackground = (rarity: Rarity): string => {
-  return rarityBackgroundMap[rarity] || "/images/backgroundsBackgroundSR.webp"; 
+export const getRarityBackground = (rarity: Rarity | string | null | undefined): string => {
+  if (!rarity) return "/images/backgrounds/BackgroundSR.png";
+  return rarityBackgroundMap[rarity as Rarity] || "/images/backgrounds/BackgroundSR.png"; 
 };
 
 const rarityColorMap: Record<Rarity, string> = {
-    "SR": "text-blue-300",
-    "SSR": "text-yellow-400", 
-    "UR": "text-orange-400",
-    "SP": "text-purple-400",
+    "SR": "text-zinc-400",
+    "SSR": "text-[#EBAC43]", 
+    "UR": "text-[#E04444]",
+    "SP": "text-[#C6E3FF]",
 }
 export const getRarityColor = (rarity: Rarity): string => {
     return rarityColorMap[rarity] || "text-gray-300";
 }
 
 const rarityBorderColorMap: Record<Rarity, string> = {
-    "SR": "border-purple-500",    
-    "SSR": "border-yellow-500", 
-    "UR": "border-red-500",  
-    "SP": "border-blue-300", 
+    "SR": "border-zinc-400",    
+    "SSR": "border-[#EBAC43]", 
+    "UR": "border-[#E04444]",  
+    "SP": "border-[#C6E3FF]", 
 };
 
 export const getRarityBorderColor = (rarity: Rarity): string => {

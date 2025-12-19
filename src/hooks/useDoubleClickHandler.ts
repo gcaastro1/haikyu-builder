@@ -5,36 +5,28 @@ import { useCallback } from "react";
 
 export function useDoubleClickHandler(
   team: TeamSlots,
-  isPositionFree: boolean,
   teamCharacterNames: Set<string>
 ) {
   const { showFeedback } = useUIStore();
   const { setTeam, removeFromCourt } = useTeamStore();
 
   const findCourtSlotForDoubleClick = useCallback(
-    (character: Character, currentTeam: TeamSlots, isFreeMode: boolean): SlotKey | null => {
+    (character: Character, currentTeam: TeamSlots): SlotKey | null => {
       const { position } = character;
 
       if (position === "L") return currentTeam.libero === null ? "libero" : null;
 
       const courtKeys: SlotKey[] = ["pos1_s", "pos2_mb", "pos3_ws", "pos5_mb", "pos6_ws", "pos4_op"];
 
-      if (isFreeMode) {
+      if (character.position !== "L") {
         for (const key of courtKeys) {
-          if (currentTeam[key] === null && character.position !== "L") {
+          if (currentTeam[key] === null) {
             return key;
           }
         }
-        return null;
       }
-
-      switch (position) {
-        case "WS": return currentTeam.pos3_ws === null ? "pos3_ws" : currentTeam.pos6_ws === null ? "pos6_ws" : null;
-        case "MB": return currentTeam.pos2_mb === null ? "pos2_mb" : currentTeam.pos5_mb === null ? "pos5_mb" : null;
-        case "S": return currentTeam.pos1_s === null ? "pos1_s" : null;
-        case "OP": return currentTeam.pos4_op === null ? "pos4_op" : null;
-        default: return null;
-      }
+      
+      return null;
     },
     []
   );
@@ -48,7 +40,7 @@ export function useDoubleClickHandler(
         }
 
         let added = false;
-        const targetSlotKey = findCourtSlotForDoubleClick(character, team, isPositionFree);
+        const targetSlotKey = findCourtSlotForDoubleClick(character, team);
 
         if (targetSlotKey) {
           setTeam({ ...team, [targetSlotKey]: character });
@@ -61,7 +53,7 @@ export function useDoubleClickHandler(
         showFeedback(`${character.name} removido da quadra.`);
       }
     },
-    [team, isPositionFree, findCourtSlotForDoubleClick, showFeedback, teamCharacterNames, setTeam, removeFromCourt]
+    [team, findCourtSlotForDoubleClick, showFeedback, teamCharacterNames, setTeam, removeFromCourt]
   );
 
   return { handleDoubleClickCharacter };

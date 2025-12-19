@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
-import { Save, List, Trash2, RotateCw, Lightbulb } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useUIStore } from "@/stores/useUIStore";
-import { useTeamStore } from "@/stores/useTeamStore";
 import { useTeamManager } from "@/hooks/useTeamManager";
 import { useCharacterStore } from "@/stores/useCharacterStore";
+import { useTeamStore } from "@/stores/useTeamStore";
+import { useUIStore } from "@/stores/useUIStore";
 import type { TeamType } from "@/types";
+import { AnimatePresence, motion } from "framer-motion";
+import { Lightbulb, List, RotateCw, Save, Trash2 } from "lucide-react";
+import { useState } from "react";
 
 export function TeamControls() {
   const { openTeamsModal, showFeedback } = useUIStore();
-  const { team, setTeam, rotateTeam, clearTeam, isJPMode, toggleJPMode } = useTeamStore();
+  const { team, setTeam, rotateTeam, clearTeam } = useTeamStore();
   const { handleSave } = useTeamManager();
   const { suggestTeam } = useCharacterStore();
 
@@ -47,7 +47,7 @@ export function TeamControls() {
 
   const handleGenerateTeam = () => {
     if (!selectedType) return;
-    const suggestion = suggestTeam(selectedType, team, isJPMode);
+    const suggestion = suggestTeam(selectedType, team);
     setTeam(suggestion);
     setIsModalOpen(false);
     showFeedback(`Time sugerido para o tipo "${selectedType}"!`);
@@ -83,20 +83,6 @@ export function TeamControls() {
         <Lightbulb size={16} />
         <span>Sugerir</span>
       </button>
-
-      {/* === Toggle JP === */}
-      <div className="jp-toggle">
-        <label className="jp-toggle__label">
-          <span className="jp-toggle__text">Modo JP</span>
-          <input
-            type="checkbox"
-            checked={isJPMode}
-            onChange={toggleJPMode}
-            className="jp-toggle__input"
-          />
-          <span className="jp-toggle__slider" />
-        </label>
-      </div>
 
       {/* === Modal de Sugestão === */}
       <AnimatePresence>

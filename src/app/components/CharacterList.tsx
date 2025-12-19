@@ -59,10 +59,9 @@ export function CharacterList({ className = "" }: CharacterListProps) {
     }))
   );
 
-  const { team, isJPMode } = useTeamStore(
+  const { team } = useTeamStore(
     useShallow((s) => ({
       team: s.team,
-      isJPMode: s.isJPMode,
     }))
   );
 
@@ -86,7 +85,7 @@ export function CharacterList({ className = "" }: CharacterListProps) {
 
     return allCharacters.filter((char: Character) => {
       // Filtro de posição
-      if (!isJPMode && positionFilter !== "ALL" && char.position !== positionFilter) {
+      if (positionFilter !== "ALL" && char.position !== positionFilter) {
         return false;
       }
 
@@ -102,7 +101,7 @@ export function CharacterList({ className = "" }: CharacterListProps) {
 
       return true;
     });
-  }, [allCharacters, positionFilter, schoolFilter, normalizedNameSearch, isJPMode]);
+  }, [allCharacters, positionFilter, schoolFilter, normalizedNameSearch]);
 
   if (isLoading) {
     return (

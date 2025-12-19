@@ -1,7 +1,10 @@
 "use client";
 
+import { useAuthStore } from "@/stores/useAuthStore";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { Character, Position, School } from "@/types";
+import { Edit } from "lucide-react";
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { CharacterCard } from "../components/CharacterCard";
@@ -10,8 +13,6 @@ import { NameSearchInput } from "../components/NameSearchInput";
 import { PositionFilter } from "../components/PositionFilter";
 import { SchoolFilter } from "../components/SchoolFilter";
 import { SectionHeader } from "../components/SectionHeader";
-
-
 export default function DatabasePage() {
   const { allCharacters, isLoading, fetchError, fetchInitialData, hasLoadedData } = useCharacterStore(
     useShallow((s) => ({
@@ -22,6 +23,8 @@ export default function DatabasePage() {
       hasLoadedData: s.hasLoadedData,
     }))
   );
+
+  const { isAdmin } = useAuthStore();
 
   const [positionFilter, setPositionFilter] = useState<Position | "ALL">("ALL");
   const [schoolFilter, setSchoolFilter] = useState<School | "ALL">("ALL");
@@ -90,6 +93,14 @@ export default function DatabasePage() {
     <main className="database-page">
       <SectionHeader title="Banco de Dados de Personagens"/>
 
+      {isAdmin && (
+        <div style={{ padding: "0 2rem" }}>
+          <Link href="/cadastro" className="btn btn--confirm" style={{ padding: "8px 16px", borderRadius: "4px", textDecoration: "none", display: "inline-block", marginBottom: "1rem" }}>
+            + Novo Personagem
+          </Link>
+        </div>
+      )}
+
       <div className="database-page__filters">
         <div className="database-page__filters-row">
           <div className="database-page__filters-col">
@@ -135,12 +146,38 @@ export default function DatabasePage() {
         {!isLoading &&
           !fetchError &&
           filteredCharacters.slice(0, visibleCount).map((char) => (
-            <CharacterCard
-              key={char.id}
-              character={char}
-              onClick={() => handleOpenModal(char)}
-              originType={"list"}
-            />
+            <div key={char.id} style={{ position: 'relative' }}>
+                <CharacterCard
+                character={char}
+                onClick={() => handleOpenModal(char)}
+                originType={"list"}
+                />
+                {isAdmin && (
+                    <Link
+                        href={`/cadastro?id=${char.id}`}
+                        style={{
+                            position: 'absolute',
+                            top: '8px',
+                            right: '8px',
+                            background: '#e65100',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '50%',
+                            width: '32px',
+                            height: '32px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer',
+                            zIndex: 10,
+                            boxShadow: '0 2px 4px rgba(0,0,0,0.5)'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <Edit size={16} />
+                    </Link>
+                )}
+            </div>
           ))}
 
         {!isLoading && visibleCount < filteredCharacters.length && (
