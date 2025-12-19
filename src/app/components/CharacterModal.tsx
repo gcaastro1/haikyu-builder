@@ -359,7 +359,7 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                             onClick={() => setActiveTab("Habilidades")}
                           >
                             <strong>{specialSkill.name}</strong>
-                            <p title={specialSkill.description}>{specialSkill.description}</p>
+                            <p title={specialSkill.description || undefined}>{specialSkill.description}</p>
                           </div>
                         ) : (
                           <p className={styles.emptyText}>-</p>
