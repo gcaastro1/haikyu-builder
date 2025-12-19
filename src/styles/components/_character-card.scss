@@ -28,6 +28,15 @@
     opacity: 0.6;
   }
 
+  &--selected {
+    opacity: 0.5;
+    filter: grayscale(100%);
+    
+    .character-card__frame {
+      border: 2px solid #71717a; 
+    }
+  }
+
   &:hover {
     transform: translateY(-6px) scale(1.04);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6),

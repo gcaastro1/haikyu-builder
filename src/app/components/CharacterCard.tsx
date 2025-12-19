@@ -100,7 +100,7 @@ export const CharacterCard = React.memo(function CharacterCard({
         .toLowerCase()
         .replace(/\s+/g, "-")} character-card--rarity-${(character.rarity || "").toString().toLowerCase()} ${
         droppable.isOver ? "character-card--over" : ""
-      } ${className}`}
+      } ${isSelected ? "character-card--selected" : ""} ${className}`}
       {...(dragId ? draggable.listeners : {})}
       {...(dragId ? draggable.attributes : {})}
       layout={false}

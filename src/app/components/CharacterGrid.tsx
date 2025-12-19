@@ -123,6 +123,7 @@ export function CharacterGrid({
               character={char}
               isSelected={currentTeamNames.has(char.name)}
               onClick={() => handleSelect(char)}
+              originType="list"
             />
           </motion.div>
         ))}

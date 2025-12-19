@@ -13,6 +13,7 @@ export type CharacterCardProps = {
   onAddToTeam?: (character: Character) => void;
   className?: string;
   variant?: "default" | "popout";
+  isSelected?: boolean;
 };
 
 export type CharacterModalProps = {
