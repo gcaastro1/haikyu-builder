@@ -13,7 +13,6 @@ type DragDropProviderProps = {
   children: React.ReactNode;
 };
 
-// ✅ Otimização: Drop animation configurada para melhor performance
 const dropAnimationConfig: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
     styles: {
@@ -27,7 +26,6 @@ const dropAnimationConfig: DropAnimation = {
 };
 
 export function DragDropProvider({ children }: DragDropProviderProps) {
-  // ✅ Otimização: Usa seletores combinados para reduzir re-renders
   const { team, isPositionFree } = useTeamStore(
     useShallow((s) => ({
       team: s.team,
@@ -35,7 +33,6 @@ export function DragDropProvider({ children }: DragDropProviderProps) {
     }))
   );
 
-  // ✅ Otimização: Memoiza o Set para evitar recriação a cada render
   const teamCharacterNames = useMemo(
     () =>
       new Set(
@@ -55,7 +52,6 @@ export function DragDropProvider({ children }: DragDropProviderProps) {
     handleDragCancel,
   } = useDragHandlers(team, teamCharacterNames, isPositionFree);
 
-  // ✅ Otimização: Memoiza os sensores para evitar recriação
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -65,7 +61,6 @@ export function DragDropProvider({ children }: DragDropProviderProps) {
     })
   );
 
-  // ✅ Otimização: Preview leve do card no overlay (sem componente completo)
   const renderDragOverlay = useCallback(() => {
     if (!activeDragItem) return null;
 
@@ -98,7 +93,6 @@ export function DragDropProvider({ children }: DragDropProviderProps) {
     );
   }, [activeDragItem]);
 
-  // ✅ Contexto para compartilhar estado do drag com componentes filhos
   const dragContextValue = useMemo(
     () => ({
       activeDragItem: activeDragItem

@@ -1,8 +1,6 @@
 @use "variables";
 @use "mixins";
 @use "globals";
-
-// Components
 @use "components/active-bonds-display";
 @use "components/bonds";
 @use "components/character-modal";
@@ -30,7 +28,6 @@
 @use "components/character-selection-modal";
 
 
-// Pages
 @use "pages/home";
 @use "pages/database";
 @use "pages/register";

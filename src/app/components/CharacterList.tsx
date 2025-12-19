@@ -23,13 +23,11 @@ export function CharacterList({ className = "" }: CharacterListProps) {
   const [isMobile, setIsMobile] = useState(false);
   const [topOffset, setTopOffset] = useState(0);
 
-  // Constantes de dimensionamento
   const DRAWER_WIDTH = 360;
   const BUTTON_WIDTH = 56;
   const DRAWER_HEIGHT_MOBILE = 280;
   const BUTTON_COLLAPSED_OFFSET = DRAWER_WIDTH - BUTTON_WIDTH;
 
-  // Medir navbar e detectar mobile uma única vez
   useEffect(() => {
     const updateLayout = () => {
       const nav = document.querySelector(".navbar");
@@ -65,7 +63,6 @@ export function CharacterList({ className = "" }: CharacterListProps) {
     }))
   );
 
-  // Cria um Set com os nomes dos personagens já no time
   const teamCharacterNames = useMemo(
     () =>
       new Set(
@@ -76,25 +73,20 @@ export function CharacterList({ className = "" }: CharacterListProps) {
     [team]
   );
 
-  // Filtra os personagens
-  // Otimização: memoizar searchTerm normalizado
   const normalizedNameSearch = nameSearch.toLowerCase();
 
   const filteredCharacters = useMemo(() => {
     if (!allCharacters.length) return [];
 
     return allCharacters.filter((char: Character) => {
-      // Filtro de posição
       if (positionFilter !== "ALL" && char.position !== positionFilter) {
         return false;
       }
 
-      // Filtro de escola
       if (schoolFilter !== "ALL" && char.school !== schoolFilter) {
         return false;
       }
 
-      // Filtro de nome
       if (normalizedNameSearch && !char.name.toLowerCase().includes(normalizedNameSearch)) {
         return false;
       }
@@ -113,7 +105,6 @@ export function CharacterList({ className = "" }: CharacterListProps) {
 
   return (
     <>
-      {/* Backdrop semi-transparente quando expandido */}
       <AnimatePresence>
         {isExpanded && (
           <motion.div
@@ -128,7 +119,6 @@ export function CharacterList({ className = "" }: CharacterListProps) {
         )}
       </AnimatePresence>
 
-      {/* Drawer */}
       <motion.div
         className={`character-list__drawer ${isMobile ? "character-list__drawer--mobile" : "character-list__drawer--desktop"} ${className}`}
         initial={false}
@@ -138,7 +128,6 @@ export function CharacterList({ className = "" }: CharacterListProps) {
         }
         transition={{ duration: 0.32, ease: "easeInOut" }}
       >
-      {/* Header com controles */}
       <div className="character-list__header">
         <button
           className={`character-list__toggle ${isMobile ? "character-list__toggle--mobile" : "character-list__toggle--desktop"} ${isExpanded ? "character-list__toggle--expanded" : ""}`}
@@ -150,7 +139,6 @@ export function CharacterList({ className = "" }: CharacterListProps) {
           </span>
         </button>
       </div>
-      {/* Filtros e lista (animação horizontal) */}
       <motion.div
         className={`${isMobile ? "character-list__content character-list__content--mobile" : "character-list__content character-list__content--desktop"} ${
           isExpanded ? "is-interactive" : "is-disabled"

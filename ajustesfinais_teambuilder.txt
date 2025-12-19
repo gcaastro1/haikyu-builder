@@ -1,0 +1,15 @@
+
+### 5. Testabilidade
+- Ausência Total de Testes
+  - Descrição : Não foram encontrados arquivos de teste ( .test.ts , .spec.tsx ) ou configurações de frameworks de teste (Jest, Vitest).
+  - Localização : Todo o projeto.
+  - Gravidade : Crítico
+  - Sugestão : Configurar Vitest e React Testing Library. Começar testando funções puras críticas como calculateActiveBonds e componentes complexos como TeamCourt .
+  - Impacto : Crítico. Qualquer refatoração atual corre alto risco de quebrar funcionalidades existentes sem que seja detectado.
+### 6. Documentação
+- Documentação de Lógica Complexa
+  - Descrição : Arquivos com lógica de negócio densa, como calculateActiveBonds.ts e useTeamStore.ts , possuem poucos ou nenhuns comentários explicativos (JSDoc) sobre o "porquê" das decisões, apenas comentários breves sobre o "o quê".
+  - Localização : src/app/lib/calculateActiveBonds.ts , src/stores/useTeamStore.ts .
+  - Gravidade : Baixo
+  - Sugestão : Adicionar JSDoc para funções exportadas explicando parâmetros, retornos e casos de borda.
+  - Impacto : Facilita o onboarding de novos desenvolvedores e manutenção futura.

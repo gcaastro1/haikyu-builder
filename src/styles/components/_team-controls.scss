@@ -1,7 +1,6 @@
 @use "../variables" as *;
 @use "sass:color";
 
-/* Container */
 .team-controls {
   display: flex;
   align-items: center;
@@ -14,7 +13,6 @@
   font-family: var(--font-bricolage);
 }
 
-/* ===== Botões ===== */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -68,7 +66,6 @@
   }
 }
 
-/* ===== Botões Circulares ===== */
 .btn-circle {
   @extend .btn;
   padding: 0.6rem;
@@ -78,7 +75,6 @@
   justify-content: center;
 }
 
-/* ===== Tooltip ===== */
 .tooltip-wrapper {
   position: relative;
   display: flex;

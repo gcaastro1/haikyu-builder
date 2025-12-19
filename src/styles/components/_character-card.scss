@@ -39,7 +39,6 @@
     border-color: #ff8c00;
   }
 
-  // School accent overrides
   &.character-card--school-karasuno {
     &:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.6), 0 0 15px rgba(249,115,22,0.35); }
     &.character-card--over { box-shadow: 0 0 10px rgba(234,88,12,0.85); border-color: #ea580c; }
@@ -85,7 +84,6 @@
     &.character-card--over { box-shadow: 0 0 10px rgba(29,78,216,0.85); border-color: #1d4ed8; }
   }
 
-  // Rarity Borders
   &.character-card--rarity-sp { border-color: $rarity-sp; }
   &.character-card--rarity-ur { border-color: $rarity-ur; }
   &.character-card--rarity-ssr { border-color: $rarity-ssr; }
@@ -108,10 +106,8 @@
   }
 
   &__background {
-    // Background is now inside frame
   }
 
-  // Popout Variant
   &--popout {
     overflow: visible !important;
     border: none !important;
@@ -120,18 +116,16 @@
 
     .character-card__frame {
       border: 2px solid;
-      border-color: inherit; // Inherit color from parent (set by modifiers)
+      border-color: inherit;
       background: rgba(24, 24, 27, 0.5);
       backdrop-filter: blur(6px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); // Default shadow
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
     }
 
     .character-card__image {
       top: -15%;
       height: 115%;
       z-index: 1;
-      // Optional: Mask bottom to respect rounded corners if needed
-      // mask-image: linear-gradient(to top, transparent 0%, black 10%, black 100%);
     }
   }
 
@@ -140,8 +134,7 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    // overflow: hidden; // Remove overflow hidden to allow popout
-    background: transparent; // Make transparent to see frame behind
+    background: transparent;
     z-index: 2;
   }
 
@@ -160,7 +153,6 @@
   }
 
   &__overlay {
-    // Moved overlay to inside frame or adjusting z-index
     position: absolute;
     inset: 0;
     background: radial-gradient(
@@ -168,14 +160,14 @@
       rgba(0, 0, 0, 0) 60%,
       rgba(0, 0, 0, 0.45) 100%
     );
-    z-index: 1; // Lower z-index
+    z-index: 1;
     pointer-events: none;
-    border-radius: 4px; // Match card radius
+    border-radius: 4px;
   }
 
   &__position-badge-container {
     position: absolute;
-    top: 12px; // Moved down
+    top: 12px;
     left: 4px;
     z-index: 20;
   }
@@ -230,7 +222,6 @@
 
   &__position-badge {
     position: relative;
-    // Ensure it looks good in top left
     display: flex;
     align-items: center;
     justify-content: center;
@@ -243,7 +234,6 @@
     box-shadow: none;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
     
-    // Removed specific border colors
     &--s, &--ws, &--mb, &--l { border-color: transparent; }
 
     .character-card__position-icon {

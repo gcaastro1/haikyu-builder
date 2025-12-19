@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Character } from "@/types";
+import { motion } from "framer-motion";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CharacterCard } from "./CharacterCard";
 
 import "@/styles/components/character-grid.scss";
@@ -50,15 +50,13 @@ export function CharacterGrid({
 
   useEffect(() => {
     setVisibleCount(BATCH_SIZE);
-  }, [characters.length]); // ✅ Otimização: depende apenas do length
+  }, [characters.length]);
 
-  // ✅ Otimização: Memoiza lista visível para evitar recálculos
   const visibleCharacters = useMemo(
     () => characters.slice(0, visibleCount),
     [characters, visibleCount]
   );
 
-  // ✅ Otimização: Memoiza callback para evitar re-renders
   const handleSelect = useCallback(
     (character: Character) => {
       onSelect(character);

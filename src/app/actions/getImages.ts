@@ -12,11 +12,9 @@ export async function getStorageImages(): Promise<{ images: StorageFile[] | null
   try {
     const imagesDir = path.join(process.cwd(), 'public', 'images', 'characters_lg');
     
-    // Check if directory exists
     try {
         await fs.access(imagesDir);
     } catch {
-        // If it doesn't exist, return empty
         return { images: [], error: null };
     }
 

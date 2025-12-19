@@ -36,7 +36,6 @@ export function CharacterSelectionModal() {
     }))
   );
 
-  // ✅ Otimização: Usa dados do store ao invés de fetch duplicado
   const { allCharacters, isLoading, fetchError, fetchInitialData, hasLoadedData } = useCharacterStore(
     useShallow((s) => ({
       allCharacters: s.allCharacters,
@@ -72,7 +71,6 @@ export function CharacterSelectionModal() {
   };
   const positionTitle = positionNames[autoPosition] || "Todos";
 
-  // Otimização: memoizar searchTerm normalizado
   const normalizedNameSearch = nameSearch.toLowerCase();
 
   const filteredCharacters = useMemo(() => {
@@ -105,7 +103,6 @@ export function CharacterSelectionModal() {
     return () => observer.disconnect();
   }, [handleIntersect]);
 
-  // === NOVO: cria um set de nomes que já estão na quadra ===
   const inCourtNames = useMemo(() => {
     return new Set(
       Object.values(team)
@@ -135,7 +132,7 @@ export function CharacterSelectionModal() {
   };
 
   const handleCardClick = (char: Character) => {
-    if (inCourtNames.has(char.name)) return; // 🔒 não deixa clicar em bloqueado
+    if (inCourtNames.has(char.name)) return;
     setSelectedCharacter((prev) => (prev?.id === char.id ? null : char));
   };
 
@@ -195,7 +192,7 @@ export function CharacterSelectionModal() {
               <div className="character-modal__grid">
                 {filteredCharacters.slice(0, visibleCount).map((char) => {
                   const isSelected = selectedCharacter?.id === char.id;
-                  const isDisabled = inCourtNames.has(char.name); // 🔒 bloqueado se já está na quadra
+                  const isDisabled = inCourtNames.has(char.name);
                   return (
                     <motion.div
                       key={char.id}

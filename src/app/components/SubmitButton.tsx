@@ -2,7 +2,7 @@
 
 import { useFormStatus } from 'react-dom';
 import { RotateCw } from 'lucide-react';
-import "@/styles/components/_submit-button.scss"; // importa o estilo
+import "@/styles/components/_submit-button.scss";
 
 export function SubmitButton() {
   const { pending } = useFormStatus();

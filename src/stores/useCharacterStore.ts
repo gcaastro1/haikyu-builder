@@ -14,7 +14,6 @@ import {
 } from "@/types";
 import { create, StoreApi, UseBoundStore } from "zustand";
 import { persist } from "zustand/middleware";
-// Dados passam a ser carregados 100% dos JSON em /public/mock
 import { fetchAndValidate } from "@/app/lib/api";
 import { BondSchema, CharacterBondLinkSchema, CharacterSchema, CharacterStatsBondSchema, MemorySchema, PotentialSchema } from "@/app/lib/schemas";
 import z from "zod";
@@ -83,12 +82,9 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
             ]);
 
             const formattedCharacters: Character[] = charactersJson.map((c) => {
-              // Se já tiver caminho completo local, usa ele. Se não, tenta construir.
-              // Isso permite que o characters.json tenha "/images/characters_lg/..." ou "/images/characters/..."
               let localImageUrl = c.image_url;
               
               if (!localImageUrl || (!localImageUrl.startsWith("/images/") && !localImageUrl.startsWith("http"))) {
-                  // Fallback para comportamento antigo se não tiver path
                 const supabaseUrl: string | null = c.image_url ?? null;
                 const fileName = typeof supabaseUrl === "string" ? supabaseUrl.split("/").pop() ?? null : null;
                 localImageUrl = fileName ? `/images/characters_lg/${fileName}` : null;
@@ -201,7 +197,6 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
               .map((c) => c.id)
           );
 
-          // Build a map of bond_id -> Set<character_id> from characterBondLinks
           const bondParticipantsMap = new Map<number, Set<number>>();
           characterBondLinks.forEach((link) => {
             if (!bondParticipantsMap.has(link.bond_id)) {
@@ -284,14 +279,12 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
             return (char.styles ?? []).includes(expectedDbKey);
           };
 
-          // ✅ Otimização: Cria Maps uma vez para lookup O(1) ao invés de includes() O(n)
           const teamIdsSet = new Set(
             Object.values(currentTeam)
               .filter(Boolean)
               .map((m) => m!.id)
           );
 
-          // Cria um Map de character_id -> bond_ids para lookup rápido
           const characterBondMap = new Map<number, Set<number>>();
           characterBondLinks.forEach((link) => {
             if (!characterBondMap.has(link.character_id)) {
@@ -300,8 +293,6 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
             characterBondMap.get(link.character_id)!.add(link.bond_id);
           });
 
-          // Otimização adicional: cria map bond_id -> set de character_ids
-          // Isso permite calcular sinergia rapidamente sem iterar toda a lista de links
           const bondToCharacters = new Map<number, Set<number>>();
           characterBondLinks.forEach((link) => {
             if (!bondToCharacters.has(link.bond_id)) {
@@ -314,9 +305,6 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
             const charBondIds = characterBondMap.get(char.id) || new Set();
             if (charBondIds.size === 0) return 0;
 
-            // Para cada bond do personagem, conta quantos membros do time
-            // também possuem esse bond. Usamos `bondToCharacters` para lookup O(1)
-            // e iteramos sobre `teamIdsSet` (tipicamente pequeno).
             let synergyScore = 0;
             for (const bondId of charBondIds) {
               const members = bondToCharacters.get(bondId);
@@ -358,7 +346,6 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
           const requiredOfType = requiredCounts[targetType];
           let addedOfType = 0;
 
-          // ✅ Otimização: Cria Set de NOMES já no time para evitar duplicatas do mesmo personagem
           const teamNamesInNewTeam = new Set(
             Object.values(newTeam)
               .filter(Boolean)
@@ -398,7 +385,6 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
             });
 
             if (availableCandidates.length > 0) {
-              // ✅ Otimização: Encontra o melhor candidato sem ordenar toda a lista
               const bestCandidate = availableCandidates.reduce((best, current) => {
                 const currentScore = getCharacterScore(current, newTeam);
                 const bestScore = getCharacterScore(best, newTeam);
@@ -432,8 +418,8 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
 
       {
         name: "haikyu-character-cache",
-        version: 1, // Bump version to force re-fetch with new validation
-        skipHydration: true, // ✅ Evita hidratação automática que causa mismatch SSR/CSR
+        version: 1, 
+        skipHydration: true, 
         partialize: (state) => ({
           allCharacters: state.allCharacters,
           allBonds: state.allBonds,
@@ -441,7 +427,6 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
           allPotentials: state.allPotentials,
           allMemories: state.allMemories,
         }),
-        // Normaliza imagens antigas armazenadas em localStorage (ex: "/imagens/..." -> "/images/...")
         onRehydrateStorage: () => (persistedState) => {
           if (!persistedState || !persistedState.allCharacters) return;
           try {

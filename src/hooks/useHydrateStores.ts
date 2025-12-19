@@ -3,17 +3,12 @@ import { useSavedTeamsStore } from "@/stores/useSavedTeamsStore";
 import { useTeamStore } from "@/stores/useTeamStore";
 import { useEffect, useState } from "react";
 
-/**
- * Hook para hidratar os stores do Zustand apenas no cliente
- * Evita erros de hidratação SSR/CSR
- */
 export function useHydrateStores() {
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Hidrata os stores do localStorage
     const hydrate = async () => {
       try {
         const teamPersist = (useTeamStore as any).persist;
@@ -31,7 +26,7 @@ export function useHydrateStores() {
         setIsHydrated(true);
       } catch (error) {
         console.warn("Erro ao hidratar stores:", error);
-        setIsHydrated(true); // Continua mesmo com erro
+        setIsHydrated(true); 
       }
     };
 
@@ -40,5 +35,3 @@ export function useHydrateStores() {
 
   return isHydrated;
 }
-
-

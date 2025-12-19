@@ -36,7 +36,6 @@ export function TeamTypeDisplay() {
       Recepção: 0,
     };
 
-    // ✅ Otimização: Cria um Map para lookup O(1) ao invés de find O(n)
     const characterMap = new Map(allCharacters.map((c) => [c.id, c]));
 
     Object.values(team)

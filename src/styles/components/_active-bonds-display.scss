@@ -58,7 +58,7 @@
     flex-direction: column;
     gap: 0.75rem;
     flex: 1 1 auto;
-    min-height: 0; // permite que o flex filho faça scroll
+    min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
 

@@ -15,7 +15,6 @@ export async function saveCharacterToJson(
     const characterBondsPath = path.join(process.cwd(), 'public', 'mock', 'character_bonds.json');
     const characterStatsBondsPath = path.join(process.cwd(), 'public', 'mock', 'character_stats_bonds.json');
     
-    // 1. Save Character
     const fileContent = await fs.readFile(charactersPath, 'utf-8');
     const characters: Character[] = JSON.parse(fileContent);
 
@@ -39,35 +38,28 @@ export async function saveCharacterToJson(
 
     await fs.writeFile(charactersPath, JSON.stringify(characters, null, 2), 'utf-8');
 
-    // 2. Update Bonds if provided
     if (bondIds) {
-      // Update character_bonds.json
       const charBondsContent = await fs.readFile(characterBondsPath, 'utf-8');
       let charBonds: { character_id: number; bond_id: number }[] = JSON.parse(charBondsContent);
 
-      // Remove existing bonds for this character
       charBonds = charBonds.filter(cb => cb.character_id !== nextId);
 
-      // Add new bonds
       bondIds.forEach(bondId => {
         charBonds.push({ character_id: nextId!, bond_id: bondId });
       });
 
       await fs.writeFile(characterBondsPath, JSON.stringify(charBonds, null, 2), 'utf-8');
 
-      // Update bonds.json (participants)
       const bondsContent = await fs.readFile(bondsPath, 'utf-8');
       const bonds: any[] = JSON.parse(bondsContent);
 
       bonds.forEach(bond => {
-        // Remove character from participants if it exists (to avoid duplicates or if removed)
         if (bond.participants) {
           bond.participants = bond.participants.filter((pid: number) => pid !== nextId);
         } else {
             bond.participants = [];
         }
 
-        // Add if selected
         if (bondIds.includes(bond.id)) {
           bond.participants.push(nextId);
         }
@@ -76,21 +68,17 @@ export async function saveCharacterToJson(
       await fs.writeFile(bondsPath, JSON.stringify(bonds, null, 2), 'utf-8');
     }
 
-    // 3. Update Stats Bonds if provided
     if (statsBondIds) {
       const charStatsBondsContent = await fs.readFile(characterStatsBondsPath, 'utf-8');
       let charStatsBonds: any[] = JSON.parse(charStatsBondsContent);
 
-      // Find existing to preserve buff_description
       const existingLinks = charStatsBonds.filter(csb => csb.character_id === nextId);
       
-      // Remove all for this character
       charStatsBonds = charStatsBonds.filter(csb => csb.character_id !== nextId);
       
       const maxLinkId = charStatsBonds.reduce((max, l) => Math.max(max, l.id || 0), 0);
       let nextLinkId = maxLinkId + 1;
 
-      // Add new ones
       statsBondIds.forEach(sbId => {
         const existing = existingLinks.find(l => l.stats_bond_id === sbId);
         charStatsBonds.push({

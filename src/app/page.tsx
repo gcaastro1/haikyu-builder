@@ -26,10 +26,8 @@ const SavedTeamsModal = dynamic(() =>
 );
 
 export default function Home() {
-  // ✅ Hidratação dos stores apenas no cliente (evita erro de hidratação SSR)
   const _isHydrated = useHydrateStores();
 
-  // === STORES - Otimizado: seletores combinados com useShallow para evitar loops infinitos ===
   const { team, isPositionFree, removeFromCourt } = useTeamStore(
     useShallow((s) => ({
       team: s.team,
@@ -94,7 +92,6 @@ export default function Home() {
     fetchInitialData();
   }, [fetchInitialData]);
 
-  // Removed old calculateBondsForTeam effect
 
   return (
     <DragDropProvider>
@@ -114,7 +111,6 @@ export default function Home() {
                 />
               </div>
 
-            {/* Banco de reservas removido desta tela */}
             </div>
 
             <div className="home__controls">
@@ -132,7 +128,6 @@ export default function Home() {
           </section>
         </div>
 
-        {/* Drawer fixo (desktop/mobile) */}
         <CharacterList />
 
         <CharacterSelectionModal />

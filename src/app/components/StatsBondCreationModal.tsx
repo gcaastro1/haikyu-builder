@@ -29,13 +29,12 @@ export function StatsBondCreationModal({ isOpen, onClose, onSuccess }: StatsBond
     try {
       const participants = selectedParticipants.map(id => ({
         characterId: id,
-        buffDescription: "" // Default empty, user can edit later or we can add input if needed
+        buffDescription: ""
       }));
 
       const result = await saveStatsBond(name, participants);
 
       if (result.success && result.statsBond) {
-        // Refresh store data
         await fetchInitialData(); 
         onSuccess(result.statsBond);
         onClose();

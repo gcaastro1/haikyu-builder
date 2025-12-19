@@ -47,7 +47,6 @@ export const useSavedTeamsStore: UseBoundStore<StoreApi<SavedTeamsState>> =
             return false;
           }
 
-          // Basic validation of the team structure
           const validKeys = ["pos1_s", "pos2_mb", "pos3_ws", "pos4_op", "pos5_mb", "pos6_ws", "libero"];
           const keys = Object.keys(teamToLoad.court);
           const hasAllKeys = validKeys.every(k => keys.includes(k));
@@ -70,7 +69,7 @@ export const useSavedTeamsStore: UseBoundStore<StoreApi<SavedTeamsState>> =
       }),
       {
         name: "haikyu-saved-teams",
-        skipHydration: true, // ✅ Evita hidratação automática que causa mismatch SSR/CSR
+        skipHydration: true, 
         partialize: (state) => ({
           savedTeamsList: state.savedTeamsList,
         }),

@@ -25,12 +25,10 @@ export function useDragHandlers(
   const [activeDragItem, setActiveDragItem] = useState<Character | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
   
-  // ✅ Otimização: Usa refs para evitar dependências desnecessárias nos callbacks
   const teamRef = useRef(team);
   const isPositionFreeRef = useRef(isPositionFree);
   const teamCharacterNamesRef = useRef(teamCharacterNames);
 
-  // Atualiza refs quando valores mudam
   teamRef.current = team;
   isPositionFreeRef.current = isPositionFree;
   teamCharacterNamesRef.current = teamCharacterNames;
@@ -38,21 +36,17 @@ export function useDragHandlers(
   const setTeam = useTeamStore((s) => s.setTeam);
   const showFeedback = useUIStore((s) => s.showFeedback);
 
-  // ✅ Função para validar se um slot é válido para o personagem
   const isValidDrop = useCallback((draggedCharacter: Character, overData: OverDragData): boolean => {
     if (!overData) return false;
 
-    // Validação para slots da quadra
     if (overData.type === "court") {
       const targetSlotKey = overData.slotKey as SlotKey;
       const targetPosition = overData.acceptedPosition as Position;
 
-      // Slot de líbero
       if (targetSlotKey === "libero") {
         return draggedCharacter.position === "L";
       }
 
-      // Líberos só podem ir para slot de líbero
       if (draggedCharacter.position === "L") {
         return false;
       }
@@ -71,7 +65,6 @@ export function useDragHandlers(
     }
   }, []);
 
-  // ✅ Handler para rastrear quando está sobre um slot
   const handleDragOver = useCallback((event: DragOverEvent) => {
     const { active, over } = event;
     if (!over || !active.data.current?.character) {
@@ -82,7 +75,6 @@ export function useDragHandlers(
     const draggedCharacter = active.data.current.character as Character;
     const overData = over.data.current as OverDragData;
 
-    // Valida se o drop é válido
     if (isValidDrop(draggedCharacter, overData)) {
       setOverId(over.id as string);
     } else {
@@ -95,7 +87,6 @@ export function useDragHandlers(
     setOverId(null);
   }, []);
 
-  // ✅ Otimização: Callback sem dependências usando refs
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
       setActiveDragItem(null);
@@ -108,7 +99,6 @@ export function useDragHandlers(
       const draggedCharacter = activeData.character;
       if (!draggedCharacter) return;
 
-      // ✅ Usa refs para valores atuais sem causar re-renders
       const currentTeam = teamRef.current;
       
       const currentIsPositionFree = isPositionFreeRef.current;
@@ -131,7 +121,6 @@ export function useDragHandlers(
         return;
       }
 
-      // === Validação de posição ===
       if (overData?.type === "court") {
         const targetPosition = overData.acceptedPosition as Position;
         const targetSlotKey = overData.slotKey as SlotKey;
@@ -152,7 +141,6 @@ export function useDragHandlers(
         }
       }
 
-      // === Atualização de estado ===
       if (overData?.type === "court")
         newTeam[overData.slotKey as SlotKey] = draggedCharacter;
       
@@ -165,7 +153,7 @@ export function useDragHandlers(
 
       setTeam(newTeam);
     },
-    [showFeedback, setTeam] // ✅ Apenas dependências estáveis
+    [showFeedback, setTeam] 
   );
 
   return {

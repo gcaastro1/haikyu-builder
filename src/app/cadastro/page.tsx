@@ -42,18 +42,15 @@ function CadastroForm() {
   const [editingCharacter, setEditingCharacter] = useState<Character | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   
-  // Bonds State
   const [selectedBonds, setSelectedBonds] = useState<number[]>([]);
   const [isBondModalOpen, setIsBondModalOpen] = useState(false);
 
-  // Stats Bonds State
   const [allStatsBonds, setAllStatsBonds] = useState<StatsBondType[]>([]);
   const [selectedStatsBonds, setSelectedStatsBonds] = useState<number[]>([]);
   const [isStatsBondModalOpen, setIsStatsBondModalOpen] = useState(false);
 
   useEffect(() => {
     fetchInitialData();
-    // Load available Stats Bonds types
     getStatsBondTypes().then(({ types }) => {
       if (types) setAllStatsBonds(types);
     });
@@ -72,7 +69,6 @@ function CadastroForm() {
         setEditingCharacter(char);
         setImageUrl(char.image_url || "");
         
-        // Carregar vínculos existentes
         if (characterBondLinks.length > 0) {
             const charBonds = characterBondLinks
                 .filter(link => link.character_id === char.id)
@@ -80,7 +76,6 @@ function CadastroForm() {
             setSelectedBonds(charBonds);
         }
 
-        // Carregar vínculos de status existentes
         getCharacterStatBonds(char.id).then(({ statsBonds }) => {
             if (statsBonds) {
                 setSelectedStatsBonds(statsBonds.map(sb => sb.stats_bond_id));
@@ -88,7 +83,6 @@ function CadastroForm() {
         });
       }
     }
-    // Only set loaded if we are not editing OR if we found the character
     if (!editId || (editId && allCharacters.length > 0)) {
         setIsLoaded(true);
     }
@@ -103,7 +97,6 @@ function CadastroForm() {
   };
 
   const handleBondCreated = (newBond: Bond) => {
-    // Adiciona o novo vínculo à lista de selecionados automaticamente
     setSelectedBonds(prev => [...prev, newBond.id]);
   };
 
@@ -185,17 +178,13 @@ function CadastroForm() {
       recommended_stats,
     };
 
-    // 2. Salva no arquivo JSON (persistência)
     const result = await saveCharacterToJson(charData as any, selectedBonds, selectedStatsBonds);
     
-    // Atualiza local se necessário. Como saveCharacterToJson é server action e não atualiza o cliente automaticamente
-    // O ideal seria recarregar os dados.
     if (result.success) {
-        await fetchInitialData(true); // Reload data to reflect changes
+        await fetchInitialData(true); 
         setSubmitStatus("success");
         setMessage(result.message);
 
-        // Redireciona para a tela de personagens após 1.5 segundos
         setTimeout(() => {
             router.push("/database");
         }, 1500);
@@ -215,7 +204,6 @@ function CadastroForm() {
   if (!isLoaded) return <div className="cadastro-page"><p>Carregando...</p></div>;
   if (editId && !editingCharacter && isLoaded) return <div className="cadastro-page"><p>Personagem não encontrado.</p></div>;
 
-  // Sorting logic for Bonds
   const sortedBonds = [...allBonds].sort((a, b) => {
     const aSelected = selectedBonds.includes(a.id);
     const bSelected = selectedBonds.includes(b.id);
@@ -224,7 +212,6 @@ function CadastroForm() {
     return (a.name || "").localeCompare(b.name || "");
   });
 
-  // Sorting logic for Stats Bonds
   const sortedStatsBonds = [...allStatsBonds].sort((a, b) => {
     const aSelected = selectedStatsBonds.includes(a.id);
     const bSelected = selectedStatsBonds.includes(b.id);
@@ -299,7 +286,6 @@ function CadastroForm() {
           <StyleSelector name="styles" initialStyles={editingCharacter?.styles || []} />
         </div>
 
-        {/* Regular Bonds Section */}
         <div className="cadastro-page__section">
           <SectionHeader title="Vínculos (Bonds)" />
           <button 
@@ -327,7 +313,7 @@ function CadastroForm() {
                                     checked={selectedBonds.includes(bond.id)}
                                     onChange={() => handleBondChange(bond.id)}
                                 />
-                                <span title={bond.description}>{bond.name}</span>
+                                <span title={bond.description || undefined}>{bond.name}</span>
                             </div>
                             
                             {participants.length > 0 && (
@@ -356,7 +342,6 @@ function CadastroForm() {
             />
         )}
 
-        {/* Stats Bonds Section */}
         <div className="cadastro-page__section">
           <SectionHeader title="Vínculos de Status (Stats Bonds)" />
           <button 

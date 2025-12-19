@@ -110,7 +110,6 @@ export function SavedTeamsModal() {
       let foundAll = true;
       const missing: string[] = [];
 
-      // Otimização: Map para lookup O(1) de characters por ID
       const characterMap = new Map(allCharacters.map((c) => [c.id, c]));
 
       for (const key in data.c) {

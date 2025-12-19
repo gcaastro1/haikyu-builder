@@ -42,7 +42,6 @@ export function BondSelector({
     onChange(newSelectedIds);
   };
 
-  // Otimização: memoizar searchTerm normalizado para evitar .toLowerCase() repetido
   const normalizedSearchTerm = searchTerm.toLowerCase();
   const filteredBonds = allBonds.filter((bond) =>
     bond.name!.toLowerCase().includes(normalizedSearchTerm)

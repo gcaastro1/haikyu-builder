@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 const ALL_STYLES = [
   { label: "Potente", value: "power", icon: "/images/styles/power.png" },
@@ -12,7 +12,6 @@ const ALL_STYLES = [
   { label: "Bloqueio", value: "block", icon: "/images/styles/block.png" },
 ];
 
-// Helper to normalize legacy Portuguese values to English keys
 const normalizeStyle = (style: string): string => {
   const normalized = style.toLowerCase().trim();
   const map: Record<string, string> = {
@@ -29,19 +28,17 @@ const normalizeStyle = (style: string): string => {
 };
 
 type StyleSelectorProps = {
-  name: string;             // nome do campo oculto enviado no form
-  initialStyles?: string[]; // valores iniciais (opcional)
+  name: string;
+  initialStyles?: string[];
 };
 
-import "@/styles/components/_style-selector.scss"; // opção A: importar local
+import "@/styles/components/_style-selector.scss";
 
 export function StyleSelector({ name, initialStyles = [] }: StyleSelectorProps) {
-  // Initialize with normalized values
   const [selectedStyles, setSelectedStyles] = useState<string[]>(() => 
     initialStyles.map(normalizeStyle)
   );
 
-  // Ensure we update if initialStyles changes (e.g. data load)
   useEffect(() => {
     setSelectedStyles(initialStyles.map(normalizeStyle));
   }, [initialStyles]);
@@ -54,7 +51,6 @@ export function StyleSelector({ name, initialStyles = [] }: StyleSelectorProps) 
 
   const styleString = selectedStyles.join(', ');
 
-  // Get labels for display in the hint
   const selectedLabels = selectedStyles.map(val => 
     ALL_STYLES.find(s => s.value === val)?.label || val
   );
@@ -63,7 +59,6 @@ export function StyleSelector({ name, initialStyles = [] }: StyleSelectorProps) 
     <div className="style-selector">
       <label className="style-selector__label">Estilos Selecionados</label>
 
-      {/* Campo enviado no form */}
       <input type="hidden" name={name} value={styleString} />
 
       <div className="style-selector__chips">

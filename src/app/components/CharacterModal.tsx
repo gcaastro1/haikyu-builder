@@ -10,11 +10,11 @@ import { X } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 import {
-  getBonds,
-  getCharacterBonds,
-  getCharacterSkills,
-  getCharacterStatBonds,
-  getPotentials
+    getBonds,
+    getCharacterBonds,
+    getCharacterSkills,
+    getCharacterStatBonds,
+    getPotentials
 } from "../lib/actions";
 import styles from "./CharacterModal.module.scss";
 import { HexagonStatChart } from "./HexagonStatChart";

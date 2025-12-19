@@ -34,7 +34,6 @@ export function BondCreationModal({ isOpen, onClose, onSuccess }: BondCreationMo
       }, selectedParticipants);
 
       if (result.success && result.bond) {
-        // Refresh store data to get the new bond in the list
         await fetchInitialData(); 
         onSuccess(result.bond);
         onClose();

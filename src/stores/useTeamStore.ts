@@ -117,7 +117,7 @@ export const useTeamStore: UseBoundStore<StoreApi<TeamStoreState>> =
       }),
       {
         name: "haikyu-team-storage",
-        skipHydration: true, // ✅ Evita hidratação automática que causa mismatch SSR/CSR
+        skipHydration: true, 
         partialize: (state) => ({
           team: state.team,
           isPositionFree: state.isPositionFree,

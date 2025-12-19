@@ -17,12 +17,10 @@ type HexagonStatChartProps = {
 };
 
 export function HexagonStatChart({ stats }: HexagonStatChartProps) {
-  // Configuration
-  const size = 300; // SVG size
+  const size = 300;
   const center = size / 2;
-  const radius = 100; // Radius of the chart
+  const radius = 100;
   
-  // Calculate max stat dynamically
   const maxStatValue = Math.max(
     stats.serve,
     stats.attack,
@@ -32,14 +30,8 @@ export function HexagonStatChart({ stats }: HexagonStatChartProps) {
     stats.defense
   );
   
-  // Ensure we have a valid maxStat (avoid division by zero if all stats are 0)
-  // Also add a tiny buffer if desired, but user asked for "closest to corners", so exact max is best.
-  // If max is 0, default to something like 100 to avoid issues.
   const maxStat = maxStatValue > 0 ? maxStatValue : 100;
   
-  // Order of stats to match the visual reference (Clockwise starting from top)
-  // Reference image order seems to be: Serve (Top), Spike (TR), Set (BR), Receive (Bottom), Block (BL), Save (TL)
-  // Our stats: Serve, Attack, Set, Receive, Block, Defense
   const statConfig = [
     { key: 'serve', label: 'Serve', value: stats.serve },
     { key: 'attack', label: 'Spike', value: stats.attack },
@@ -49,9 +41,8 @@ export function HexagonStatChart({ stats }: HexagonStatChartProps) {
     { key: 'defense', label: 'Save', value: stats.defense },
   ];
 
-  // Helper to calculate points
   const getPoint = (value: number, index: number, total: number) => {
-    const angle = (Math.PI * 2 * index) / total - Math.PI / 2; // Start at -90deg (top)
+    const angle = (Math.PI * 2 * index) / total - Math.PI / 2;
     const normalizedValue = Math.min(value / maxStat, 1);
     const r = normalizedValue * radius;
     const x = center + r * Math.cos(angle);
@@ -59,26 +50,22 @@ export function HexagonStatChart({ stats }: HexagonStatChartProps) {
     return { x, y };
   };
 
-  // Helper to calculate label points (slightly outside radius)
   const getLabelPoint = (index: number, total: number) => {
     const angle = (Math.PI * 2 * index) / total - Math.PI / 2;
-    const labelRadius = radius + 35; // Distance for labels
+    const labelRadius = radius + 35;
     const x = center + labelRadius * Math.cos(angle);
     const y = center + labelRadius * Math.sin(angle);
     return { x, y };
   };
 
-  // Generate grid points (concentric hexagons)
   const gridLevels = [0.2, 0.4, 0.6, 0.8, 1];
   
-  // Generate data polygon points
   const dataPoints = statConfig.map((stat, i) => getPoint(stat.value, i, statConfig.length));
   const dataPath = dataPoints.map((p, i) => (i === 0 ? `M ${p.x},${p.y}` : `L ${p.x},${p.y}`)).join(' ') + ' Z';
 
   return (
     <div className="hexagon-chart-container" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        {/* Background Grids */}
         {gridLevels.map((level, lvlIndex) => {
           const points = statConfig.map((_, i) => {
             const angle = (Math.PI * 2 * i) / statConfig.length - Math.PI / 2;
@@ -99,7 +86,6 @@ export function HexagonStatChart({ stats }: HexagonStatChartProps) {
           );
         })}
 
-        {/* Axis Lines */}
         {statConfig.map((_, i) => {
           const angle = (Math.PI * 2 * i) / statConfig.length - Math.PI / 2;
           const x = center + radius * Math.cos(angle);
@@ -117,15 +103,13 @@ export function HexagonStatChart({ stats }: HexagonStatChartProps) {
           );
         })}
 
-        {/* Data Polygon */}
         <path
           d={dataPath}
-          fill="rgba(6, 182, 212, 0.2)" // Cyan-500 with opacity
-          stroke="#06b6d4" // Cyan-500
+          fill="rgba(6, 182, 212, 0.2)"
+          stroke="#06b6d4"
           strokeWidth="2"
         />
 
-        {/* Data Points */}
         {dataPoints.map((p, i) => (
           <circle
             key={i}
@@ -136,7 +120,6 @@ export function HexagonStatChart({ stats }: HexagonStatChartProps) {
           />
         ))}
 
-        {/* Labels and Values */}
         {statConfig.map((stat, i) => {
           const p = getLabelPoint(i, statConfig.length);
           const isLeft = p.x < center;
@@ -148,7 +131,7 @@ export function HexagonStatChart({ stats }: HexagonStatChartProps) {
                 x="0"
                 y="-6"
                 textAnchor="middle"
-                fill="#a1a1aa" // Zinc-400
+                fill="#a1a1aa"
                 fontSize="12"
                 fontWeight="500"
               >

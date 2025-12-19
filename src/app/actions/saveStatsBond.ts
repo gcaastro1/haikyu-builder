@@ -12,7 +12,6 @@ export async function saveStatsBond(
     const typesPath = path.join(process.cwd(), 'public', 'mock', 'stats_bonds.json');
     const linksPath = path.join(process.cwd(), 'public', 'mock', 'character_stats_bonds.json');
     
-    // 1. Save Type
     const typesContent = await fs.readFile(typesPath, 'utf-8');
     const types: StatsBondType[] = JSON.parse(typesContent);
 
@@ -28,7 +27,6 @@ export async function saveStatsBond(
     types.push(newType);
     await fs.writeFile(typesPath, JSON.stringify(types, null, 2), 'utf-8');
 
-    // 2. Save Links (Participants)
     if (initialParticipants && initialParticipants.length > 0) {
       const linksContent = await fs.readFile(linksPath, 'utf-8');
       const links: any[] = JSON.parse(linksContent);

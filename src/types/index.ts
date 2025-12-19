@@ -64,7 +64,7 @@ export interface CharacterStatsBond {
 }
 
 export interface Character {
-  id: number; //
+  id: number;
   name: string;
   position: Position | string | null;
   rarity: Rarity | null;

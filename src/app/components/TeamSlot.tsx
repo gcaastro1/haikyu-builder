@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
-import { useDroppable } from "@dnd-kit/core";
-import { motion } from "framer-motion";
 import { useDragContext } from "@/contexts/DragContext";
 import { useTeamStore } from "@/stores/useTeamStore";
 import { Position } from "@/types";
+import { useDroppable } from "@dnd-kit/core";
+import { motion } from "framer-motion";
+import React from "react";
 
 type TeamSlotProps = {
   positionName: string;
@@ -27,38 +27,31 @@ export function TeamSlot({
 
   const isPositionFree = useTeamStore((s) => s.isPositionFree);
 
-  // ✅ Verifica se este slot é válido para o personagem sendo arrastado
   const isValidDrop = React.useMemo(() => {
     if (!activeDragItem) return false;
 
     const acceptedPosition = dropData.acceptedPosition as Position | undefined;
     const slotKey = dropData.slotKey as string | undefined;
 
-    // Slot de líbero
     if (slotKey === "libero") {
       return activeDragItem.position === "L";
     }
 
-    // Líberos só podem ir para slot de líbero
     if (activeDragItem.position === "L") {
       return false;
     }
 
-    // Se não tem posição aceita definida, aceita (bench)
     if (!acceptedPosition) {
       return true;
     }
 
-    // Modo posição livre: aceita qualquer posição exceto L
     if (isPositionFree) {
       return true;
     }
 
-    // Modo restrito: valida posição
     return activeDragItem.position === acceptedPosition;
   }, [activeDragItem, dropData, isPositionFree]);
 
-  // ✅ Determina se deve mostrar feedback visual
   const showValidFeedback = overId === dropId && isValidDrop && activeDragItem !== null;
   const showInvalidFeedback = overId === dropId && !isValidDrop && activeDragItem !== null;
 

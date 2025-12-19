@@ -24,7 +24,6 @@ export const CharacterCard = React.memo(function CharacterCard({
   const [flipped, setFlipped] = useState(false);
   const [memoryError, setMemoryError] = useState(false);
 
-  // ✅ Otimização: Memoiza o ID do drag para evitar recriação
   const dragIdMemo = React.useMemo(() => dragId || `card-${character.id}`, [dragId, character.id]);
 
   const draggable = useDraggable({
@@ -39,7 +38,6 @@ export const CharacterCard = React.memo(function CharacterCard({
     disabled: !dragId,
   });
 
-  // ✅ Usa transform seguro mesmo quando não há drag para evitar erros de runtime
   const style = React.useMemo(() => {
     const t = draggable.transform || { x: 0, y: 0 };
     const x = Number.isFinite(t.x) ? t.x : 0;
@@ -85,7 +83,6 @@ export const CharacterCard = React.memo(function CharacterCard({
     return addSetter ? [...keys, "setter"] : keys;
   }, [character.styles, character.position]);
 
-  // ✅ Otimização: Memoiza o callback de ref para evitar recriação
   const setNodeRef = React.useCallback((node: HTMLElement | null) => {
     draggable.setNodeRef(node);
     droppable.setNodeRef(node);
@@ -106,13 +103,11 @@ export const CharacterCard = React.memo(function CharacterCard({
       } ${className}`}
       {...(dragId ? draggable.listeners : {})}
       {...(dragId ? draggable.attributes : {})}
-      // ✅ Otimização: Desabilita animações durante drag para melhor performance
       layout={false}
     >
       <motion.div
         className="character-card__inner"
       >
-        {/* FRONT */}
         <motion.div
           className="character-card__front"
         >
@@ -126,7 +121,6 @@ export const CharacterCard = React.memo(function CharacterCard({
               unoptimized
             />
           </div>
-          {/** Fallback de imagem local em caso de erro */}
           <Image
             src={imgError ? PLACEHOLDER : character.image_url || PLACEHOLDER}
             alt={character.name}

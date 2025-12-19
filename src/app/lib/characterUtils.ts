@@ -1,9 +1,5 @@
 import { Character } from "@/types";
 
-/**
- * Helper function para parsear estilos de personagem
- * Evita código duplicado em vários lugares
- */
 export function parseCharacterStyles(styles: unknown): string[] {
   if (Array.isArray(styles)) return styles;
   if (typeof styles === "string") {
@@ -17,9 +13,6 @@ export function parseCharacterStyles(styles: unknown): string[] {
   return [];
 }
 
-/**
- * Formata personagens do banco de dados para o formato esperado
- */
 export function formatCharacters(characters: unknown[]): Character[] {
   return characters.map((char: any) => ({
     ...char,

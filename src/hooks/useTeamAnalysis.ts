@@ -52,9 +52,6 @@ export function useTeamAnalysis(team: TeamSlots, isPositionFree: boolean) {
     return { calculatedTeamType: finalTeamType, styleCounts: currentStyleCounts };
   }, [team, isPositionFree]);
 
-  // === Análise de vínculos ativos ===
-  // ✅ Otimização: Usa a função calculateActiveBonds que já existe e é otimizada
-  // Removido cálculo duplicado que estava sendo feito manualmente
   const activeBonds = useMemo(() => {
     const charactersOnCourt = Object.values(team).filter(Boolean) as Character[];
     if (!charactersOnCourt.length || !allBonds.length || !characterBondLinks.length)
@@ -62,10 +59,8 @@ export function useTeamAnalysis(team: TeamSlots, isPositionFree: boolean) {
 
     const calculated = calculateActiveBonds(team, allCharacters, allBonds, characterBondLinks);
     
-    // ✅ Otimização: Cria Map para lookup O(1) ao invés de find O(n)
     const bondMap = new Map(allBonds.map((b) => [b.id, b]));
     
-    // Retorna apenas os bonds ativos como Bond[] (sem os campos calculados)
     return calculated
       .filter((b) => b.isActive)
       .map((b) => bondMap.get(b.id))

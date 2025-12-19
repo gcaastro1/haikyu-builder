@@ -24,7 +24,6 @@ export const CharacterCardSmall = React.memo(function CharacterCardSmall({
   dragData,
   dropData,
 }: CharacterCardSmallProps) {
-  // ✅ Otimização: Memoiza o ID do drag
   const dragIdMemo = React.useMemo(() => dragId || `card-small-${character.id}`, [dragId, character.id]);
 
   const draggable = useDraggable({
@@ -42,7 +41,7 @@ export const CharacterCardSmall = React.memo(function CharacterCardSmall({
   const style = draggable.transform
     ? {
         transform: `translate3d(${draggable.transform.x}px, ${draggable.transform.y}px, 0)`,
-        willChange: "transform", // ✅ Otimização: Melhora performance de transformações
+        willChange: "transform",
       }
     : undefined;
 
@@ -60,7 +59,6 @@ export const CharacterCardSmall = React.memo(function CharacterCardSmall({
     ? "draggable"
     : "clickable";
 
-  // ✅ Otimização: Memoiza o callback de ref
   const setNodeRef = React.useCallback((node: HTMLElement | null) => {
     draggable.setNodeRef(node);
     droppable.setNodeRef(node);
@@ -78,7 +76,7 @@ export const CharacterCardSmall = React.memo(function CharacterCardSmall({
       {...(dragId ? draggable.attributes : {})}
       whileHover={!isDisabled ? { scale: 1.03, y: -2 } : {}}
       whileTap={!isDisabled ? { scale: 0.95 } : {}}
-      layout={false} // ✅ Otimização: Desabilita layout animations durante drag
+      layout={false}
     >
       <div className="character-card-small__inner">
         <div className="character-card-small__front">

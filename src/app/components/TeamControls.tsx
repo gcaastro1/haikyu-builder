@@ -55,7 +55,6 @@ export function TeamControls() {
 
   return (
     <div className="team-controls">
-      {/* === Botões principais === */}
       <button className="btn btn--save" onClick={handleSaveClick}>
         <Save size={16} />
         <span>Salvar</span>
@@ -84,7 +83,6 @@ export function TeamControls() {
         <span>Sugerir</span>
       </button>
 
-      {/* === Modal de Sugestão === */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div

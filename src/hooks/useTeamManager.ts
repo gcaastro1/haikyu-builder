@@ -44,7 +44,6 @@ export function useTeamManager() {
 
       const newTeam: TeamSlots = { ...useTeamStore.getState().team };
 
-      // Otimização: criar Map de characters por id para lookup O(1)
       const characterMap = new Map<number, Character>(
         allCharacters.map((c) => [c.id, c])
       );

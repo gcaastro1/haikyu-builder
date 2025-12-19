@@ -8,26 +8,22 @@ type FeedbackMessage =
   | null;
 
 export type UIStoreState = {
-  // === Estados existentes ===
   isTeamsModalOpen: boolean;
   isSelectionModalOpen: boolean;
   targetSlotIdentifier: string | null;
   feedbackMessage: FeedbackMessage;
   _feedbackTimer: ReturnType<typeof setTimeout> | null;
 
-  // === Novo estado ===
-  modalPosition: string; // ✅ adicionamos isso
+  modalPosition: string; 
 
-  // === Métodos ===
   openTeamsModal: () => void;
-  openSelectionModal: (slotIdentifier: string, position?: string) => void; // ✅ agora recebe posição opcional
+  openSelectionModal: (slotIdentifier: string, position?: string) => void; 
   closeModals: () => void;
   showFeedback: (text: string, type?: "success" | "error") => void;
 };
 
 export const useUIStore: UseBoundStore<StoreApi<UIStoreState>> =
   create<UIStoreState>((set, get) => ({
-    // === Defaults ===
     isTeamsModalOpen: false,
     isSelectionModalOpen: false,
     targetSlotIdentifier: null,

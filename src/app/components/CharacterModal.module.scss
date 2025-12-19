@@ -127,7 +127,6 @@
 }
 
 .mainContent {
-  /* Wrapper for tabs and panels */
 }
 
 .tabs {
@@ -169,7 +168,6 @@
 }
 
 .tabPanel {
-  /* Animation handled by Framer Motion mostly, but layout here */
 }
 
 .summary {
@@ -272,7 +270,6 @@
 }
 
 .summaryInfo {
-  /* container for HexagonChart */
 }
 
 .section {
@@ -290,7 +287,6 @@
 }
 
 .skills {
-  /* wrapper */
 }
 
 .skillsGrid {
@@ -307,7 +303,7 @@
 }
 
 .skillCardSpecial {
-  background-color: rgba(235, 172, 67, 0.05); // Gold tint
+  background-color: rgba(235, 172, 67, 0.05);
   border-color: rgba(235, 172, 67, 0.2);
 }
 
@@ -421,7 +417,7 @@
   &::before {
     content: "";
     position: absolute;
-    left: 19px; // Center of dot (18px width + border?) roughly
+    left: 19px;
     top: 0;
     bottom: 0;
     width: 2px;

@@ -12,7 +12,7 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       isAdmin: false,
       login: (password: string) => {
-        if (password === '@L0ntra667104') {
+        if (password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
           set({ isAdmin: true });
           return true;
         }

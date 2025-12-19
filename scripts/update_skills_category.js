@@ -12,33 +12,25 @@ try {
   const skills = JSON.parse(rawData);
 
   const updatedSkills = skills.map(skill => {
-    let category = "Passive"; // Default to Passive
+    let category = "Passive"; 
 
     const desc = (skill.description || "").toLowerCase().trim();
     const type = skill.type || "Normal";
 
-    // Heuristics
-    // 1. Special skills are usually Active (Ultimate moves)
-    if (type === "Special") {
+  if (type === "Special") {
       category = "Active";
     } else {
-      // 2. Normal skills: check for action verbs
-      // "realiza", "executa", "consome", "dispara"
-      // Check if the description implies an action the player takes explicitly vs a passive effect
-      
+   
       if (
         desc.includes("realiza") || 
         desc.includes("executa") || 
         desc.startsWith("consome") ||
-        desc.includes("saque em suspensão") // Often "Realiza um Saque..."
+        desc.includes("saque em suspensão")  
       ) {
         category = "Active";
       }
       
-      // Counter-heuristics for Passive (overrides action if context implies condition?)
-      // Actually, "Realiza uma recepção com X% de poder" is an active skill in this game context.
-      // "Aumenta..." is passive.
-      
+   
       if (
         desc.startsWith("aumenta") ||
         desc.startsWith("quando") ||
@@ -46,16 +38,12 @@ try {
         desc.startsWith("se ") ||
         desc.startsWith("no encerramento") ||
         desc.startsWith("no estado") ||
-        desc.startsWith("o [") // "O [Bloqueio] de X aumenta..."
+        desc.startsWith("o [") 
       ) {
         category = "Passive";
       }
       
-      // Specific checks for ambiguity
-      // "RYUNOSUKE TANAKA realiza uma Recepção..." -> Active?
-      // "ESPÍRITO OBSTINADO: RYUNOSUKE TANAKA realiza uma Recepção..." -> This sounds like a skill you activate or that triggers on specific action (Active).
-      // "PAIXÃO ARDENTE: Aumenta a potência..." -> Passive.
-    }
+ }
 
     return {
       ...skill,
