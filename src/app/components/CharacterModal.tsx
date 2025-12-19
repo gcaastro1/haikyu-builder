@@ -582,10 +582,15 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                 )}
                 {activeTab === "Memória" && (
                   <div className={styles.memoriesContainer}>
-                    {memoryForCharacter ? (
-                      <div className={styles.memorySection}>
-                        <h4 className={styles.memorySectionTitle}>Memória Principal</h4>
-                        <div className={styles.memoryCard}>
+                    {/* Caso não exista nada */}
+                    {!memoryForCharacter && otherMemories.length === 0 && (
+                      <p className={styles.empty}>Nenhuma memória definida.</p>
+                    )}
+
+                    <div className={styles.memoryGrid}>
+                      {memoryForCharacter && (
+                        <div className={`${styles.memoryCard} ${styles.memoryCardPrincipal}`}>
+                          <div className={styles.memoryTag}>Principal</div>
                           <div className={styles.memoryHero}>
                             <img
                               src={memoryForCharacter.image_url}
@@ -601,34 +606,25 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                             <p className={styles.memoryDesc}>{memoryForCharacter.desc}</p>
                           </div>
                         </div>
-                      </div>
-                    ) : (
-                      <p className={styles.empty}>Nenhuma memória principal definida.</p>
-                    )}
+                      )}
 
-                    {otherMemories.length > 0 && (
-                      <div className={styles.memorySection}>
-                        <h4 className={styles.memorySectionTitle}>Sugestões</h4>
-                        <div className={styles.memoryGrid}>
-                          {otherMemories.map((mem) => (
-                            <div key={mem.id} className={styles.memoryCard}>
-                              <div className={styles.memoryHero}>
-                                <img
-                                  src={mem.image_url}
-                                  alt={mem.name}
-                                  className={styles.memoryHeroImage}
-                                />
-                                <div className={styles.memoryOverlay} />
-                              </div>
-                              <h3 className={styles.memoryTitle}>{mem.name}</h3>
-                              <div className={styles.memoryPanel}>
-                                <p className={styles.memoryDesc}>{mem.desc}</p>
-                              </div>
-                            </div>
-                          ))}
+                      {otherMemories.map((mem) => (
+                        <div key={mem.id} className={styles.memoryCard}>
+                          <div className={styles.memoryHero}>
+                            <img
+                              src={mem.image_url}
+                              alt={mem.name}
+                              className={styles.memoryHeroImage}
+                            />
+                            <div className={styles.memoryOverlay} />
+                          </div>
+                          <h3 className={styles.memoryTitle}>{mem.name}</h3>
+                          <div className={styles.memoryPanel}>
+                            <p className={styles.memoryDesc}>{mem.desc}</p>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      ))}
+                    </div>
                   </div>
                 )}
                 {activeTab === "Potenciais" && (

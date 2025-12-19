@@ -146,7 +146,7 @@
     "recommended_memories": {
       "main": "mem_defense_up_yu_nishinoya"
     },
-    "substats": null
+    "substats": "Reflexo % > Empenho % > Recepção % > Tec. Def. %"
   },
   {
     "id": 7,
@@ -210,11 +210,25 @@
     "receive": 1173,
     "block": 1389,
     "defense": 1102,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 5,
+      "2slots": 2
+    },
+    "recommended_stats": {
+      "slot1": "Bloqueio",
+      "slot2": "Percepção % ou Atq. Rápido %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Def % ou Bloqueio %"
+    },
     "recommended_memories": {
-      "main": "mem_block_up_Tsuki"
-    }
+      "main": "mem_block_up_Tsuki",
+      "others": [
+        "mem_defense_up_takanobu_aone"
+      ]
+    },
+    "substats": "Reflexo % > Empenho % > Bloqueio % > Tec. Def. %"
   },
   {
     "id": 10,
@@ -347,11 +361,22 @@
     "receive": 1391,
     "block": 1098,
     "defense": 1323,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 10,
+      "2slots": 1
+    },
+    "recommended_stats": {
+      "slot1": "Recepção",
+      "slot2": "Passe %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Def % ou Recepção %"
+    },
     "recommended_memories": {
       "main": "mem_receba_morisuke_yaku"
-    }
+    },
+    "substats": "Reflexo % > Empenho % > Recepção % Tec. Def %"
   },
   {
     "id": 16,
@@ -406,9 +431,12 @@
       "slot6": "Tec. Def % ou Bloqueio %"
     },
     "recommended_memories": {
-      "main": "mem_hast_attack_blockup_tetsuro_kuroo"
+      "main": "mem_hast_attack_blockup_tetsuro_kuroo",
+      "others": [
+        "mem_block_up_Tsuki"
+      ]
     },
-    "substats": null
+    "substats": "Reflexo % > Empenho % > Bloqueio % > Tec. Def. %"
   },
   {
     "id": 18,
@@ -565,11 +593,25 @@
     "receive": 1378,
     "block": 1530,
     "defense": 1290,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 6,
+      "2slots": 7
+    },
+    "recommended_stats": {
+      "slot1": "Passe",
+      "slot2": "Percepção % ou Saque %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Atq % ou Saque %"
+    },
     "recommended_memories": {
-      "main": "mem_oikawa_ur"
-    }
+      "main": "mem_oikawa_ur",
+      "others": [
+        "mem_koganegawa_ssr"
+      ]
+    },
+    "substats": "Percepção % > Força % > Passe % > Saque % > Tec. Ataque %"
   },
   {
     "id": 25,
@@ -611,11 +653,25 @@
     "receive": 1314,
     "block": 1248,
     "defense": 1129,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 4,
+      "2slots": 3
+    },
+    "recommended_stats": {
+      "slot1": "Atq Potente",
+      "slot2": "Percepção % ou Força %",
+      "slot3": "Saque",
+      "slot4": "Reflexo % ou Recepção %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Atq % ou Atq Potente %"
+    },
     "recommended_memories": {
-      "main": "mem_iwaizumi_ssr"
-    }
+      "main": "mem_iwaizumi_ssr",
+      "others": [
+        "mem_tanaka_ssr"
+      ]
+    },
+    "substats": "Percepção % > Força % > Atq. Potente % > Tec. Atq %"
   },
   {
     "id": 27,
@@ -634,11 +690,22 @@
     "receive": 1235,
     "block": 1179,
     "defense": 1109,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 4,
+      "2slots": 3
+    },
+    "recommended_stats": {
+      "slot1": "Atq Potente",
+      "slot2": "Percepção % ou Força %",
+      "slot3": "Saque",
+      "slot4": "Reflexo % ou Recepção %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Atq % ou Atq Potente %"
+    },
     "recommended_memories": {
       "main": "mem_ofensive_up_kentaro_kyotani"
-    }
+    },
+    "substats": "Percepção % > Força % > Atq. Potente % > Tec. Ataque %"
   },
   {
     "id": 28,
@@ -674,7 +741,8 @@
       "others": [
         "mem_ofensive_up_kentaro_kyotani"
       ]
-    }
+    },
+    "substats": "Força % > Percepção % Atq Potente % > Tec. Atq %"
   },
   {
     "id": 29,
@@ -762,11 +830,22 @@
     "receive": 1184,
     "block": 1329,
     "defense": 1111,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 6,
+      "2slots": 7
+    },
+    "recommended_stats": {
+      "slot1": "Passe",
+      "slot2": "Percepção % ou Saque %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Atq % ou Saque %"
+    },
     "recommended_memories": {
       "main": "mem_semi_ssr"
-    }
+    },
+    "substats": "Percepção % > Saque > Força % > Passe % > Tec. Ataque"
   },
   {
     "id": 33,
@@ -806,11 +885,22 @@
     "receive": 1477,
     "block": 1172,
     "defense": 1410,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 10,
+      "2slots": 1
+    },
+    "recommended_stats": {
+      "slot1": "Recepção",
+      "slot2": "Passe %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Def % ou Defesa %"
+    },
     "recommended_memories": {
       "main": "mem_receba_yamagata_hayato"
-    }
+    },
+    "substats": "Reflexo % > Empenho % > Defesa % > Recepção % > Tec. Def %"
   },
   {
     "id": 35,
@@ -829,11 +919,25 @@
     "receive": 1417,
     "block": 1347,
     "defense": 1268,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 4,
+      "2slots": 3
+    },
+    "recommended_stats": {
+      "slot1": "Atq Potente",
+      "slot2": "Percepção % ou Força %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Atq % ou Atq Potente %"
+    },
     "recommended_memories": {
-      "main": "mem_bokuto_ur"
-    }
+      "main": "mem_bokuto_ur",
+      "others": [
+        "mem_tanaka_ssr"
+      ]
+    },
+    "substats": "Força % > Percepção % > Atq. Potente % > Tec. Atq. %"
   },
   {
     "id": 36,
@@ -898,11 +1002,26 @@
     "receive": 1191,
     "block": 1334,
     "defense": 1123,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 7,
+      "2slots": 6
+    },
+    "recommended_stats": {
+      "slot1": "Passe",
+      "slot2": "Percepção %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Atq % ou Passe %"
+    },
     "recommended_memories": {
-      "main": "mem_akaashi_ssr"
-    }
+      "main": "mem_akaashi_ssr",
+      "others": [
+        "mem_koganegawa_ssr",
+        "mem_s"
+      ]
+    },
+    "substats": "Percepção % > Força % > Passe % > Tec. Ataque"
   },
   {
     "id": 39,
@@ -920,11 +1039,22 @@
     "receive": 1274,
     "block": 1333,
     "defense": 1335,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 10,
+      "2slots": 1
+    },
+    "recommended_stats": {
+      "slot1": "Recepção",
+      "slot2": "Passe %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Def % ou Recepção %"
+    },
     "recommended_memories": {
       "main": "mem_reacao_para_cima_akinori_konoha"
-    }
+    },
+    "substats": "Reflexo % > Empenho % > Defesa % > Recepção % > Tec. Def. %"
   },
   {
     "id": 40,
@@ -1012,11 +1142,25 @@
     "receive": 1376,
     "block": 1530,
     "defense": 1290,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 6,
+      "2slots": 7
+    },
+    "recommended_stats": {
+      "slot1": "Passe",
+      "slot2": "Percepção % ou Saque %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Atq % ou Saque %"
+    },
     "recommended_memories": {
-      "main": "mem_atsumu_ur"
-    }
+      "main": "mem_atsumu_ur",
+      "others": [
+        "mem_koganegawa_ssr"
+      ]
+    },
+    "substats": "Percepção % > Saque % > Força % > Passe % > Tec. Ataque"
   },
   {
     "id": 44,
@@ -1035,11 +1179,22 @@
     "receive": 1459,
     "block": 1428,
     "defense": 1373,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 9,
+      "2slots": 8
+    },
+    "recommended_stats": {
+      "slot1": "Atq. Rápido",
+      "slot2": "Percepção %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Atq % ou Atq. Rápido %"
+    },
     "recommended_memories": {
       "main": "mem_ofensive_up_osamu_miya"
-    }
+    },
+    "substats": "Percepção % > Força % > Atq. Rápido % > Tec. Atq. %"
   },
   {
     "id": 45,
@@ -1057,11 +1212,25 @@
     "receive": 1476,
     "block": 1198,
     "defense": 1409,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 10,
+      "2slots": 1
+    },
+    "recommended_stats": {
+      "slot1": "Recepção",
+      "slot2": "Passe %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Def % ou Recepção %"
+    },
     "recommended_memories": {
-      "main": "mem_kita_ssr"
-    }
+      "main": "mem_kita_ssr",
+      "others": [
+        "mem_iwaizumi_ssr"
+      ]
+    },
+    "substats": "Reflexo % > Defesa % > Recepção % > Tec. Def %"
   },
   {
     "id": 46,
@@ -1170,11 +1339,25 @@
     "receive": 1541,
     "block": 1581,
     "defense": 1305,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 4,
+      "2slots": 3
+    },
+    "recommended_stats": {
+      "slot1": "Atq. Potente",
+      "slot2": "Percepção %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Atq % ou Atq Potente %"
+    },
     "recommended_memories": {
-      "main": "mem_offense_defense_up_hoshiumi_ur"
-    }
+      "main": "mem_offense_defense_up_hoshiumi_ur",
+      "others": [
+        "mem_tanaka_ssr"
+      ]
+    },
+    "substats": "Percepção % > Força % > Atq. Potente % > Tec. Atq %"
   },
   {
     "id": 51,
@@ -1193,11 +1376,25 @@
     "receive": 1540,
     "block": 1742,
     "defense": 1493,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 5,
+      "2slots": 2
+    },
+    "recommended_stats": {
+      "slot1": "Bloqueio",
+      "slot2": "Percepção %",
+      "slot3": "Saque",
+      "slot4": "Reflexo % ou Bloqueio %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Def % ou Bloqueio %"
+    },
     "recommended_memories": {
-      "main": "mem_block_up_hirugami_yukoro"
-    }
+      "main": "mem_block_up_hirugami_yukoro",
+      "others": [
+        "mem_block_up_Tsuki"
+      ]
+    },
+    "substats": "Reflexo % > Empenho % > Bloqueio % > Tec. Def %"
   },
   {
     "id": 52,
@@ -1216,11 +1413,25 @@
     "receive": 1928,
     "block": 1699,
     "defense": 1656,
-    "potential": null,
-    "recommended_stats": null,
+    "potential": {
+      "4slots": 4,
+      "2slots": 3
+    },
+    "recommended_stats": {
+      "slot1": "Atq. Potente",
+      "slot2": "Percepção %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Atq % ou Atq Potente %"
+    },
     "recommended_memories": {
-      "main": "mem_Sakusa_ur"
-    }
+      "main": "mem_Sakusa_ur",
+      "others": [
+        "mem_bokuto_ur"
+      ]
+    },
+    "substats": "Percepção % > Força % > Atq. Potente % > Tec. Atq. %"
   },
   {
     "id": 53,
@@ -1253,7 +1464,8 @@
     },
     "recommended_memories": {
       "main": "mem_defense_offensive_up_motoya_komori"
-    }
+    },
+    "substats": "Reflexo % > Empenho %  > Recepção % > Tec. Defesa %"
   },
   {
     "id": 54,

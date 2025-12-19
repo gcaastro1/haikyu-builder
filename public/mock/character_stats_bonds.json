@@ -48,60 +48,6 @@
     "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
   },
   {
-    "id": 39,
-    "stats_bond_id": 21,
-    "character_id": 53,
-    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
-  },
-  {
-    "id": 1,
-    "stats_bond_id": 1,
-    "character_id": 27,
-    "buff_description": "Sem bônus"
-  },
-  {
-    "id": 28,
-    "stats_bond_id": 18,
-    "character_id": 27,
-    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
-  },
-  {
-    "id": 135,
-    "stats_bond_id": 66,
-    "character_id": 27,
-    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
-  },
-  {
-    "id": 139,
-    "stats_bond_id": 68,
-    "character_id": 27,
-    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
-  },
-  {
-    "id": 142,
-    "stats_bond_id": 69,
-    "character_id": 27,
-    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
-  },
-  {
-    "id": 12,
-    "stats_bond_id": 10,
-    "character_id": 24,
-    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
-  },
-  {
-    "id": 98,
-    "stats_bond_id": 47,
-    "character_id": 24,
-    "buff_description": "Saque +5/7/9/12/15, Saque +1/2/3/4/5%"
-  },
-  {
-    "id": 104,
-    "stats_bond_id": 50,
-    "character_id": 24,
-    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
-  },
-  {
     "id": 133,
     "stats_bond_id": 65,
     "character_id": 57,
@@ -180,52 +126,16 @@
     "buff_description": "Bloqueio +5/7/9/12/15, Bloqueio +1/2/3/4/5%"
   },
   {
-    "id": 23,
-    "stats_bond_id": 14,
-    "character_id": 39,
-    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
-  },
-  {
     "id": 22,
     "stats_bond_id": 14,
     "character_id": 40,
     "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
   },
   {
-    "id": 110,
-    "stats_bond_id": 52,
-    "character_id": 38,
-    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
-  },
-  {
     "id": 106,
     "stats_bond_id": 51,
     "character_id": 37,
     "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
-  },
-  {
-    "id": 21,
-    "stats_bond_id": 14,
-    "character_id": 35,
-    "buff_description": "Sem bônus"
-  },
-  {
-    "id": 26,
-    "stats_bond_id": 16,
-    "character_id": 35,
-    "buff_description": "Sem bônus"
-  },
-  {
-    "id": 61,
-    "stats_bond_id": 30,
-    "character_id": 35,
-    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
-  },
-  {
-    "id": 109,
-    "stats_bond_id": 52,
-    "character_id": 35,
-    "buff_description": "Saque +5/7/9/12/15, Saque +1/2/3/4/5%"
   },
   {
     "id": 64,
@@ -258,36 +168,6 @@
     "buff_description": "Ataque Rápido +5/7/9/12/15, Ataque Rápido +1/2/3/4/5%"
   },
   {
-    "id": 18,
-    "stats_bond_id": 13,
-    "character_id": 43,
-    "buff_description": "Saque +5/7/9/12/15, Saque +1/2/3/4/5%"
-  },
-  {
-    "id": 32,
-    "stats_bond_id": 19,
-    "character_id": 43,
-    "buff_description": "Sem bônus"
-  },
-  {
-    "id": 37,
-    "stats_bond_id": 21,
-    "character_id": 43,
-    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
-  },
-  {
-    "id": 120,
-    "stats_bond_id": 57,
-    "character_id": 43,
-    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
-  },
-  {
-    "id": 152,
-    "stats_bond_id": 74,
-    "character_id": 43,
-    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
-  },
-  {
     "id": 159,
     "stats_bond_id": 76,
     "character_id": 62,
@@ -317,30 +197,6 @@
     "stats_bond_id": 74,
     "character_id": 59,
     "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
-  },
-  {
-    "id": 10,
-    "stats_bond_id": 7,
-    "character_id": 44,
-    "buff_description": "Bloqueio +5/7/9/12/15, Bloqueio +1/2/3/4/5%"
-  },
-  {
-    "id": 19,
-    "stats_bond_id": 13,
-    "character_id": 44,
-    "buff_description": "Ataque Rápido +5/7/9/12/15, Ataque Rápido +1/2/3/4/5%"
-  },
-  {
-    "id": 31,
-    "stats_bond_id": 19,
-    "character_id": 44,
-    "buff_description": "Ataque Rápido +5/7/9/12/15, Ataque Rápido +1/2/3/4/5%"
-  },
-  {
-    "id": 153,
-    "stats_bond_id": 74,
-    "character_id": 44,
-    "buff_description": "Ataque Rápido +5/7/9/12/15, Ataque Rápido +1/2/3/4/5%"
   },
   {
     "id": 20,
@@ -391,51 +247,9 @@
     "buff_description": "Ataque Rápido +5/7/9/12/15, Ataque Rápido +1/2/3/4/5%"
   },
   {
-    "id": 33,
-    "stats_bond_id": 20,
-    "character_id": 45,
-    "buff_description": "Cobertura +5/7/9/12/15, Cobertura +1/2/3/4/5%"
-  },
-  {
-    "id": 101,
-    "stats_bond_id": 49,
-    "character_id": 45,
-    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
-  },
-  {
-    "id": 38,
-    "stats_bond_id": 21,
-    "character_id": 52,
-    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
-  },
-  {
     "id": 113,
     "stats_bond_id": 53,
     "character_id": 42,
-    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
-  },
-  {
-    "id": 40,
-    "stats_bond_id": 21,
-    "character_id": 50,
-    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
-  },
-  {
-    "id": 121,
-    "stats_bond_id": 58,
-    "character_id": 50,
-    "buff_description": "Saque +5/7/9/12/15, Saque +1/2/3/4/5%"
-  },
-  {
-    "id": 124,
-    "stats_bond_id": 59,
-    "character_id": 50,
-    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
-  },
-  {
-    "id": 126,
-    "stats_bond_id": 60,
-    "character_id": 50,
     "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
   },
   {
@@ -485,30 +299,6 @@
     "stats_bond_id": 4,
     "character_id": 2,
     "buff_description": "Saque +5/7/9/12/15, Saque +1/2/3/4/5%"
-  },
-  {
-    "id": 58,
-    "stats_bond_id": 28,
-    "character_id": 9,
-    "buff_description": "Bloqueio +5/7/9/12/15, Bloqueio +1/2/3/4/5%"
-  },
-  {
-    "id": 68,
-    "stats_bond_id": 34,
-    "character_id": 9,
-    "buff_description": "Sem bônus"
-  },
-  {
-    "id": 85,
-    "stats_bond_id": 41,
-    "character_id": 9,
-    "buff_description": "Sem bônus"
-  },
-  {
-    "id": 112,
-    "stats_bond_id": 52,
-    "character_id": 9,
-    "buff_description": "Sem bônus"
   },
   {
     "id": 100,
@@ -763,42 +553,6 @@
     "buff_description": "Bloqueio +5/7/9/12/15, Bloqueio +1/2/3/4/5%"
   },
   {
-    "id": 17,
-    "stats_bond_id": 12,
-    "character_id": 15,
-    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
-  },
-  {
-    "id": 66,
-    "stats_bond_id": 32,
-    "character_id": 15,
-    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
-  },
-  {
-    "id": 73,
-    "stats_bond_id": 36,
-    "character_id": 15,
-    "buff_description": "Sem bônus"
-  },
-  {
-    "id": 89,
-    "stats_bond_id": 43,
-    "character_id": 15,
-    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
-  },
-  {
-    "id": 91,
-    "stats_bond_id": 44,
-    "character_id": 15,
-    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
-  },
-  {
-    "id": 80,
-    "stats_bond_id": 39,
-    "character_id": 32,
-    "buff_description": "Saque +5/7/9/12/15, Saque +1/2/3/4/5%"
-  },
-  {
     "id": 76,
     "stats_bond_id": 38,
     "character_id": 31,
@@ -889,9 +643,51 @@
     "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
   },
   {
-    "id": 78,
-    "stats_bond_id": 39,
-    "character_id": 34,
+    "id": 12,
+    "stats_bond_id": 10,
+    "character_id": 24,
+    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
+  },
+  {
+    "id": 98,
+    "stats_bond_id": 47,
+    "character_id": 24,
+    "buff_description": "Saque +5/7/9/12/15, Saque +1/2/3/4/5%"
+  },
+  {
+    "id": 104,
+    "stats_bond_id": 50,
+    "character_id": 24,
+    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
+  },
+  {
+    "id": 17,
+    "stats_bond_id": 12,
+    "character_id": 15,
+    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
+  },
+  {
+    "id": 66,
+    "stats_bond_id": 32,
+    "character_id": 15,
+    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
+  },
+  {
+    "id": 73,
+    "stats_bond_id": 36,
+    "character_id": 15,
+    "buff_description": "Sem bônus"
+  },
+  {
+    "id": 89,
+    "stats_bond_id": 43,
+    "character_id": 15,
+    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
+  },
+  {
+    "id": 91,
+    "stats_bond_id": 44,
+    "character_id": 15,
     "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
   },
   {
@@ -964,6 +760,210 @@
     "id": 88,
     "stats_bond_id": 43,
     "character_id": 6,
+    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
+  },
+  {
+    "id": 21,
+    "stats_bond_id": 14,
+    "character_id": 35,
+    "buff_description": "Sem bônus"
+  },
+  {
+    "id": 26,
+    "stats_bond_id": 16,
+    "character_id": 35,
+    "buff_description": "Sem bônus"
+  },
+  {
+    "id": 61,
+    "stats_bond_id": 30,
+    "character_id": 35,
+    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
+  },
+  {
+    "id": 109,
+    "stats_bond_id": 52,
+    "character_id": 35,
+    "buff_description": "Saque +5/7/9/12/15, Saque +1/2/3/4/5%"
+  },
+  {
+    "id": 78,
+    "stats_bond_id": 39,
+    "character_id": 34,
+    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
+  },
+  {
+    "id": 110,
+    "stats_bond_id": 52,
+    "character_id": 38,
+    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
+  },
+  {
+    "id": 80,
+    "stats_bond_id": 39,
+    "character_id": 32,
+    "buff_description": "Saque +5/7/9/12/15, Saque +1/2/3/4/5%"
+  },
+  {
+    "id": 18,
+    "stats_bond_id": 13,
+    "character_id": 43,
+    "buff_description": "Saque +5/7/9/12/15, Saque +1/2/3/4/5%"
+  },
+  {
+    "id": 32,
+    "stats_bond_id": 19,
+    "character_id": 43,
+    "buff_description": "Sem bônus"
+  },
+  {
+    "id": 37,
+    "stats_bond_id": 21,
+    "character_id": 43,
+    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
+  },
+  {
+    "id": 120,
+    "stats_bond_id": 57,
+    "character_id": 43,
+    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
+  },
+  {
+    "id": 152,
+    "stats_bond_id": 74,
+    "character_id": 43,
+    "buff_description": "Passe +5/7/9/12/15, Passe +1/2/3/4/5%"
+  },
+  {
+    "id": 58,
+    "stats_bond_id": 28,
+    "character_id": 9,
+    "buff_description": "Bloqueio +5/7/9/12/15, Bloqueio +1/2/3/4/5%"
+  },
+  {
+    "id": 68,
+    "stats_bond_id": 34,
+    "character_id": 9,
+    "buff_description": "Sem bônus"
+  },
+  {
+    "id": 85,
+    "stats_bond_id": 41,
+    "character_id": 9,
+    "buff_description": "Sem bônus"
+  },
+  {
+    "id": 112,
+    "stats_bond_id": 52,
+    "character_id": 9,
+    "buff_description": "Sem bônus"
+  },
+  {
+    "id": 23,
+    "stats_bond_id": 14,
+    "character_id": 39,
+    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
+  },
+  {
+    "id": 10,
+    "stats_bond_id": 7,
+    "character_id": 44,
+    "buff_description": "Bloqueio +5/7/9/12/15, Bloqueio +1/2/3/4/5%"
+  },
+  {
+    "id": 19,
+    "stats_bond_id": 13,
+    "character_id": 44,
+    "buff_description": "Ataque Rápido +5/7/9/12/15, Ataque Rápido +1/2/3/4/5%"
+  },
+  {
+    "id": 31,
+    "stats_bond_id": 19,
+    "character_id": 44,
+    "buff_description": "Ataque Rápido +5/7/9/12/15, Ataque Rápido +1/2/3/4/5%"
+  },
+  {
+    "id": 153,
+    "stats_bond_id": 74,
+    "character_id": 44,
+    "buff_description": "Ataque Rápido +5/7/9/12/15, Ataque Rápido +1/2/3/4/5%"
+  },
+  {
+    "id": 40,
+    "stats_bond_id": 21,
+    "character_id": 50,
+    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
+  },
+  {
+    "id": 121,
+    "stats_bond_id": 58,
+    "character_id": 50,
+    "buff_description": "Saque +5/7/9/12/15, Saque +1/2/3/4/5%"
+  },
+  {
+    "id": 124,
+    "stats_bond_id": 59,
+    "character_id": 50,
+    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
+  },
+  {
+    "id": 126,
+    "stats_bond_id": 60,
+    "character_id": 50,
+    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
+  },
+  {
+    "id": 33,
+    "stats_bond_id": 20,
+    "character_id": 45,
+    "buff_description": "Cobertura +5/7/9/12/15, Cobertura +1/2/3/4/5%"
+  },
+  {
+    "id": 101,
+    "stats_bond_id": 49,
+    "character_id": 45,
+    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
+  },
+  {
+    "id": 1,
+    "stats_bond_id": 1,
+    "character_id": 27,
+    "buff_description": "Sem bônus"
+  },
+  {
+    "id": 28,
+    "stats_bond_id": 18,
+    "character_id": 27,
+    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
+  },
+  {
+    "id": 135,
+    "stats_bond_id": 66,
+    "character_id": 27,
+    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
+  },
+  {
+    "id": 139,
+    "stats_bond_id": 68,
+    "character_id": 27,
+    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
+  },
+  {
+    "id": 142,
+    "stats_bond_id": 69,
+    "character_id": 27,
+    "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
+  },
+  {
+    "id": 38,
+    "stats_bond_id": 21,
+    "character_id": 52,
+    "buff_description": "Ataque Potente +5/7/9/12/15, Ataque Potente +1/2/3/4/5%"
+  },
+  {
+    "id": 39,
+    "stats_bond_id": 21,
+    "character_id": 53,
     "buff_description": "Recepção +5/7/9/12/15, Recepção +1/2/3/4/5%"
   }
 ]
