@@ -3,11 +3,13 @@
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { Bond, Character, StatsBondType } from "@/types";
+import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { saveCharacterToJson } from "../actions/saveCharacter";
 import { BondCreationModal } from "../components/BondCreationModal";
 import { ImageSelector } from "../components/ImageSelector";
+import { MemorySelector } from "../components/MemorySelector";
 import { SectionHeader } from "../components/SectionHeader";
 import { StatsBondCreationModal } from "../components/StatsBondCreationModal";
 import { StyleSelector } from "../components/StyleSelector";
@@ -50,9 +52,17 @@ function CadastroForm() {
   const [isStatsBondModalOpen, setIsStatsBondModalOpen] = useState(false);
 
   // Memories State
-  const [mainMemoryId, setMainMemoryId] = useState<string>("");
-  const [suggestion1Id, setSuggestion1Id] = useState<string>("");
-  const [suggestion2Id, setSuggestion2Id] = useState<string>("");
+  const [selectedMemoryIds, setSelectedMemoryIds] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState("info");
+
+  const tabs = [
+    { id: "info", label: "Informações principais" },
+    { id: "appearance", label: "Aparência" },
+    { id: "bonds", label: "Vínculos" },
+    { id: "potentials", label: "Potenciais" },
+    { id: "memories", label: "Memórias" },
+    { id: "attributes", label: "Atributos" },
+  ];
 
   useEffect(() => {
     fetchInitialData();
@@ -88,18 +98,26 @@ function CadastroForm() {
         });
 
         // Load memories
-        if (char.recommended_memories) {
-            setMainMemoryId(char.recommended_memories.main || "");
+        if (char.recommended_memories && allMemories.length > 0) {
+            const main = char.recommended_memories.main;
             const others = char.recommended_memories.others || [];
-            setSuggestion1Id(others[0] || "");
-            setSuggestion2Id(others[1] || "");
+            const validIds = new Set(allMemories.map(m => m.id));
+            const ids: string[] = [];
+            
+            if (main && validIds.has(main)) ids.push(main);
+            
+            others.forEach(id => {
+                if (validIds.has(id)) ids.push(id);
+            });
+            
+            setSelectedMemoryIds(ids);
         }
       }
     }
     if (!editId || (editId && allCharacters.length > 0)) {
         setIsLoaded(true);
     }
-  }, [editId, allCharacters, characterBondLinks]);
+  }, [editId, allCharacters, characterBondLinks, allMemories]);
 
   const handleBondChange = (bondId: number) => {
     setSelectedBonds(prev => 
@@ -165,11 +183,14 @@ function CadastroForm() {
         slot1, slot2, slot3, slot4, slot5, slot6
     } : null;
 
-    const others = [suggestion1Id, suggestion2Id].filter(id => id && id !== "");
+    const mainMemoryId = selectedMemoryIds[0];
+    const others = selectedMemoryIds.slice(1);
     const recommended_memories = (mainMemoryId || others.length > 0) ? {
         main: mainMemoryId || undefined,
         others: others.length > 0 ? others : undefined
     } : null;
+
+    const substats = (fd.get("substats") as string) || null;
 
     const img = imageUrl || "/images/placeholder.png";
 
@@ -196,6 +217,7 @@ function CadastroForm() {
       potential,
       recommended_stats,
       recommended_memories,
+      substats,
     };
 
     const result = await saveCharacterToJson(charData as any, selectedBonds, selectedStatsBonds);
@@ -214,9 +236,7 @@ function CadastroForm() {
             setImageUrl("");
             setSelectedBonds([]);
             setSelectedStatsBonds([]);
-            setMainMemoryId("");
-            setSuggestion1Id("");
-            setSuggestion2Id("");
+            setSelectedMemoryIds([]);
         }
     } else {
         setSubmitStatus("error");
@@ -262,103 +282,297 @@ function CadastroForm() {
       )}
 
       <form key={editingCharacter ? editingCharacter.id : 'new'} onSubmit={handleSubmit} className="cadastro-page__form">
+        
         <div className="cadastro-page__field cadastro-page__field--wide">
-          <label>Nome</label>
-          <input type="text" name="name" required defaultValue={editingCharacter?.name || ""} />
+          <label>Nome do Personagem</label>
+          <input 
+            type="text" 
+            name="name" 
+            required 
+            defaultValue={editingCharacter?.name || ""} 
+            placeholder="Ex: Tobio Kageyama"
+            className="cadastro-page__input-name"
+          />
         </div>
 
-        <div className="cadastro-page__field cadastro-page__field--wide">
-          <ImageSelector name="image_url" initialValue={imageUrl} onChange={setImageUrl} />
+        <div className="cadastro-page__tabs">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setActiveTab(tab.id)}
+              className={`cadastro-page__tab ${activeTab === tab.id ? "active" : ""}`}
+            >
+              {activeTab === tab.id && (
+                <motion.div
+                  layoutId="underline"
+                  className="cadastro-page__tab-underline"
+                />
+              )}
+              {tab.label}
+            </button>
+          ))}
+        </div>
+        
+        {/* Informações principais */}
+        <div style={{ display: activeTab === 'info' ? 'contents' : 'none' }}>
+          {/* Nome movido para o topo */}
+
+          <div className="cadastro-page__field">
+            <label>Posição</label>
+            <select name="position" required defaultValue={editingCharacter?.position || ""}>
+              <option value="">Selecione a Posição</option>
+              {positions.map((p) => (
+                <option key={p} value={p}>
+                  {p}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="cadastro-page__field">
+            <label>Raridade</label>
+            <select name="rarity" required defaultValue={editingCharacter?.rarity || ""}>
+              <option value="">Selecione a Raridade</option>
+              {rarities.map((r) => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="cadastro-page__field">
+            <label>Escola</label>
+            <select name="school" required defaultValue={editingCharacter?.school || ""}>
+              <option value="">Selecione a Escola</option>
+              {schools.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="cadastro-page__field cadastro-page__field--wide">
+            <StyleSelector name="styles" initialStyles={editingCharacter?.styles || []} />
+          </div>
         </div>
 
-        <div className="cadastro-page__field">
-          <label>Posição</label>
-          <select name="position" required defaultValue={editingCharacter?.position || ""}>
-            <option value="">Selecione a Posição</option>
-            {positions.map((p) => (
-              <option key={p} value={p}>
-                {p}
-              </option>
+        {/* Aparência */}
+        <div style={{ display: activeTab === 'appearance' ? 'contents' : 'none' }}>
+          <div className="cadastro-page__section">
+            <SectionHeader title="Aparência" />
+          </div>
+          <div className="cadastro-page__field cadastro-page__field--wide">
+            <ImageSelector name="image_url" initialValue={imageUrl} onChange={setImageUrl} />
+          </div>
+        </div>
+
+        {/* Vínculos */}
+        <div style={{ display: activeTab === 'bonds' ? 'contents' : 'none' }}>
+          <div className="cadastro-page__section">
+            <SectionHeader title="Vínculos (Bonds)" />
+            <button 
+              type="button" 
+              className="cadastro-page__add-bond-btn"
+              onClick={() => setIsBondModalOpen(true)}
+            >
+              + Criar Novo Vínculo
+            </button>
+          </div>
+
+          <div className="cadastro-page__field cadastro-page__field--wide">
+              <div className="bond-selector" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                  {sortedBonds.map(bond => {
+                      const participants = characterBondLinks
+                          .filter(link => link.bond_id === bond.id)
+                          .map(link => allCharacters.find(c => c.id === link.character_id))
+                          .filter(Boolean);
+
+                      return (
+                          <label key={bond.id} className={selectedBonds.includes(bond.id) ? "selected" : ""}>
+                              <div className="bond-selector__header">
+                                  <input 
+                                      type="checkbox" 
+                                      checked={selectedBonds.includes(bond.id)}
+                                      onChange={() => handleBondChange(bond.id)}
+                                  />
+                                  <span title={bond.description || undefined}>{bond.name}</span>
+                              </div>
+                              
+                              {participants.length > 0 && (
+                                  <div className="bond-selector__participants">
+                                      {participants.map(char => (
+                                          <div key={char!.id} className="bond-selector__avatar" title={char!.name}>
+                                              <img 
+                                                  src={char!.image_url || "/images/placeholder.png"} 
+                                                  alt={char!.name}
+                                              />
+                                          </div>
+                                      ))}
+                                  </div>
+                              )}
+                          </label>
+                      );
+                  })}
+              </div>
+          </div>
+
+          <div className="cadastro-page__section">
+            <SectionHeader title="Vínculos de Status (Stats Bonds)" />
+            <button 
+              type="button" 
+              className="cadastro-page__add-bond-btn"
+              onClick={() => setIsStatsBondModalOpen(true)}
+            >
+              + Criar Novo Vínculo de Status
+            </button>
+          </div>
+
+          <div className="cadastro-page__field cadastro-page__field--wide">
+              <div className="bond-selector" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                  {sortedStatsBonds.map(statsBond => {
+                      const participants = characterStatsBondLinks
+                          .filter(link => link.stats_bond_id === statsBond.id)
+                          .map(link => allCharacters.find(c => c.id === link.character_id))
+                          .filter(Boolean);
+
+                      return (
+                          <label key={statsBond.id} className={selectedStatsBonds.includes(statsBond.id) ? "selected" : ""}>
+                              <div className="bond-selector__header">
+                                  <input 
+                                      type="checkbox" 
+                                      checked={selectedStatsBonds.includes(statsBond.id)}
+                                      onChange={() => handleStatsBondChange(statsBond.id)}
+                                  />
+                                  <span>{statsBond.name}</span>
+                              </div>
+                              
+                              {participants.length > 0 && (
+                                  <div className="bond-selector__participants">
+                                      {participants.map(char => (
+                                          <div key={char!.id} className="bond-selector__avatar" title={char!.name}>
+                                              <img 
+                                                  src={char!.image_url || "/images/placeholder.png"} 
+                                                  alt={char!.name}
+                                              />
+                                          </div>
+                                      ))}
+                                  </div>
+                              )}
+                          </label>
+                      );
+                  })}
+                  {sortedStatsBonds.length === 0 && (
+                      <p className="text-zinc-500 text-sm p-2">Nenhum vínculo de status cadastrado.</p>
+                  )}
+              </div>
+          </div>
+        </div>
+
+        {/* Potenciais */}
+        <div style={{ display: activeTab === 'potentials' ? 'contents' : 'none' }}>
+          <div className="cadastro-page__section">
+            <SectionHeader title="Potenciais" />
+          </div>
+          <div className="cadastro-page__field">
+              <label>Potencial (4 slots)</label>
+              <select name="potential4" defaultValue={editingCharacter?.potential?.["4slots"] || ""}>
+                  <option value="">Selecione...</option>
+                  {allPotentials.map(p => (
+                      <option key={p.id} value={p.id}>{p.name}</option>
+                  ))}
+              </select>
+          </div>
+          <div className="cadastro-page__field">
+              <label>Potencial (2 slots)</label>
+              <select name="potential2" defaultValue={editingCharacter?.potential?.["2slots"] || ""}>
+                  <option value="">Selecione...</option>
+                  {allPotentials.map(p => (
+                      <option key={p.id} value={p.id}>{p.name}</option>
+                  ))}
+              </select>
+          </div>
+
+          <div className="cadastro-page__section">
+              <SectionHeader title="Status Recomendados (Slots)" />
+          </div>
+          <div className="cadastro-page__attributes">
+              {[1, 2, 3, 4, 5, 6].map(i => (
+                  <div key={i} className="cadastro-page__attr">
+                      <label>Slot {i}</label>
+                      <input 
+                          type="text" 
+                          name={`slot${i}`} 
+                          placeholder={`Status principal`} 
+                          defaultValue={editingCharacter?.recommended_stats?.[`slot${i}` as keyof NonNullable<Character['recommended_stats']>] || ""}
+                      />
+                  </div>
+              ))}
+          </div>
+
+          <div className="cadastro-page__section">
+              <SectionHeader title="Atributos Recomendados" />
+          </div>
+          <div className="cadastro-page__field cadastro-page__field--wide">
+              <textarea 
+                  name="substats" 
+                  placeholder="Ex: Ataque %, Salto %, etc."
+                  defaultValue={editingCharacter?.substats || ""}
+                  rows={3}
+                  className="cadastro-page__textarea"
+                  style={{ width: '100%', padding: '0.75rem', borderRadius: '0.375rem', border: '1px solid #3f3f46', background: '#18181b', color: 'white' }}
+              />
+          </div>
+        </div>
+
+        {/* Memórias */}
+        <div style={{ display: activeTab === 'memories' ? 'contents' : 'none' }}>
+          <div className="cadastro-page__section">
+              <SectionHeader title="Memórias Recomendadas" />
+          </div>
+          <div className="cadastro-page__field cadastro-page__field--wide">
+              <MemorySelector 
+                  memories={sortedMemories}
+                  selectedIds={selectedMemoryIds}
+                  onChange={setSelectedMemoryIds}
+                  maxSelections={3}
+              />
+          </div>
+        </div>
+
+        {/* Atributos */}
+        <div style={{ display: activeTab === 'attributes' ? 'contents' : 'none' }}>
+          <div className="cadastro-page__section">
+            <SectionHeader title="Atributos (0–9999)" />
+          </div>
+
+          <div className="cadastro-page__attributes">
+            {[
+              { label: "Saque (Serve)", name: "serve", val: editingCharacter?.serve },
+              { label: "Ataque (Attack)", name: "attack", val: editingCharacter?.attack },
+              { label: "Passe (Set)", name: "set", val: editingCharacter?.set },
+              { label: "Recepção (Receive)", name: "receive", val: editingCharacter?.receive },
+              { label: "Bloqueio (Block)", name: "block", val: editingCharacter?.block },
+              { label: "Defesa (Defense)", name: "defense", val: editingCharacter?.defense },
+            ].map((attr) => (
+              <div key={attr.name} className="cadastro-page__attr">
+                <label>{attr.label}</label>
+                <input
+                  type="number"
+                  name={attr.name}
+                  min="0"
+                  max="9999"
+                  defaultValue={attr.val || 0}
+                  required
+                />
+              </div>
             ))}
-          </select>
+          </div>
         </div>
 
-        <div className="cadastro-page__field">
-          <label>Raridade</label>
-          <select name="rarity" required defaultValue={editingCharacter?.rarity || ""}>
-            <option value="">Selecione a Raridade</option>
-            {rarities.map((r) => (
-              <option key={r} value={r}>
-                {r}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="cadastro-page__field">
-          <label>Escola</label>
-          <select name="school" required defaultValue={editingCharacter?.school || ""}>
-            <option value="">Selecione a Escola</option>
-            {schools.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="cadastro-page__field cadastro-page__field--wide">
-          <StyleSelector name="styles" initialStyles={editingCharacter?.styles || []} />
-        </div>
-
-        <div className="cadastro-page__section">
-          <SectionHeader title="Vínculos (Bonds)" />
-          <button 
-            type="button" 
-            className="cadastro-page__add-bond-btn"
-            onClick={() => setIsBondModalOpen(true)}
-          >
-            + Criar Novo Vínculo
-          </button>
-        </div>
-
-        <div className="cadastro-page__field cadastro-page__field--wide">
-            <div className="bond-selector" style={{ maxHeight: '400px', overflowY: 'auto' }}>
-                {sortedBonds.map(bond => {
-                    const participants = characterBondLinks
-                        .filter(link => link.bond_id === bond.id)
-                        .map(link => allCharacters.find(c => c.id === link.character_id))
-                        .filter(Boolean);
-
-                    return (
-                        <label key={bond.id} className={selectedBonds.includes(bond.id) ? "selected" : ""}>
-                            <div className="bond-selector__header">
-                                <input 
-                                    type="checkbox" 
-                                    checked={selectedBonds.includes(bond.id)}
-                                    onChange={() => handleBondChange(bond.id)}
-                                />
-                                <span title={bond.description || undefined}>{bond.name}</span>
-                            </div>
-                            
-                            {participants.length > 0 && (
-                                <div className="bond-selector__participants">
-                                    {participants.map(char => (
-                                        <div key={char!.id} className="bond-selector__avatar" title={char!.name}>
-                                            <img 
-                                                src={char!.image_url || "/images/placeholder.png"} 
-                                                alt={char!.name}
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </label>
-                    );
-                })}
-            </div>
-        </div>
-
+        {/* Modals - kept inside form or can be anywhere since they are usually portals or absolute */}
         {isBondModalOpen && (
             <BondCreationModal 
                 isOpen={isBondModalOpen}
@@ -367,57 +581,6 @@ function CadastroForm() {
             />
         )}
 
-        <div className="cadastro-page__section">
-          <SectionHeader title="Vínculos de Status (Stats Bonds)" />
-          <button 
-            type="button" 
-            className="cadastro-page__add-bond-btn"
-            onClick={() => setIsStatsBondModalOpen(true)}
-          >
-            + Criar Novo Vínculo de Status
-          </button>
-        </div>
-
-        <div className="cadastro-page__field cadastro-page__field--wide">
-            <div className="bond-selector" style={{ maxHeight: '400px', overflowY: 'auto' }}>
-                {sortedStatsBonds.map(statsBond => {
-                    const participants = characterStatsBondLinks
-                        .filter(link => link.stats_bond_id === statsBond.id)
-                        .map(link => allCharacters.find(c => c.id === link.character_id))
-                        .filter(Boolean);
-
-                    return (
-                        <label key={statsBond.id} className={selectedStatsBonds.includes(statsBond.id) ? "selected" : ""}>
-                            <div className="bond-selector__header">
-                                <input 
-                                    type="checkbox" 
-                                    checked={selectedStatsBonds.includes(statsBond.id)}
-                                    onChange={() => handleStatsBondChange(statsBond.id)}
-                                />
-                                <span>{statsBond.name}</span>
-                            </div>
-                            
-                            {participants.length > 0 && (
-                                <div className="bond-selector__participants">
-                                    {participants.map(char => (
-                                        <div key={char!.id} className="bond-selector__avatar" title={char!.name}>
-                                            <img 
-                                                src={char!.image_url || "/images/placeholder.png"} 
-                                                alt={char!.name}
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </label>
-                    );
-                })}
-                {sortedStatsBonds.length === 0 && (
-                    <p className="text-zinc-500 text-sm p-2">Nenhum vínculo de status cadastrado.</p>
-                )}
-            </div>
-        </div>
-
         {isStatsBondModalOpen && (
             <StatsBondCreationModal 
                 isOpen={isStatsBondModalOpen}
@@ -425,112 +588,6 @@ function CadastroForm() {
                 onSuccess={handleStatsBondCreated} 
             />
         )}
-
-        <div className="cadastro-page__section">
-          <SectionHeader title="Potenciais" />
-        </div>
-        <div className="cadastro-page__field">
-             <label>Potencial (4 slots)</label>
-             <select name="potential4" defaultValue={editingCharacter?.potential?.["4slots"] || ""}>
-                 <option value="">Selecione...</option>
-                 {allPotentials.map(p => (
-                     <option key={p.id} value={p.id}>{p.name}</option>
-                 ))}
-             </select>
-        </div>
-        <div className="cadastro-page__field">
-             <label>Potencial (2 slots)</label>
-             <select name="potential2" defaultValue={editingCharacter?.potential?.["2slots"] || ""}>
-                 <option value="">Selecione...</option>
-                 {allPotentials.map(p => (
-                     <option key={p.id} value={p.id}>{p.name}</option>
-                 ))}
-             </select>
-        </div>
-
-        <div className="cadastro-page__section">
-            <SectionHeader title="Status Recomendados (Slots)" />
-        </div>
-        <div className="cadastro-page__attributes">
-             {[1, 2, 3, 4, 5, 6].map(i => (
-                 <div key={i} className="cadastro-page__attr">
-                     <label>Slot {i}</label>
-                     <input 
-                        type="text" 
-                        name={`slot${i}`} 
-                        placeholder={`Status principal`} 
-                        defaultValue={editingCharacter?.recommended_stats?.[`slot${i}` as keyof NonNullable<Character['recommended_stats']>] || ""}
-                    />
-                 </div>
-             ))}
-        </div>
-
-        <div className="cadastro-page__section">
-            <SectionHeader title="Memórias Recomendadas" />
-        </div>
-        <div className="cadastro-page__field">
-             <label>Memória Principal</label>
-             <select 
-                value={mainMemoryId} 
-                onChange={(e) => setMainMemoryId(e.target.value)}
-             >
-                 <option value="">Selecione...</option>
-                 {sortedMemories.map(m => (
-                     <option key={m.id} value={m.id}>{m.name}</option>
-                 ))}
-             </select>
-        </div>
-        <div className="cadastro-page__field">
-             <label>Sugestão 1</label>
-             <select 
-                value={suggestion1Id} 
-                onChange={(e) => setSuggestion1Id(e.target.value)}
-             >
-                 <option value="">Selecione...</option>
-                 {sortedMemories.map(m => (
-                     <option key={m.id} value={m.id}>{m.name}</option>
-                 ))}
-             </select>
-        </div>
-        <div className="cadastro-page__field">
-             <label>Sugestão 2</label>
-             <select 
-                value={suggestion2Id} 
-                onChange={(e) => setSuggestion2Id(e.target.value)}
-             >
-                 <option value="">Selecione...</option>
-                 {sortedMemories.map(m => (
-                     <option key={m.id} value={m.id}>{m.name}</option>
-                 ))}
-             </select>
-        </div>
-
-        <div className="cadastro-page__section">
-          <SectionHeader title="Atributos (0–9999)" />
-        </div>
-
-        <div className="cadastro-page__attributes">
-          {[
-            { label: "Saque (Serve)", name: "serve", val: editingCharacter?.serve },
-            { label: "Ataque (Attack)", name: "attack", val: editingCharacter?.attack },
-            { label: "Passe (Set)", name: "set", val: editingCharacter?.set },
-            { label: "Recepção (Receive)", name: "receive", val: editingCharacter?.receive },
-            { label: "Bloqueio (Block)", name: "block", val: editingCharacter?.block },
-            { label: "Defesa (Defense)", name: "defense", val: editingCharacter?.defense },
-          ].map((attr) => (
-            <div key={attr.name} className="cadastro-page__attr">
-              <label>{attr.label}</label>
-              <input
-                type="number"
-                name={attr.name}
-                min="0"
-                max="9999"
-                defaultValue={attr.val || 0}
-                required
-              />
-            </div>
-          ))}
-        </div>
 
         <div className="cadastro-page__submit">
           <button type="submit" disabled={submitStatus === "saving"}>

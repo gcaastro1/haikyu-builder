@@ -15,6 +15,7 @@ export function Navbar() {
     { href: "/", label: "Builder" },
     { href: "/database", label: "Personagens" },
     { href: "/memories", label: "Memórias" },
+    { href: "/exercises", label: "Exercícios" },
   ];
 
   return (

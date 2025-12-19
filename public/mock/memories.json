@@ -262,7 +262,7 @@
   },
   {
     "id": "mem_ofensive_up_kentaro_kyotani",
-    "name": "Memória de Kentaro MAD DOG SSR",
+    "name": "Memória de Kentaro SSR",
     "positions": [
       "OP"
     ],
@@ -1012,7 +1012,7 @@
       }
     },
     "desc": "O [Reflexo] aumenta em 16%. Quando um Ataque Potente/Rápido do oponente for PERFECT, um aliado que ativar uma habilidade de Bloqueio ou Recepção ganha 1 acúmulo de [Adesão]; para cada acúmulo, o [Reflexo] aumenta em 4% (máx. 3). Se tal aliado atingir 3 acúmulos, consuma-os para aumentar em 100% o [Reflexo] desse aliado até a bola cruzar a rede uma vez.",
-    "image_url": "/images/memories/kenma-kozume-SP-memory.png"
+    "image_url": "/images/memories/kenma-kozume-SSR-memory.png"
   },
   {
     "id": "mem_oikawa_ur",
@@ -1157,7 +1157,7 @@
       }
     },
     "desc": "O [Passe] aumenta em 8%. Enquanto o equipador estiver em quadra, a [Recepção] dos aliados da linha de trás aumenta em 12%. Enquanto o equipador estiver em quadra, quando as pilhas de [Conexão] de um aliado diminuírem, os aliados ganham 1 acúmulo de [Conexão]; para cada acúmulo, aliados em quadra recebem +1% de [Recepção], até 6 acúmulos.",
-    "image_url": "/images/memories/kenma-kozume-SSR-memory.png"
+    "image_url": "/images/memories/kenma-kozume-SP-memory.png"
   },
   {
     "id": "mem_akaashi_ssr",

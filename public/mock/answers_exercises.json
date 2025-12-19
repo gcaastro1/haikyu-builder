@@ -1,0 +1,242 @@
+[
+    {
+        "desc": "Você recebe um panfleto e parece que abriram uma nova loja de esportes nesta rota. Será que vale a pena dar uma olhada?",
+        "option1": "flecha_retorno.png",
+        "option2": "caramelo.png"
+    },
+    {
+        "desc": "O cruzamento familiar à frente tem uma placa de 'Proibido Passar'. O que você faz?",
+        "option1": "flecha_retorno.png",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "De repente, você percebe que uma pequena figura te segue por trás. Você se vira e vê que é um filhotinho.",
+        "option1": "gemas_5.png",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "Você torce acidentalmente o tornozelo durante o exercício. Não parece grave, mas dói um pouco. O que você faz?",
+        "option1": "oro_5000.png",
+        "option2": "zapato.png"
+    },
+    {
+        "desc": "Enquanto corre, de repente você vê um passarinho pulando em um galho. É tão adorável.",
+        "option1": "oro_10000.jpg",
+        "option2": "zapato.png"
+    },
+    {
+        "desc": "Uma pequena poça bloqueia seu caminho durante o exercício e não parece haver como evitá-la. O que você faz?",
+        "option1": "zapato.png",
+        "option2": "gemas_5.png"
+    },
+    {
+        "desc": "No caminho, você cruza com um companheiro de equipe que também está se exercitando. O que você faz?",
+        "option1": "bebida_energia.png",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "No cruzamento, você encontra um desconhecido que também está correndo. Quer correr com ele?",
+        "option1": "oro_5000.png",
+        "option2": "huella.png"
+    },
+    {
+        "desc": "Por acaso, você topa com uma equipe de TV fazendo uma entrevista. De longe, você ouve que mencionam vôlei. O que você faz?",
+        "option1": "oro_5000.png",
+        "option2": "zapato.png"
+    },
+    {
+        "desc": "O vento aumenta sua intensidade e a temperatura cai de repente, então você começa a sentir frio. O que você faz?",
+        "option1": "oro_5000.png",
+        "option2": "coche.jpg"
+    },
+    {
+        "desc": "Sopra uma rajada de vento e de repente cai aos seus pés uma bola de vôlei que parece estar bem nova. O que você faz?",
+        "option1": "oro_10000.jpg",
+        "option2": "gemas_5.png"
+    },
+    {
+        "desc": "SOPRA UMA RAJADA DE VENTO E UMA FOLHA DE JORNAL PASSA VOANDO NA SUA FRENTE E SE PERDE NA DISTÂNCIA... UM MOMENTO! PARECEU QUE A PÁGINA TINHA UMA NOTÍCIA SOBRE VÔLEI!",
+        "option1": "bebida_energia.png",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "Em uma árvore há um corvo que parece estar te olhando. O que você faz?",
+        "option1": "caramelo.png",
+        "option2": "gemas_5.png"
+    },
+    {
+        "desc": "Enquanto corre, você ouve um miado muito leve. Olha para cima e vê que parece haver um gatinho preso em uma árvore.",
+        "option1": "gemas_5.png",
+        "option2": "zapato.png"
+    },
+    {
+        "desc": "De repente, começa a chover levemente. São apenas algumas gotas pequenas trazidas pelo vento que tocam seu corpo. Parece que está fazendo mais frio.",
+        "option1": "flecha_retorno.png",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "Um estrangeiro puxa conversa com você. Aparentemente, ele quer pedir informações. O que você faz?",
+        "option1": "gemas_5.png",
+        "option2": "bebida_energia.png"
+    },
+    {
+        "desc": "Algo se move nos arbustos ao lado do caminho. O que você faz?",
+        "option1": "bebida_energia.png",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "Enquanto corre, você vê um estudante uniformizado jogando lixo na rua sem cuidado. O que você faz?",
+        "option1": "huella.png",
+        "option2": "gemas_5.png"
+    },
+    {
+        "desc": "Durante o exercício, você passa por uma loja e começa a sentir sede. Talvez pudesse comprar algo.",
+        "option1": "bebida_energia.png",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "Você passa pelo clube da orquestra de sopro enquanto ensaiam. Você para para curtir a música?",
+        "option1": "caramelo.png",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "NO CAMINHO HÁ UM GRUPO DE ESTUDANTES ANDANDO LADO A LADO E BLOQUEANDO SUA PASSAGEM. O QUE VOCÊ FAZ?",
+        "option1": "item_vs.jpg",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "Você percebe que um artista está desenhando uma árvore frondosa. O que você faz?",
+        "option1": "gemas_10.jpg",
+        "option2": "huella.png"
+    },
+    {
+        "desc": "De repente, você vê um menino praticando cortadas, mas ele parece estar com dificuldades. Que tipo de conselho você dá a ele?",
+        "option1": "zapato.png",
+        "option2": "gemas_10.jpg"
+    },
+    {
+        "desc": "Você passa em frente a uma quadra de vôlei ao ar livre e parece que estão jogando uma partida intensa. O que você faz?",
+        "option1": "gemas_10.jpg",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "Você passa por uma quadra de vôlei e vê umas crianças praticando. Embora a técnica ainda não seja boa, nota-se que estão se divertindo muito. Você fica um pouco e as observa jogar?",
+        "option1": "gemas_5.png",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "Você passa em frente a uma quadra de tênis ao ar livre e parece que estão jogando uma partida intensa. O que você faz?",
+        "option1": "gemas_5.png",
+        "option2": "zapato.png"
+    },
+    {
+        "desc": "A rua comercial está cheia de gente. Parece que há liquidação. O que você faz?",
+        "option1": "bebida_energia.png",
+        "option2": "flecha_retorno.png"
+    },
+    {
+        "desc": "A pessoa que está mais à frente parece conhecida. Você se aproxima para cumprimentá-la?",
+        "option1": "bebida_energia.png",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "De repente, um balão aparece na sua frente. Você imagina que o vento deve tê-lo empurrado até aqui, e ele está prestes a subir ainda mais. O que você faz?",
+        "option1": "caramelo.png",
+        "option2": "coche.jpg"
+    },
+    {
+        "desc": "Você chega a uma ladeira muito íngreme que já subiu muitas vezes. O que você faz?",
+        "option1": "caramelo.png",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "Uma bola de vôlei passa perto de você em alta velocidade durante o exercício. O que você faz?",
+        "option1": "zapato.png",
+        "option2": "oro_10000.jpg"
+    },
+    {
+        "desc": "Depois de treinar um bom tempo, você começa a sentir fome. O que você faz?",
+        "option1": "gemas_5.png",
+        "option2": "huella.png"
+    },
+    {
+        "desc": "Um flash de luz chama sua atenção. Parece que algo brilha ao longe.",
+        "option1": "bebida_energia.png",
+        "option2": "gemas_5.png"
+    },
+    {
+        "desc": "Trazida pelo vento, uma bela melodia chega até você. Você segue o som e dá uma olhada?",
+        "option1": "caramelo.png",
+        "option2": "flecha_retorno.png"
+    },
+    {
+        "desc": "Durante o exercício, você percebe que uma pessoa com um monte de documentos nas mãos tropeça e os papéis saem voando pelo ar. O que você faz?",
+        "option1": "item_vs.jpg",
+        "option2": "gemas_5.png"
+    },
+    {
+        "desc": "Mais à frente, você vê uma grande multidão. O que está acontecendo?",
+        "option1": "flecha_retorno.png",
+        "option2": "oro_5000.png"
+    },
+    {
+        "desc": "Você vê um membro do clube de atletismo se exercitando. Ele corre muito rápido... O que você faz?",
+        "option1": "gemas_5.png",
+        "option2": "huella.png"
+    },
+    {
+        "desc": "Uma pessoa conhecida da escola acena para você. O que você faz?",
+        "option1": "flecha_retorno.png",
+        "option2": "oro_10000.jpg"
+    },
+    {
+        "desc": "Ao lado da estrada, você encontra uma carteira que parece estar cheia de coisas. O que você faz?",
+        "option1": "oro_15000.jpg",
+        "option2": "gemas_10.jpg"
+    },
+    {
+        "desc": "Em um caminho tranquilo, você topa com uma pessoa totalmente absorta em um jogo que, ao que parece, ela gosta muito. Você puxa conversa?",
+        "option1": "gemas_5.png",
+        "option2": "item_vs.jpg"
+    },
+    {
+        "desc": "Você vê uma menina com aparência triste na beira do caminho. Parece que ela perdeu a mochila. O que você faz?",
+        "option1": "caramelo.png",
+        "option2": "gemas_10.jpg"
+    },
+    {
+        "desc": "Você vê um gatinho adorável na beira do caminho. Ele é tão fofo que é difícil conter a vontade...",
+        "option1": "caramelo.png",
+        "option2": "gemas_5.png"
+    },
+    {
+        "desc": "Você encontra um cachorrinho indefeso na beira da estrada. Ele usa coleira. Parece que se separou do dono. O que você faz?",
+        "option1": "oro_10000.jpg",
+        "option2": "coche.jpg"
+    },
+    {
+        "desc": "De repente, você nota um pequeno buquê de flores brancas ao lado da estrada. Essas plantas sempre estiveram aqui?",
+        "option1": "zapato.png",
+        "option2": "oro_10000.jpg"
+    },
+    {
+        "desc": "Enquanto se exercita, sente um cheiro de carne assada. Parece que vem de um acampamento próximo. O que você faz?",
+        "option1": "gemas_10.jpg",
+        "option2": "bebida_energia.png"
+    },
+    {
+        "desc": "Enquanto se exercita, você recebe um folheto sobre uma nova churrascaria perto daqui. Ainda não abriu, mas você vai visitar mesmo assim?",
+        "option1": "flecha_retorno.png",
+        "option2": "gemas_5.png"
+    },
+    {
+        "desc": "Você se concentra completamente no exercício, mas quando volta à realidade, percebe que não sabe onde está...",
+        "option1": "gemas_5.png",
+        "option2": "flecha_retorno.png"
+    },
+    {
+        "desc": "Enquanto avança, um esquilo se lança repentinamente na sua frente. Seus olhos brilhantes parecem tentar te transmitir uma mensagem.",
+        "option1": "flecha_retorno.png",
+        "option2": "gemas_10.jpg"
+    }
+]

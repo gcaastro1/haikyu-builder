@@ -34,6 +34,7 @@
   max-width: 58rem;
   height: auto;
   max-height: 90vh;
+  max-height: 90dvh;
   
   display: flex;
   flex-direction: column;
@@ -42,7 +43,15 @@
   
   @media (max-width: 768px) {
     width: 95vw;
-    max-height: 95vh;
+    max-height: 95dvh;
+  }
+
+  @media (max-width: 480px) {
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+    border: none;
   }
 }
 
@@ -54,6 +63,10 @@
   justify-content: space-between;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.02);
+
+  @media (max-width: 480px) {
+    padding: 0.75rem;
+  }
 }
 
 .closeButton {
@@ -124,6 +137,10 @@
     background-color: $color-zinc-700;
     border-radius: 3px;
   }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 }
 
 .mainContent {
@@ -136,6 +153,18 @@
   border-bottom: 1px solid $color-zinc-800;
   padding: 0 1.5rem 0.5rem 1.5rem;
   margin-top: 1rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    gap: 0.75rem;
+    padding: 0 1rem 0.5rem 1rem;
+  }
 }
 
 .tabItem {
@@ -148,9 +177,14 @@
   cursor: pointer;
   position: relative;
   transition: color 0.2s;
+  white-space: nowrap;
 
   &:hover {
     color: $color-gray-200;
+  }
+
+  @media (max-width: 640px) {
+    font-size: 0.8rem;
   }
 }
 
@@ -174,7 +208,7 @@
   display: grid;
   grid-template-columns: 220px 280px 1fr;
   gap: 1.5rem;
-  align-items: start;
+  align-items: center;
 
   @media (max-width: 1200px) {
     grid-template-columns: 220px 1fr;
@@ -190,6 +224,7 @@
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     justify-items: center;
+    gap: 1rem;
 
     .summaryDetails {
       grid-template-columns: 1fr;
@@ -245,6 +280,62 @@
     text-overflow: ellipsis;
     margin: 0;
   }
+}
+
+.memoryRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.memoryImageWrapper {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  background-color: $color-zinc-900;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  /* Gradient overlay effect requested */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+    pointer-events: none;
+  }
+}
+
+.memoryPlaceholder {
+  width: 100%;
+  height: 100%;
+  background-color: $color-zinc-800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &::before {
+    content: "M";
+    color: $color-zinc-600;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+}
+
+.memoryImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.memoryText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .bondHeaderRow {
@@ -402,6 +493,10 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .skillCard {
@@ -690,6 +785,10 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .potentialSlot {
@@ -718,6 +817,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .potentialSet {

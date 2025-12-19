@@ -373,8 +373,27 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                             className={styles.detailContent}
                             onClick={() => setActiveTab("Memória")}
                           >
-                            <strong>{memoryForCharacter.name}</strong>
-                            <p title={memoryForCharacter.desc}>{memoryForCharacter.desc}</p>
+                            <div className={styles.memoryRow}>
+                              <div className={styles.memoryImageWrapper}>
+                                {memoryForCharacter.image_url ? (
+                                  <Image
+                                    src={memoryForCharacter.image_url}
+                                    alt={memoryForCharacter.name}
+                                    width={40}
+                                    height={40}
+                                    className={styles.memoryImage}
+                                    unoptimized
+                                  />
+                                ) : (
+                                  <div className={styles.memoryPlaceholder} />
+                                )}
+                                <div className={styles.memoryImageOverlay} />
+                              </div>
+                              <div className={styles.memoryText}>
+                                <strong>{memoryForCharacter.name}</strong>
+                                <p title={memoryForCharacter.desc}>{memoryForCharacter.desc}</p>
+                              </div>
+                            </div>
                           </div>
                         ) : (
                           <p className={styles.emptyText}>-</p>

@@ -144,3 +144,9 @@ export const ResonanceEntrySchema = z.object({
   rarity: z.string(),
   ressonancias: z.array(ResonanceItemSchema),
 });
+
+export const ExerciseAnswerSchema = z.object({
+  desc: z.string(),
+  option1: z.string(),
+  option2: z.string(),
+});

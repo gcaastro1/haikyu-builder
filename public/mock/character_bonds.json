@@ -1,71 +1,107 @@
 [
   {
-    "character_id": 6,
-    "bond_id": 13
+    "character_id": 48,
+    "bond_id": 7
   },
   {
-    "character_id": 6,
-    "bond_id": 14
+    "character_id": 58,
+    "bond_id": 37
   },
   {
-    "character_id": 6,
-    "bond_id": 1
+    "character_id": 58,
+    "bond_id": 4
   },
   {
-    "character_id": 18,
-    "bond_id": 16
+    "character_id": 58,
+    "bond_id": 39
   },
   {
-    "character_id": 18,
-    "bond_id": 2
+    "character_id": 55,
+    "bond_id": 33
   },
   {
-    "character_id": 2,
-    "bond_id": 1
+    "character_id": 55,
+    "bond_id": 4
   },
   {
-    "character_id": 7,
-    "bond_id": 14
+    "character_id": 53,
+    "bond_id": 30
   },
   {
-    "character_id": 7,
-    "bond_id": 1
+    "character_id": 26,
+    "bond_id": 20
   },
   {
-    "character_id": 9,
-    "bond_id": 1
+    "character_id": 26,
+    "bond_id": 21
   },
   {
-    "character_id": 10,
-    "bond_id": 1
+    "character_id": 26,
+    "bond_id": 4
   },
   {
-    "character_id": 11,
-    "bond_id": 13
+    "character_id": 27,
+    "bond_id": 21
   },
   {
-    "character_id": 11,
-    "bond_id": 1
+    "character_id": 27,
+    "bond_id": 4
   },
   {
-    "character_id": 15,
-    "bond_id": 16
+    "character_id": 25,
+    "bond_id": 4
   },
   {
-    "character_id": 15,
-    "bond_id": 2
+    "character_id": 24,
+    "bond_id": 20
   },
   {
-    "character_id": 20,
-    "bond_id": 18
+    "character_id": 24,
+    "bond_id": 4
   },
   {
-    "character_id": 20,
+    "character_id": 57,
+    "bond_id": 36
+  },
+  {
+    "character_id": 57,
+    "bond_id": 37
+  },
+  {
+    "character_id": 57,
+    "bond_id": 4
+  },
+  {
+    "character_id": 57,
+    "bond_id": 38
+  },
+  {
+    "character_id": 57,
+    "bond_id": 39
+  },
+  {
+    "character_id": 23,
+    "bond_id": 19
+  },
+  {
+    "character_id": 23,
     "bond_id": 3
   },
   {
-    "character_id": 16,
-    "bond_id": 2
+    "character_id": 56,
+    "bond_id": 33
+  },
+  {
+    "character_id": 56,
+    "bond_id": 34
+  },
+  {
+    "character_id": 56,
+    "bond_id": 35
+  },
+  {
+    "character_id": 56,
+    "bond_id": 3
   },
   {
     "character_id": 21,
@@ -84,112 +120,28 @@
     "bond_id": 3
   },
   {
+    "character_id": 20,
+    "bond_id": 18
+  },
+  {
+    "character_id": 20,
+    "bond_id": 3
+  },
+  {
+    "character_id": 19,
+    "bond_id": 17
+  },
+  {
+    "character_id": 19,
+    "bond_id": 35
+  },
+  {
+    "character_id": 19,
+    "bond_id": 3
+  },
+  {
     "character_id": 22,
     "bond_id": 3
-  },
-  {
-    "character_id": 23,
-    "bond_id": 19
-  },
-  {
-    "character_id": 23,
-    "bond_id": 3
-  },
-  {
-    "character_id": 24,
-    "bond_id": 20
-  },
-  {
-    "character_id": 24,
-    "bond_id": 4
-  },
-  {
-    "character_id": 25,
-    "bond_id": 4
-  },
-  {
-    "character_id": 26,
-    "bond_id": 20
-  },
-  {
-    "character_id": 26,
-    "bond_id": 21
-  },
-  {
-    "character_id": 26,
-    "bond_id": 4
-  },
-  {
-    "character_id": 28,
-    "bond_id": 22
-  },
-  {
-    "character_id": 28,
-    "bond_id": 23
-  },
-  {
-    "character_id": 28,
-    "bond_id": 5
-  },
-  {
-    "character_id": 29,
-    "bond_id": 22
-  },
-  {
-    "character_id": 29,
-    "bond_id": 5
-  },
-  {
-    "character_id": 30,
-    "bond_id": 24
-  },
-  {
-    "character_id": 30,
-    "bond_id": 5
-  },
-  {
-    "character_id": 31,
-    "bond_id": 23
-  },
-  {
-    "character_id": 31,
-    "bond_id": 5
-  },
-  {
-    "character_id": 32,
-    "bond_id": 5
-  },
-  {
-    "character_id": 4,
-    "bond_id": 8
-  },
-  {
-    "character_id": 4,
-    "bond_id": 1
-  },
-  {
-    "character_id": 33,
-    "bond_id": 24
-  },
-  {
-    "character_id": 33,
-    "bond_id": 5
-  },
-  {
-    "character_id": 34,
-    "bond_id": 5
-  },
-  {
-    "character_id": 35,
-    "bond_id": 25
-  },
-  {
-    "character_id": 35,
-    "bond_id": 6
-  },
-  {
-    "character_id": 38,
-    "bond_id": 25
   },
   {
     "character_id": 39,
@@ -197,6 +149,42 @@
   },
   {
     "character_id": 40,
+    "bond_id": 6
+  },
+  {
+    "character_id": 38,
+    "bond_id": 25
+  },
+  {
+    "character_id": 37,
+    "bond_id": 17
+  },
+  {
+    "character_id": 37,
+    "bond_id": 26
+  },
+  {
+    "character_id": 37,
+    "bond_id": 6
+  },
+  {
+    "character_id": 35,
+    "bond_id": 25
+  },
+  {
+    "character_id": 35,
+    "bond_id": 6
+  },
+  {
+    "character_id": 36,
+    "bond_id": 17
+  },
+  {
+    "character_id": 36,
+    "bond_id": 26
+  },
+  {
+    "character_id": 36,
     "bond_id": 6
   },
   {
@@ -216,270 +204,6 @@
     "bond_id": 7
   },
   {
-    "character_id": 44,
-    "bond_id": 27
-  },
-  {
-    "character_id": 44,
-    "bond_id": 28
-  },
-  {
-    "character_id": 44,
-    "bond_id": 7
-  },
-  {
-    "character_id": 45,
-    "bond_id": 28
-  },
-  {
-    "character_id": 45,
-    "bond_id": 7
-  },
-  {
-    "character_id": 46,
-    "bond_id": 7
-  },
-  {
-    "character_id": 47,
-    "bond_id": 7
-  },
-  {
-    "character_id": 48,
-    "bond_id": 7
-  },
-  {
-    "character_id": 49,
-    "bond_id": 7
-  },
-  {
-    "character_id": 50,
-    "bond_id": 29
-  },
-  {
-    "character_id": 51,
-    "bond_id": 29
-  },
-  {
-    "character_id": 52,
-    "bond_id": 30
-  },
-  {
-    "character_id": 54,
-    "bond_id": 32
-  },
-  {
-    "character_id": 54,
-    "bond_id": 31
-  },
-  {
-    "character_id": 54,
-    "bond_id": 2
-  },
-  {
-    "character_id": 56,
-    "bond_id": 33
-  },
-  {
-    "character_id": 56,
-    "bond_id": 34
-  },
-  {
-    "character_id": 56,
-    "bond_id": 35
-  },
-  {
-    "character_id": 56,
-    "bond_id": 3
-  },
-  {
-    "character_id": 1,
-    "bond_id": 8
-  },
-  {
-    "character_id": 1,
-    "bond_id": 9
-  },
-  {
-    "character_id": 1,
-    "bond_id": 36
-  },
-  {
-    "character_id": 1,
-    "bond_id": 1
-  },
-  {
-    "character_id": 14,
-    "bond_id": 15
-  },
-  {
-    "character_id": 14,
-    "bond_id": 2
-  },
-  {
-    "character_id": 3,
-    "bond_id": 8
-  },
-  {
-    "character_id": 3,
-    "bond_id": 10
-  },
-  {
-    "character_id": 3,
-    "bond_id": 11
-  },
-  {
-    "character_id": 3,
-    "bond_id": 1
-  },
-  {
-    "character_id": 5,
-    "bond_id": 9
-  },
-  {
-    "character_id": 5,
-    "bond_id": 12
-  },
-  {
-    "character_id": 5,
-    "bond_id": 1
-  },
-  {
-    "character_id": 8,
-    "bond_id": 11
-  },
-  {
-    "character_id": 8,
-    "bond_id": 32
-  },
-  {
-    "character_id": 8,
-    "bond_id": 34
-  },
-  {
-    "character_id": 8,
-    "bond_id": 1
-  },
-  {
-    "character_id": 12,
-    "bond_id": 12
-  },
-  {
-    "character_id": 12,
-    "bond_id": 1
-  },
-  {
-    "character_id": 13,
-    "bond_id": 10
-  },
-  {
-    "character_id": 13,
-    "bond_id": 31
-  },
-  {
-    "character_id": 13,
-    "bond_id": 2
-  },
-  {
-    "character_id": 19,
-    "bond_id": 17
-  },
-  {
-    "character_id": 19,
-    "bond_id": 35
-  },
-  {
-    "character_id": 19,
-    "bond_id": 3
-  },
-  {
-    "character_id": 36,
-    "bond_id": 17
-  },
-  {
-    "character_id": 36,
-    "bond_id": 26
-  },
-  {
-    "character_id": 36,
-    "bond_id": 6
-  },
-  {
-    "character_id": 37,
-    "bond_id": 17
-  },
-  {
-    "character_id": 37,
-    "bond_id": 26
-  },
-  {
-    "character_id": 37,
-    "bond_id": 6
-  },
-  {
-    "character_id": 59,
-    "bond_id": 7
-  },
-  {
-    "character_id": 60,
-    "bond_id": 38
-  },
-  {
-    "character_id": 60,
-    "bond_id": 39
-  },
-  {
-    "character_id": 60,
-    "bond_id": 40
-  },
-  {
-    "character_id": 57,
-    "bond_id": 36
-  },
-  {
-    "character_id": 57,
-    "bond_id": 37
-  },
-  {
-    "character_id": 57,
-    "bond_id": 4
-  },
-  {
-    "character_id": 57,
-    "bond_id": 38
-  },
-  {
-    "character_id": 57,
-    "bond_id": 39
-  },
-  {
-    "character_id": 58,
-    "bond_id": 37
-  },
-  {
-    "character_id": 58,
-    "bond_id": 4
-  },
-  {
-    "character_id": 58,
-    "bond_id": 39
-  },
-  {
-    "character_id": 17,
-    "bond_id": 15
-  },
-  {
-    "character_id": 17,
-    "bond_id": 2
-  },
-  {
-    "character_id": 61,
-    "bond_id": 40
-  },
-  {
-    "character_id": 61,
-    "bond_id": 41
-  },
-  {
     "character_id": 62,
     "bond_id": 7
   },
@@ -492,23 +216,299 @@
     "bond_id": 41
   },
   {
-    "character_id": 27,
-    "bond_id": 21
+    "character_id": 49,
+    "bond_id": 7
   },
   {
-    "character_id": 27,
-    "bond_id": 4
+    "character_id": 59,
+    "bond_id": 7
   },
   {
-    "character_id": 55,
-    "bond_id": 33
+    "character_id": 44,
+    "bond_id": 27
   },
   {
-    "character_id": 55,
-    "bond_id": 4
+    "character_id": 44,
+    "bond_id": 28
   },
   {
-    "character_id": 53,
+    "character_id": 44,
+    "bond_id": 7
+  },
+  {
+    "character_id": 47,
+    "bond_id": 7
+  },
+  {
+    "character_id": 46,
+    "bond_id": 7
+  },
+  {
+    "character_id": 45,
+    "bond_id": 28
+  },
+  {
+    "character_id": 45,
+    "bond_id": 7
+  },
+  {
+    "character_id": 52,
     "bond_id": 30
+  },
+  {
+    "character_id": 51,
+    "bond_id": 29
+  },
+  {
+    "character_id": 50,
+    "bond_id": 29
+  },
+  {
+    "character_id": 11,
+    "bond_id": 13
+  },
+  {
+    "character_id": 11,
+    "bond_id": 1
+  },
+  {
+    "character_id": 10,
+    "bond_id": 1
+  },
+  {
+    "character_id": 2,
+    "bond_id": 1
+  },
+  {
+    "character_id": 9,
+    "bond_id": 1
+  },
+  {
+    "character_id": 8,
+    "bond_id": 11
+  },
+  {
+    "character_id": 8,
+    "bond_id": 32
+  },
+  {
+    "character_id": 8,
+    "bond_id": 34
+  },
+  {
+    "character_id": 8,
+    "bond_id": 1
+  },
+  {
+    "character_id": 12,
+    "bond_id": 12
+  },
+  {
+    "character_id": 12,
+    "bond_id": 1
+  },
+  {
+    "character_id": 7,
+    "bond_id": 14
+  },
+  {
+    "character_id": 7,
+    "bond_id": 1
+  },
+  {
+    "character_id": 4,
+    "bond_id": 8
+  },
+  {
+    "character_id": 4,
+    "bond_id": 1
+  },
+  {
+    "character_id": 1,
+    "bond_id": 8
+  },
+  {
+    "character_id": 1,
+    "bond_id": 9
+  },
+  {
+    "character_id": 1,
+    "bond_id": 36
+  },
+  {
+    "character_id": 1,
+    "bond_id": 1
+  },
+  {
+    "character_id": 3,
+    "bond_id": 8
+  },
+  {
+    "character_id": 3,
+    "bond_id": 10
+  },
+  {
+    "character_id": 3,
+    "bond_id": 11
+  },
+  {
+    "character_id": 3,
+    "bond_id": 1
+  },
+  {
+    "character_id": 5,
+    "bond_id": 9
+  },
+  {
+    "character_id": 5,
+    "bond_id": 12
+  },
+  {
+    "character_id": 5,
+    "bond_id": 1
+  },
+  {
+    "character_id": 13,
+    "bond_id": 10
+  },
+  {
+    "character_id": 13,
+    "bond_id": 31
+  },
+  {
+    "character_id": 13,
+    "bond_id": 2
+  },
+  {
+    "character_id": 14,
+    "bond_id": 15
+  },
+  {
+    "character_id": 14,
+    "bond_id": 2
+  },
+  {
+    "character_id": 16,
+    "bond_id": 2
+  },
+  {
+    "character_id": 54,
+    "bond_id": 32
+  },
+  {
+    "character_id": 54,
+    "bond_id": 31
+  },
+  {
+    "character_id": 54,
+    "bond_id": 2
+  },
+  {
+    "character_id": 18,
+    "bond_id": 16
+  },
+  {
+    "character_id": 18,
+    "bond_id": 2
+  },
+  {
+    "character_id": 15,
+    "bond_id": 16
+  },
+  {
+    "character_id": 15,
+    "bond_id": 2
+  },
+  {
+    "character_id": 32,
+    "bond_id": 5
+  },
+  {
+    "character_id": 31,
+    "bond_id": 23
+  },
+  {
+    "character_id": 31,
+    "bond_id": 5
+  },
+  {
+    "character_id": 33,
+    "bond_id": 24
+  },
+  {
+    "character_id": 33,
+    "bond_id": 5
+  },
+  {
+    "character_id": 29,
+    "bond_id": 22
+  },
+  {
+    "character_id": 29,
+    "bond_id": 5
+  },
+  {
+    "character_id": 61,
+    "bond_id": 40
+  },
+  {
+    "character_id": 61,
+    "bond_id": 41
+  },
+  {
+    "character_id": 30,
+    "bond_id": 24
+  },
+  {
+    "character_id": 30,
+    "bond_id": 5
+  },
+  {
+    "character_id": 60,
+    "bond_id": 38
+  },
+  {
+    "character_id": 60,
+    "bond_id": 39
+  },
+  {
+    "character_id": 60,
+    "bond_id": 40
+  },
+  {
+    "character_id": 34,
+    "bond_id": 5
+  },
+  {
+    "character_id": 28,
+    "bond_id": 22
+  },
+  {
+    "character_id": 28,
+    "bond_id": 23
+  },
+  {
+    "character_id": 28,
+    "bond_id": 5
+  },
+  {
+    "character_id": 17,
+    "bond_id": 15
+  },
+  {
+    "character_id": 17,
+    "bond_id": 2
+  },
+  {
+    "character_id": 6,
+    "bond_id": 13
+  },
+  {
+    "character_id": 6,
+    "bond_id": 14
+  },
+  {
+    "character_id": 6,
+    "bond_id": 1
   }
 ]

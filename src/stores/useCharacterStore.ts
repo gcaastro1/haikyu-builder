@@ -1,5 +1,5 @@
 import { fetchAndValidate } from "@/app/lib/api";
-import { BondSchema, CharacterBondLinkSchema, CharacterSchema, CharacterStatsBondSchema, MemorySchema, PotentialSchema, ResonanceEntrySchema } from "@/app/lib/schemas";
+import { BondSchema, CharacterBondLinkSchema, CharacterSchema, CharacterStatsBondSchema, ExerciseAnswerSchema, MemorySchema, PotentialSchema, ResonanceEntrySchema } from "@/app/lib/schemas";
 import {
     Bond,
     CalculatedBond,
@@ -7,6 +7,7 @@ import {
     CharacterBondLink,
     CharacterStatsBond,
     DbStyle,
+    ExerciseAnswer,
     Memory,
     Potential,
     RelevantStyleDisplay,
@@ -29,6 +30,7 @@ export type CharacterStoreState = {
   allPotentials: Potential[];
   allMemories: Memory[];
   allResonances: ResonanceEntry[];
+  allExerciseAnswers: ExerciseAnswer[];
   isLoading: boolean;
   loadingBonds: boolean;
   fetchError: string | null;
@@ -56,6 +58,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
         allPotentials: [],
         allMemories: [],
         allResonances: [],
+        allExerciseAnswers: [],
         isLoading: false,
         loadingBonds: false,
         fetchError: null,
@@ -76,6 +79,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
               potentialsJson,
               memoriesJson,
               resonancesJson,
+              exerciseAnswersJson,
             ] = await Promise.all([
               fetchAndValidate("/mock/characters.json", z.array(CharacterSchema)),
               fetchAndValidate("/mock/bonds.json", z.array(BondSchema)),
@@ -84,6 +88,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
               fetchAndValidate("/mock/potentials.json", z.array(PotentialSchema)),
               fetchAndValidate("/mock/memories.json", z.array(MemorySchema)),
               fetchAndValidate("/mock/resonance.json", z.array(ResonanceEntrySchema)),
+              fetchAndValidate("/mock/answers_exercises.json", z.array(ExerciseAnswerSchema)),
             ]);
 
             const formattedCharacters: Character[] = charactersJson.map((c) => {
@@ -112,6 +117,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
                 potential: c.potential ?? null,
                 recommended_stats: c.recommended_stats ?? null,
                 recommended_memories: c.recommended_memories ?? null,
+                substats: c.substats ?? null,
               };
             });
 
@@ -172,6 +178,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
               allPotentials: potentials,
               allMemories: memories,
               allResonances: resonances,
+              allExerciseAnswers: exerciseAnswersJson,
               isLoading: false,
               hasLoadedData: true,
               fetchError: null,
@@ -440,6 +447,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
           characterBondLinks: state.characterBondLinks,
           allPotentials: state.allPotentials,
           allMemories: state.allMemories,
+          allExerciseAnswers: state.allExerciseAnswers,
         }),
         onRehydrateStorage: () => (persistedState) => {
           if (!persistedState || !persistedState.allCharacters) return;

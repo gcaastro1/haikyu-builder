@@ -20,10 +20,7 @@
     "potential": null,
     "recommended_stats": null,
     "recommended_memories": {
-      "main": "mem_kageyama_tobio_ur",
-      "others": [
-        "mem_kageyama_tobio_ssr"
-      ]
+      "main": "mem_kageyama_ur"
     }
   },
   {
@@ -45,7 +42,10 @@
     "block": 1246,
     "defense": 1047,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_kageyama_ssr_serve"
+    }
   },
   {
     "id": 3,
@@ -65,7 +65,10 @@
     "block": 1774,
     "defense": 1656,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_power_up_shouyou_hinata_hanami"
+    }
   },
   {
     "id": 4,
@@ -84,7 +87,10 @@
     "block": 1250,
     "defense": 1253,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_increase_consciousness_shoyo_hinata"
+    }
   },
   {
     "id": 5,
@@ -104,7 +110,10 @@
     "block": 1577,
     "defense": 1854,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_defense_up_yu_nishinoya_depois_da_escola"
+    }
   },
   {
     "id": 6,
@@ -122,8 +131,22 @@
     "receive": 1389,
     "block": 1098,
     "defense": 1327,
-    "potential": null,
-    "recommended_stats": null
+    "potential": {
+      "4slots": 10,
+      "2slots": 1
+    },
+    "recommended_stats": {
+      "slot1": "Recepção",
+      "slot2": "Passe %",
+      "slot3": "Saque %",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Def % ou Recepção %"
+    },
+    "recommended_memories": {
+      "main": "mem_defense_up_yu_nishinoya"
+    },
+    "substats": null
   },
   {
     "id": 7,
@@ -142,7 +165,10 @@
     "block": 1248,
     "defense": 1129,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_tanaka_ssr"
+    }
   },
   {
     "id": 8,
@@ -162,7 +188,10 @@
     "block": 1789,
     "defense": 1774,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_hast_attack_block_up_Tsuki_firefly_display_de_fogos_de_artificio"
+    }
   },
   {
     "id": 9,
@@ -182,7 +211,10 @@
     "block": 1389,
     "defense": 1102,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_block_up_Tsuki"
+    }
   },
   {
     "id": 10,
@@ -201,7 +233,10 @@
     "block": 1248,
     "defense": 1191,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_receba_reforco_hard_hit_daichi_sawamura"
+    }
   },
   {
     "id": 11,
@@ -221,7 +256,10 @@
     "block": 1190,
     "defense": 1122,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_azumane_ssr"
+    }
   },
   {
     "id": 12,
@@ -242,7 +280,10 @@
     "block": 1774,
     "defense": 1605,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_sugawara_sp"
+    }
   },
   {
     "id": 13,
@@ -262,7 +303,10 @@
     "block": 1600,
     "defense": 1590,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_kenma_sp"
+    }
   },
   {
     "id": 14,
@@ -282,7 +326,10 @@
     "block": 1303,
     "defense": 1060,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_kenma_sp"
+    }
   },
   {
     "id": 15,
@@ -301,7 +348,10 @@
     "block": 1098,
     "defense": 1323,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_receba_morisuke_yaku"
+    }
   },
   {
     "id": 16,
@@ -321,7 +371,10 @@
     "block": 1389,
     "defense": 1123,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_offensive_up_tetsuro_kuroo_pratica"
+    }
   },
   {
     "id": 17,
@@ -340,8 +393,22 @@
     "receive": 1581,
     "block": 1740,
     "defense": 1533,
-    "potential": null,
-    "recommended_stats": null
+    "potential": {
+      "4slots": 5,
+      "2slots": 2
+    },
+    "recommended_stats": {
+      "slot1": "Bloqueio",
+      "slot2": "Percepção % ou Força %",
+      "slot3": "Saque",
+      "slot4": "Reflexo %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Def % ou Bloqueio %"
+    },
+    "recommended_memories": {
+      "main": "mem_hast_attack_blockup_tetsuro_kuroo"
+    },
+    "substats": null
   },
   {
     "id": 18,
@@ -361,7 +428,10 @@
     "block": 1378,
     "defense": 1100,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_receive_up_ataque_rapido_reforco_haiba_lev"
+    }
   },
   {
     "id": 19,
@@ -381,7 +451,10 @@
     "block": 1904,
     "defense": 1605,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_tecnica_de_defesa_bloqueio_takashi_aone_banho_de_mar"
+    }
   },
   {
     "id": 20,
@@ -401,7 +474,10 @@
     "block": 1389,
     "defense": 1102,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_defense_up_takanobu_aone"
+    }
   },
   {
     "id": 21,
@@ -421,7 +497,10 @@
     "block": 1385,
     "defense": 1122,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_futakuchi_ssr"
+    }
   },
   {
     "id": 22,
@@ -440,7 +519,10 @@
     "block": 1255,
     "defense": 1127,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_param_main_e_hard_hit_takehito_sasaya"
+    }
   },
   {
     "id": 23,
@@ -460,7 +542,10 @@
     "block": 1306,
     "defense": 1031,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_koganegawa_ssr"
+    }
   },
   {
     "id": 24,
@@ -481,7 +566,10 @@
     "block": 1530,
     "defense": 1290,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_oikawa_ur"
+    }
   },
   {
     "id": 25,
@@ -502,7 +590,10 @@
     "block": 1248,
     "defense": 1054,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_oikawa_ssr"
+    }
   },
   {
     "id": 26,
@@ -521,7 +612,10 @@
     "block": 1248,
     "defense": 1129,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_iwaizumi_ssr"
+    }
   },
   {
     "id": 27,
@@ -563,8 +657,24 @@
     "receive": 1417,
     "block": 1345,
     "defense": 1261,
-    "potential": null,
-    "recommended_stats": null
+    "potential": {
+      "4slots": 4,
+      "2slots": 3
+    },
+    "recommended_stats": {
+      "slot1": "Atq Potente",
+      "slot2": "Percepção % ou Força %",
+      "slot3": "Saque",
+      "slot4": "Recepção %",
+      "slot5": "Recepção",
+      "slot6": "Tec. Atq % ou Atq Potente %"
+    },
+    "recommended_memories": {
+      "main": "mem_up_consciencia_wakatoshi_ushijima",
+      "others": [
+        "mem_ofensive_up_kentaro_kyotani"
+      ]
+    }
   },
   {
     "id": 29,
@@ -583,7 +693,10 @@
     "block": 1387,
     "defense": 1100,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_block_up_tendo_satoru"
+    }
   },
   {
     "id": 30,
@@ -603,7 +716,10 @@
     "block": 1240,
     "defense": 1122,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_goshiki_ssr"
+    }
   },
   {
     "id": 31,
@@ -623,7 +739,10 @@
     "block": 1239,
     "defense": 1041,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_shirabu_ssr"
+    }
   },
   {
     "id": 32,
@@ -644,7 +763,10 @@
     "block": 1329,
     "defense": 1111,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_semi_ssr"
+    }
   },
   {
     "id": 33,
@@ -663,7 +785,10 @@
     "block": 1332,
     "defense": 1197,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_oshiro_ssr"
+    }
   },
   {
     "id": 34,
@@ -682,7 +807,10 @@
     "block": 1172,
     "defense": 1410,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_receba_yamagata_hayato"
+    }
   },
   {
     "id": 35,
@@ -702,7 +830,10 @@
     "block": 1347,
     "defense": 1268,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_bokuto_ur"
+    }
   },
   {
     "id": 36,
@@ -722,7 +853,10 @@
     "block": 1760,
     "defense": 1572,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_bokuto_sp"
+    }
   },
   {
     "id": 37,
@@ -742,7 +876,10 @@
     "block": 1758,
     "defense": 1489,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_akaashi_sp"
+    }
   },
   {
     "id": 38,
@@ -762,7 +899,10 @@
     "block": 1334,
     "defense": 1123,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_akaashi_ssr"
+    }
   },
   {
     "id": 39,
@@ -781,7 +921,10 @@
     "block": 1333,
     "defense": 1335,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_reacao_para_cima_akinori_konoha"
+    }
   },
   {
     "id": 40,
@@ -800,7 +943,10 @@
     "block": 1721,
     "defense": 1409,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_receba_haruki_komi"
+    }
   },
   {
     "id": 41,
@@ -820,7 +966,10 @@
     "block": 1473,
     "defense": 1176,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_block_up_tatsuo"
+    }
   },
   {
     "id": 42,
@@ -840,7 +989,10 @@
     "block": 1263,
     "defense": 1196,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_terushima_ssr"
+    }
   },
   {
     "id": 43,
@@ -861,7 +1013,10 @@
     "block": 1530,
     "defense": 1290,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_atsumu_ur"
+    }
   },
   {
     "id": 44,
@@ -881,7 +1036,10 @@
     "block": 1428,
     "defense": 1373,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_ofensive_up_osamu_miya"
+    }
   },
   {
     "id": 45,
@@ -900,7 +1058,10 @@
     "block": 1198,
     "defense": 1409,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_kita_ssr"
+    }
   },
   {
     "id": 46,
@@ -920,7 +1081,10 @@
     "block": 1324,
     "defense": 1318,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_fast_attack_up_rintaro_suna"
+    }
   },
   {
     "id": 47,
@@ -940,7 +1104,10 @@
     "block": 1264,
     "defense": 1198,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_oshiro_ssr"
+    }
   },
   {
     "id": 48,
@@ -979,7 +1146,10 @@
     "block": 1329,
     "defense": 1201,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_yui_ssr"
+    }
   },
   {
     "id": 50,
@@ -1001,7 +1171,10 @@
     "block": 1581,
     "defense": 1305,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_offense_defense_up_hoshiumi_ur"
+    }
   },
   {
     "id": 51,
@@ -1021,7 +1194,10 @@
     "block": 1742,
     "defense": 1493,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_block_up_hirugami_yukoro"
+    }
   },
   {
     "id": 52,
@@ -1041,7 +1217,10 @@
     "block": 1699,
     "defense": 1656,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_Sakusa_ur"
+    }
   },
   {
     "id": 53,
@@ -1094,7 +1273,10 @@
     "block": 1946,
     "defense": 1577,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_kurosp"
+    }
   },
   {
     "id": 55,
@@ -1137,7 +1319,10 @@
     "block": 1970,
     "defense": 1573,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_koganegawa"
+    }
   },
   {
     "id": 57,
@@ -1158,7 +1343,10 @@
     "block": 1748,
     "defense": 1476,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_oikawaSP"
+    }
   },
   {
     "id": 58,
@@ -1198,7 +1386,10 @@
     "block": 1667,
     "defense": 1564,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_ginjimaSP"
+    }
   },
   {
     "id": 60,
@@ -1218,7 +1409,10 @@
     "block": 1759,
     "defense": 1482,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_ushijimaSP"
+    }
   },
   {
     "id": 61,
@@ -1238,7 +1432,10 @@
     "block": 1951,
     "defense": 1489,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_tendoSP"
+    }
   },
   {
     "id": 62,
@@ -1259,6 +1456,9 @@
     "block": 1755,
     "defense": 1485,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_atsumuSP"
+    }
   }
 ]

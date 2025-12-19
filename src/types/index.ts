@@ -190,3 +190,9 @@ export interface Memory {
   desc: string;
   image_url: string;
 }
+
+export interface ExerciseAnswer {
+  desc: string;
+  option1: string;
+  option2: string;
+}
