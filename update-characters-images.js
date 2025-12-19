@@ -2,24 +2,19 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Obter __dirname em módulos ES
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Caminho dos arquivos
 const charactersJsonPath = path.join(__dirname, 'public', 'mock', 'characters.json');
 const imagesDir = path.join(__dirname, 'public', 'images', 'characters');
 
-// Ler o JSON
 const characters = JSON.parse(fs.readFileSync(charactersJsonPath, 'utf-8'));
 
-// Ler nomes de arquivos disponíveis
 const availableFiles = fs.readdirSync(imagesDir).filter(f => f.endsWith('.png'));
 const availableFilesSet = new Set(availableFiles);
 
 console.log(`📁 Encontrados ${availableFiles.length} arquivos PNG\n`);
 
-// Processar cada character
 let updated = 0;
 let notFound = 0;
 let unchanged = 0;
@@ -30,11 +25,9 @@ characters.forEach((char, index) => {
     return;
   }
 
-  // Extrair nome do arquivo da URL
   const urlParts = char.image_url.split('/');
   const imageName = urlParts[urlParts.length - 1];
 
-  // Verificar se arquivo existe localmente
   if (availableFilesSet.has(imageName)) {
     const newUrl = `/images/characters/${imageName}`;
     if (char.image_url !== newUrl) {
@@ -52,7 +45,6 @@ characters.forEach((char, index) => {
   }
 });
 
-// Salvar JSON atualizado
 fs.writeFileSync(charactersJsonPath, JSON.stringify(characters, null, 2), 'utf-8');
 
 console.log(`\n📊 Resumo:`);

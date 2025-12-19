@@ -1,330 +1,294 @@
 [
   {
     "id": 1,
-    "name": "Aoba Johsai's Sophomore"
+    "name": "Segundanistas da Aoba Johsai"
   },
   {
     "id": 2,
-    "name": "Behind the Smile"
+    "name": "Por Trás do Sorriso"
   },
   {
     "id": 3,
-    "name": "Bench cheer"
+    "name": "Torcida do Banco"
   },
   {
     "id": 4,
-    "name": "Building Team Chemistry"
+    "name": "Construindo a Química do Time"
   },
   {
     "id": 5,
-    "name": "Cannon \\& Iron Wall"
+    "name": "Canhão e Parede de Ferro"
   },
   {
     "id": 6,
-    "name": "Cannon and Iron Wall"
+    "name": "Colegas de Classe"
   },
   {
     "id": 7,
-    "name": "Classmates"
+    "name": "Capitães da Date Tech"
   },
   {
     "id": 8,
-    "name": "Date Kogyo's Captains"
+    "name": "Novatos da Date Tech"
   },
   {
     "id": 9,
-    "name": "Date Kogyo's Junior"
+    "name": "Levantadores da Date Tech"
   },
   {
     "id": 10,
-    "name": "Date Kogyo's Setter"
+    "name": "Rivais Destinados"
   },
   {
     "id": 11,
-    "name": "Fated Rivals"
+    "name": "Ases Flexíveis"
   },
   {
     "id": 12,
-    "name": "Flexible Aces"
+    "name": "Oponente Formidável"
   },
   {
     "id": 13,
-    "name": "Formidable Opponent"
+    "name": "Amigos da Aula de Vôlei"
   },
   {
     "id": 14,
-    "name": "Friends from Volleyball Class"
+    "name": "Terceiranistas da Fukurodani"
   },
   {
     "id": 15,
-    "name": "Fukurodani 3rd Years"
+    "name": "Bloqueadores Centrais da Fukurodani"
   },
   {
     "id": 16,
-    "name": "Fukurodani MBs"
+    "name": "Ponteiros da Fukurodani"
   },
   {
     "id": 17,
-    "name": "Fukurodani WS"
+    "name": "Garra e Competitividade"
   },
   {
     "id": 18,
-    "name": "Grit and Competitive"
+    "name": "Fogo Oculto"
   },
   {
     "id": 19,
-    "name": "Hidden Fire"
+    "name": "Segundanistas da Inarizaki"
   },
   {
     "id": 20,
-    "name": "Inarizaki 2nd Years"
+    "name": "Ponteiros Companheiros da Inarizaki"
   },
   {
     "id": 21,
-    "name": "Inarizaki WS Teammates"
+    "name": "Companheiros do Acampamento Juvenil do Japão"
   },
   {
     "id": 22,
-    "name": "Japan Youth Training Camp Teammates"
+    "name": "Terceiranistas da Karasuno"
   },
   {
     "id": 23,
-    "name": "Karasuno 3rd Years"
+    "name": "Grupo de Notas Baixas da Karasuno"
   },
   {
     "id": 24,
-    "name": "Karasuno's Failing Grades Group"
+    "name": "Esquadrão de Notas Vermelhas (Ver. Hanami)"
   },
   {
     "id": 25,
-    "name": "Karasuno's Red Mark Squad (Hanami ver.)"
+    "name": "Levantadores da Karasuno"
   },
   {
     "id": 26,
-    "name": "Karasuno's Setters"
+    "name": "Ponteiros da Karasuno"
   },
   {
     "id": 27,
-    "name": "Karasuno's Wing Spiker"
+    "name": "Líderes Feitos do Mesmo Molde"
   },
   {
     "id": 28,
-    "name": "Leaders Cut from the Same Cloth"
+    "name": "Mestre e Aprendiz"
   },
   {
     "id": 29,
-    "name": "Master and Apprentice"
+    "name": "Novatos da Nekoma"
   },
   {
     "id": 30,
-    "name": "Nekoma's Junior"
+    "name": "Discípulo Número Um"
   },
   {
     "id": 31,
-    "name": "Number One Disciple"
+    "name": "Discípulo Número Um SP"
   },
   {
     "id": 32,
-    "name": "Number One Disciple SP"
+    "name": "Treinamento Um a Um"
   },
   {
     "id": 33,
-    "name": "One-on-One Training"
+    "name": "Perseverança e Tenacidade"
   },
   {
     "id": 34,
-    "name": "Perseverance and Tenacity"
+    "name": "Previsão VS Sistema"
   },
   {
     "id": 35,
-    "name": "Prediction VS System"
+    "name": "Senpai Promissor"
   },
   {
     "id": 36,
-    "name": "Promising Senpai"
+    "name": "Veteranos Confiáveis"
   },
   {
     "id": 37,
-    "name": "Reliable Seniors"
+    "name": "Amigos Rivais"
   },
   {
     "id": 38,
-    "name": "Rival Friends"
+    "name": "Segundanistas da Shiratorizawa"
   },
   {
     "id": 39,
-    "name": "Shiratorizawa 2nd Years"
+    "name": "Terceiranistas da Shiratorizawa"
   },
   {
     "id": 40,
-    "name": "Shiratorizawa 3rd Years"
+    "name": "Silêncio e Sarcasmo"
   },
   {
     "id": 41,
-    "name": "Silence and Sarcasm"
+    "name": "Colega de Treino Simulado Juvenil"
   },
   {
     "id": 42,
-    "name": "Simulated Junior Training Teamate"
+    "name": "Amizade Estranha"
   },
   {
     "id": 43,
-    "name": "Strange Friendship"
+    "name": "Guardiões do Time"
   },
   {
     "id": 44,
-    "name": "Team's Guardians"
+    "name": "Guardiões do Time (Depois da Escola)"
   },
   {
     "id": 45,
-    "name": "Team's Guardians (After School)"
+    "name": "O Colega Enigmático"
   },
   {
     "id": 46,
-    "name": "The \"Enigmatic\" Teammate"
+    "name": "Rei Absoluto VS Combo Genial"
   },
   {
     "id": 47,
-    "name": "The Absolute King VS the Freak Duo"
+    "name": "Rei Absoluto e Levantador Mutável"
   },
   {
     "id": 48,
-    "name": "The King and The Great King"
+    "name": "O Rei e o Grande Rei"
   },
   {
     "id": 49,
-    "name": "The Moment They Fell for Volleyball"
+    "name": "O Momento em que se Apaixonaram pelo Vôlei"
   },
   {
     "id": 50,
-    "name": "Third Year from Inarizaki"
+    "name": "Terceiranistas da Inarizaki"
   },
   {
     "id": 51,
-    "name": "To Greater Heights"
+    "name": "Para Alturas Maiores"
   },
   {
     "id": 52,
-    "name": "Tokyo Training Camp Buddies"
+    "name": "Parceiros do Acampamento de Tóquio"
   },
   {
     "id": 53,
-    "name": "Tokyo Training Camp Self-Practice Buddies"
+    "name": "Parceiros de Treino Livre de Tóquio"
   },
   {
     "id": 54,
-    "name": "Two High-Energy Guys"
+    "name": "Dois Caras Cheios de Energia"
   },
   {
     "id": 55,
-    "name": "Undisputed Aces"
+    "name": "Ases Indiscutíveis"
   },
   {
     "id": 56,
-    "name": "Ushiwaka and Benkei"
+    "name": "Ushiwaka e Benkei"
   },
   {
     "id": 57,
-    "name": "Worthy Rival"
+    "name": "Rival Digno"
   },
   {
     "id": 58,
-    "name": "Youth Camp Setters"
+    "name": "Levantadores do Acampamento Juvenil"
   },
   {
     "id": 59,
-    "name": "Youth Training Camp"
+    "name": "Acampamento de Treinamento Juvenil"
   },
   {
     "id": 60,
-    "name": "Similar Builds"
+    "name": "Constituições Similares"
   },
   {
     "id": 61,
-    "name": "Similar Physique Teammates"
+    "name": "Colegas de Físico Similar"
   },
   {
     "id": 62,
-    "name": "Kiyoko's Protection Group"
+    "name": "Esquadrão de Proteção da Kiyoko"
   },
   {
     "id": 63,
-    "name": "Date Tech’s Setters"
+    "name": "Novato do Novo Tipo e o Novo Capitão"
   },
   {
     "id": 64,
-    "name": "New-type Rookie & the New Captain"
+    "name": "Calmo e Honesto"
   },
   {
     "id": 65,
-    "name": "Calm and Honest"
+    "name": "Confiança Implacável"
   },
   {
     "id": 66,
-    "name": "Ruthless Trust"
+    "name": "Terceiranistas da Aoba Johsai"
   },
   {
     "id": 67,
-    "name": "Aoba Johsai Third Years"
+    "name": "Sociedade dos Lobos"
   },
   {
     "id": 68,
-    "name": "Wolf Society"
+    "name": "Ponteiros da Aoba Johsai"
   },
   {
     "id": 69,
-    "name": "Aoba Johsai’s Wing Spikers"
+    "name": "De Grande Ace para Ace"
   },
   {
-    "id": 80,
-    "name": "Kiyoko's Protection Group"
+    "id": 70,
+    "name": "Ushiwaka e o Gerente"
   },
   {
-    "id": 81,
-    "name": "Date Tech’s Setters"
-  },
-  {
-    "id": 82,
-    "name": "New-type Rookie & the New Captain"
-  },
-  {
-    "id": 83,
-    "name": "Calm and Honest"
-  },
-  {
-    "id": 84,
-    "name": "Ruthless Trust"
-  },
-  {
-    "id": 85,
-    "name": "Aoba Johsai Third Years"
-  },
-  {
-    "id": 86,
-    "name": "Wolf Society"
-  },
-  {
-    "id": 87,
-    "name": "Aoba Johsai’s Wing Spikers"
-  },
-  {
-    "id": 88,
-    "name": "‘Absolute King’ VS Genius Combo"
-  },
-  {
-    "id": 89,
-    "name": "‘Absolute King’ and Changeable Setter"
-  },
-  {
-    "id": 90,
-    "name": "From Great Ace to Ace"
-  },
-  {
-    "id": 91,
-    "name": "‘Ushiwaka’ and ‘Manager’"
-  },
-  {
-    "id": 92,
+    "id": 71,
     "name": "Inarizaki 5"
+  },
+  {
+    "id": 72,
+    "name": "Gêmeos Mais Fortes do Ensino Médio"
+  },
+  {
+    "id": 73,
+    "name": "Amigos do Clube de Vôlei"
   }
 ]

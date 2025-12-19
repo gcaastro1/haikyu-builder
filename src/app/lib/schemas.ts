@@ -99,6 +99,10 @@ export const CharacterSchema = z.object({
     slot5: z.string().optional(),
     slot6: z.string().optional(),
   }).nullable().optional(),
+  recommended_memories: z.object({
+    main: z.string().optional(),
+    others: z.array(z.string()).optional(),
+  }).nullable().optional(),
   substats: z.string().nullable().optional(),
   resonance: z.object({
     re1: z.string().optional(),
@@ -127,4 +131,16 @@ export const MemorySchema = z.object({
   bonus: z.record(z.string(), z.object({ flat: z.number().optional(), pct: z.number().optional() })).optional(),
   desc: z.string(),
   image_url: z.string(),
+});
+
+export const ResonanceItemSchema = z.object({
+  nivel: z.string(),
+  descricao: z.string(),
+});
+
+export const ResonanceEntrySchema = z.object({
+  character_id: z.number(),
+  character: z.string(),
+  rarity: z.string(),
+  ressonancias: z.array(ResonanceItemSchema),
 });

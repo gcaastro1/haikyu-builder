@@ -1,3 +1,5 @@
+import { fetchAndValidate } from "@/app/lib/api";
+import { BondSchema, CharacterBondLinkSchema, CharacterSchema, CharacterStatsBondSchema, MemorySchema, PotentialSchema, ResonanceEntrySchema } from "@/app/lib/schemas";
 import {
     Bond,
     CalculatedBond,
@@ -8,15 +10,14 @@ import {
     Memory,
     Potential,
     RelevantStyleDisplay,
+    ResonanceEntry,
     SlotKey,
     TeamSlots,
     TeamType
 } from "@/types";
+import z from "zod";
 import { create, StoreApi, UseBoundStore } from "zustand";
 import { persist } from "zustand/middleware";
-import { fetchAndValidate } from "@/app/lib/api";
-import { BondSchema, CharacterBondLinkSchema, CharacterSchema, CharacterStatsBondSchema, MemorySchema, PotentialSchema } from "@/app/lib/schemas";
-import z from "zod";
 import { Lang } from "./useI18nStore";
 
 export type CharacterStoreState = {
@@ -27,6 +28,7 @@ export type CharacterStoreState = {
   activeBonds: CalculatedBond[];
   allPotentials: Potential[];
   allMemories: Memory[];
+  allResonances: ResonanceEntry[];
   isLoading: boolean;
   loadingBonds: boolean;
   fetchError: string | null;
@@ -53,6 +55,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
         activeBonds: [],
         allPotentials: [],
         allMemories: [],
+        allResonances: [],
         isLoading: false,
         loadingBonds: false,
         fetchError: null,
@@ -72,6 +75,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
               statsBondLinksJson,
               potentialsJson,
               memoriesJson,
+              resonancesJson,
             ] = await Promise.all([
               fetchAndValidate("/mock/characters.json", z.array(CharacterSchema)),
               fetchAndValidate("/mock/bonds.json", z.array(BondSchema)),
@@ -79,6 +83,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
               fetchAndValidate("/mock/character_stats_bonds.json", z.array(CharacterStatsBondSchema)),
               fetchAndValidate("/mock/potentials.json", z.array(PotentialSchema)),
               fetchAndValidate("/mock/memories.json", z.array(MemorySchema)),
+              fetchAndValidate("/mock/resonance.json", z.array(ResonanceEntrySchema)),
             ]);
 
             const formattedCharacters: Character[] = charactersJson.map((c) => {
@@ -106,6 +111,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
                 defense: c.defense ?? null,
                 potential: c.potential ?? null,
                 recommended_stats: c.recommended_stats ?? null,
+                recommended_memories: c.recommended_memories ?? null,
               };
             });
 
@@ -149,6 +155,13 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
               bonus: m.bonus ?? {},
               desc: m.desc ?? "",
               image_url: m.image_url ?? (m as any).img ?? "",
+            })).sort((a, b) => a.name.localeCompare(b.name));
+
+            const resonances: ResonanceEntry[] = resonancesJson.map((r) => ({
+              character_id: r.character_id,
+              character: r.character,
+              rarity: r.rarity,
+              ressonancias: r.ressonancias,
             }));
 
             set({
@@ -158,6 +171,7 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
               characterStatsBondLinks: statsBondLinks,
               allPotentials: potentials,
               allMemories: memories,
+              allResonances: resonances,
               isLoading: false,
               hasLoadedData: true,
               fetchError: null,

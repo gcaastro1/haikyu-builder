@@ -1,8 +1,8 @@
 'use client';
 
-import { useFormStatus } from 'react-dom';
-import { RotateCw } from 'lucide-react';
 import "@/styles/components/_submit-button.scss";
+import { RotateCw } from 'lucide-react';
+import { useFormStatus } from 'react-dom';
 
 export function SubmitButton() {
   const { pending } = useFormStatus();

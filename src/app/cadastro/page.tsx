@@ -30,7 +30,7 @@ const schools = [
 ];
 
 function CadastroForm() {
-  const { allPotentials, allCharacters, allBonds, characterBondLinks, characterStatsBondLinks, fetchInitialData } = useCharacterStore();
+  const { allPotentials, allCharacters, allBonds, characterBondLinks, characterStatsBondLinks, fetchInitialData, allMemories } = useCharacterStore();
   const { isAdmin } = useAuthStore();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -48,6 +48,11 @@ function CadastroForm() {
   const [allStatsBonds, setAllStatsBonds] = useState<StatsBondType[]>([]);
   const [selectedStatsBonds, setSelectedStatsBonds] = useState<number[]>([]);
   const [isStatsBondModalOpen, setIsStatsBondModalOpen] = useState(false);
+
+  // Memories State
+  const [mainMemoryId, setMainMemoryId] = useState<string>("");
+  const [suggestion1Id, setSuggestion1Id] = useState<string>("");
+  const [suggestion2Id, setSuggestion2Id] = useState<string>("");
 
   useEffect(() => {
     fetchInitialData();
@@ -81,6 +86,14 @@ function CadastroForm() {
                 setSelectedStatsBonds(statsBonds.map(sb => sb.stats_bond_id));
             }
         });
+
+        // Load memories
+        if (char.recommended_memories) {
+            setMainMemoryId(char.recommended_memories.main || "");
+            const others = char.recommended_memories.others || [];
+            setSuggestion1Id(others[0] || "");
+            setSuggestion2Id(others[1] || "");
+        }
       }
     }
     if (!editId || (editId && allCharacters.length > 0)) {
@@ -152,6 +165,12 @@ function CadastroForm() {
         slot1, slot2, slot3, slot4, slot5, slot6
     } : null;
 
+    const others = [suggestion1Id, suggestion2Id].filter(id => id && id !== "");
+    const recommended_memories = (mainMemoryId || others.length > 0) ? {
+        main: mainMemoryId || undefined,
+        others: others.length > 0 ? others : undefined
+    } : null;
+
     const img = imageUrl || "/images/placeholder.png";
 
     if (!name || !position || !rarity || !school) {
@@ -176,6 +195,7 @@ function CadastroForm() {
       defense,
       potential,
       recommended_stats,
+      recommended_memories,
     };
 
     const result = await saveCharacterToJson(charData as any, selectedBonds, selectedStatsBonds);
@@ -194,6 +214,9 @@ function CadastroForm() {
             setImageUrl("");
             setSelectedBonds([]);
             setSelectedStatsBonds([]);
+            setMainMemoryId("");
+            setSuggestion1Id("");
+            setSuggestion2Id("");
         }
     } else {
         setSubmitStatus("error");
@@ -219,6 +242,8 @@ function CadastroForm() {
     if (!aSelected && bSelected) return 1;
     return (a.name || "").localeCompare(b.name || "");
   });
+
+  const sortedMemories = [...allMemories].sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <main className="cadastro-page">
@@ -438,6 +463,46 @@ function CadastroForm() {
                     />
                  </div>
              ))}
+        </div>
+
+        <div className="cadastro-page__section">
+            <SectionHeader title="Memórias Recomendadas" />
+        </div>
+        <div className="cadastro-page__field">
+             <label>Memória Principal</label>
+             <select 
+                value={mainMemoryId} 
+                onChange={(e) => setMainMemoryId(e.target.value)}
+             >
+                 <option value="">Selecione...</option>
+                 {sortedMemories.map(m => (
+                     <option key={m.id} value={m.id}>{m.name}</option>
+                 ))}
+             </select>
+        </div>
+        <div className="cadastro-page__field">
+             <label>Sugestão 1</label>
+             <select 
+                value={suggestion1Id} 
+                onChange={(e) => setSuggestion1Id(e.target.value)}
+             >
+                 <option value="">Selecione...</option>
+                 {sortedMemories.map(m => (
+                     <option key={m.id} value={m.id}>{m.name}</option>
+                 ))}
+             </select>
+        </div>
+        <div className="cadastro-page__field">
+             <label>Sugestão 2</label>
+             <select 
+                value={suggestion2Id} 
+                onChange={(e) => setSuggestion2Id(e.target.value)}
+             >
+                 <option value="">Selecione...</option>
+                 {sortedMemories.map(m => (
+                     <option key={m.id} value={m.id}>{m.name}</option>
+                 ))}
+             </select>
         </div>
 
         <div className="cadastro-page__section">

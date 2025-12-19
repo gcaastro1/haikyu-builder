@@ -18,7 +18,13 @@
     "block": 1709,
     "defense": 1539,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_kageyama_tobio_ur",
+      "others": [
+        "mem_kageyama_tobio_ssr"
+      ]
+    }
   },
   {
     "id": 2,
@@ -535,7 +541,10 @@
     "block": 1179,
     "defense": 1109,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_ofensive_up_kentaro_kyotani"
+    }
   },
   {
     "id": 28,
@@ -666,12 +675,12 @@
     "styles": [
       "receive"
     ],
-    "serve": 1,
-    "attack": 1,
-    "set": 1,
-    "receive": 1,
-    "block": 1,
-    "defense": 1,
+    "serve": 1206,
+    "attack": 1206,
+    "set": 1331,
+    "receive": 1477,
+    "block": 1172,
+    "defense": 1410,
     "potential": null,
     "recommended_stats": null
   },
@@ -784,12 +793,12 @@
     "styles": [
       "receive"
     ],
-    "serve": 1,
-    "attack": 1,
-    "set": 1,
-    "receive": 1,
-    "block": 1,
-    "defense": 1,
+    "serve": 1206,
+    "attack": 1206,
+    "set": 1328,
+    "receive": 1475,
+    "block": 1721,
+    "defense": 1409,
     "potential": null,
     "recommended_stats": null
   },
@@ -804,12 +813,12 @@
       "quick",
       "block"
     ],
-    "serve": 1,
-    "attack": 1,
-    "set": 1,
-    "receive": 1,
-    "block": 1,
-    "defense": 1,
+    "serve": 1304,
+    "attack": 1404,
+    "set": 1224,
+    "receive": 1258,
+    "block": 1473,
+    "defense": 1176,
     "potential": null,
     "recommended_stats": null
   },
@@ -924,12 +933,12 @@
       "power",
       "serve"
     ],
-    "serve": 1,
-    "attack": 1,
-    "set": 1,
-    "receive": 1,
-    "block": 1,
-    "defense": 1,
+    "serve": 1411,
+    "attack": 1483,
+    "set": 1196,
+    "receive": 1332,
+    "block": 1264,
+    "defense": 1198,
     "potential": null,
     "recommended_stats": null
   },
@@ -943,12 +952,12 @@
     "styles": [
       "receive"
     ],
-    "serve": 1,
-    "attack": 1,
-    "set": 1,
-    "receive": 1,
-    "block": 1,
-    "defense": 1,
+    "serve": 1206,
+    "attack": 1206,
+    "set": 1330,
+    "receive": 1477,
+    "block": 1172,
+    "defense": 1410,
     "potential": null,
     "recommended_stats": null
   },
@@ -963,12 +972,12 @@
       "power",
       "receive"
     ],
-    "serve": 1,
-    "attack": 1,
-    "set": 1,
-    "receive": 1,
-    "block": 1,
-    "defense": 1,
+    "serve": 1264,
+    "attack": 1467,
+    "set": 1185,
+    "receive": 1401,
+    "block": 1329,
+    "defense": 1201,
     "potential": null,
     "recommended_stats": null
   },
@@ -1062,6 +1071,9 @@
       "slot4": "Reflexo %",
       "slot5": "Recepção",
       "slot6": "Tec. Def % ou Recepção %"
+    },
+    "recommended_memories": {
+      "main": "mem_defense_offensive_up_motoya_komori"
     }
   },
   {
@@ -1075,12 +1087,12 @@
       "receive",
       "block"
     ],
-    "serve": 1,
-    "attack": 1,
-    "set": 1,
-    "receive": 1,
-    "block": 1,
-    "defense": 1,
+    "serve": 1753,
+    "attack": 1665,
+    "set": 1577,
+    "receive": 1858,
+    "block": 1946,
+    "defense": 1577,
     "potential": null,
     "recommended_stats": null
   },
@@ -1102,7 +1114,10 @@
     "block": 1762,
     "defense": 1570,
     "potential": null,
-    "recommended_stats": null
+    "recommended_stats": null,
+    "recommended_memories": {
+      "main": "mem_kunimi"
+    }
   },
   {
     "id": 56,

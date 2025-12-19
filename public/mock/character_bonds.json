@@ -120,14 +120,6 @@
     "bond_id": 4
   },
   {
-    "character_id": 27,
-    "bond_id": 21
-  },
-  {
-    "character_id": 27,
-    "bond_id": 4
-  },
-  {
     "character_id": 28,
     "bond_id": 22
   },
@@ -272,10 +264,6 @@
     "bond_id": 30
   },
   {
-    "character_id": 53,
-    "bond_id": 30
-  },
-  {
     "character_id": 54,
     "bond_id": 32
   },
@@ -286,14 +274,6 @@
   {
     "character_id": 54,
     "bond_id": 2
-  },
-  {
-    "character_id": 55,
-    "bond_id": 33
-  },
-  {
-    "character_id": 55,
-    "bond_id": 4
   },
   {
     "character_id": 56,
@@ -434,10 +414,6 @@
   {
     "character_id": 37,
     "bond_id": 6
-  },
-  {
-    "character_id": 62,
-    "bond_id": 7
   },
   {
     "character_id": 59,
@@ -456,10 +432,6 @@
     "bond_id": 40
   },
   {
-    "character_id": 61,
-    "bond_id": 40
-  },
-  {
     "character_id": 57,
     "bond_id": 36
   },
@@ -498,5 +470,45 @@
   {
     "character_id": 17,
     "bond_id": 2
+  },
+  {
+    "character_id": 61,
+    "bond_id": 40
+  },
+  {
+    "character_id": 61,
+    "bond_id": 41
+  },
+  {
+    "character_id": 62,
+    "bond_id": 7
+  },
+  {
+    "character_id": 62,
+    "bond_id": 42
+  },
+  {
+    "character_id": 62,
+    "bond_id": 41
+  },
+  {
+    "character_id": 27,
+    "bond_id": 21
+  },
+  {
+    "character_id": 27,
+    "bond_id": 4
+  },
+  {
+    "character_id": 55,
+    "bond_id": 33
+  },
+  {
+    "character_id": 55,
+    "bond_id": 4
+  },
+  {
+    "character_id": 53,
+    "bond_id": 30
   }
 ]

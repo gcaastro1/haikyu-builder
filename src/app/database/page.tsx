@@ -1,5 +1,6 @@
 "use client";
 
+import { sortCharacters } from "@/app/lib/characterUtils";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { Character, Position, School } from "@/types";
@@ -43,7 +44,7 @@ export default function DatabasePage() {
   }, [hasLoadedData, isLoading, fetchInitialData]);
 
   const filteredCharacters = useMemo(() => {
-    return allCharacters.filter((character) => {
+    const filtered = allCharacters.filter((character) => {
       if (positionFilter !== "ALL" && character.position !== positionFilter)
         return false;
       if (schoolFilter !== "ALL" && character.school !== schoolFilter)
@@ -55,6 +56,8 @@ export default function DatabasePage() {
         return false;
       return true;
     });
+
+    return filtered.sort(sortCharacters);
   }, [allCharacters, positionFilter, schoolFilter, nameSearch]);
 
   const handleIntersect = useCallback((entries: IntersectionObserverEntry[]) => {

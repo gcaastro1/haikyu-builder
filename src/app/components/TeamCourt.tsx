@@ -34,7 +34,10 @@ export function TeamCourt({
   const isRotating = useTeamStore((s) => s.isRotating);
 
   const handleSlotClick = (slotKey: SlotKey) => {
-    openSelectionModal(`court-${slotKey}`, "ALL");
+    let position: Position | "ALL" = "ALL";
+    if (slotKey === "libero") position = "L";
+
+    openSelectionModal(`court-${slotKey}`, position);
   };
 
 

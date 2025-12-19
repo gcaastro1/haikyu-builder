@@ -3,13 +3,15 @@
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { useTeamStore } from "@/stores/useTeamStore";
 import { useUIStore } from "@/stores/useUIStore";
-import type { Character, Position, School } from "@/types";
+import type { Character, Position, Rarity, School } from "@/types";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import { X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { CharacterCard } from "./CharacterCard";
 import { NameSearchInput } from "./NameSearchInput";
+import { PositionFilter } from "./PositionFilter";
+import { RarityFilter } from "./RarityFilter";
 import { SchoolFilter } from "./SchoolFilter";
 
 export function CharacterSelectionModal() {
@@ -51,6 +53,7 @@ export function CharacterSelectionModal() {
   }, [hasLoadedData, isLoading, fetchInitialData]);
 
   const [schoolFilter, setSchoolFilter] = useState<School | "ALL">("ALL");
+  const [rarityFilter, setRarityFilter] = useState<Rarity | "ALL">("ALL");
   const [nameSearch, setNameSearch] = useState<string>("");
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
   const [visibleCount, setVisibleCount] = useState(24);
@@ -60,6 +63,12 @@ export function CharacterSelectionModal() {
   const autoPosition = useMemo(() => {
     return modalPosition as Position | "ALL";
   }, [modalPosition]);
+
+  const [activePositionFilter, setActivePositionFilter] = useState<Position | "ALL">("ALL");
+
+  useEffect(() => {
+    setActivePositionFilter(autoPosition);
+  }, [autoPosition]);
 
   const positionNames: Record<string, string> = {
     S: "Levantador",
@@ -75,12 +84,25 @@ export function CharacterSelectionModal() {
 
   const filteredCharacters = useMemo(() => {
     return allCharacters.filter((c) => {
-      if (autoPosition !== "ALL" && c.position !== autoPosition) return false;
+      // If it's a court slot (targetSlotIdentifier starts with "court-") AND NOT the libero slot ("court-libero"),
+      // strictly block Libero characters.
+      if (
+        targetSlotIdentifier?.startsWith("court-") &&
+        targetSlotIdentifier !== "court-libero" &&
+        c.position === "L"
+      ) {
+        return false;
+      }
+
+      if (activePositionFilter !== "ALL" && c.position !== activePositionFilter) return false;
       if (schoolFilter !== "ALL" && c.school !== schoolFilter) return false;
+      if (rarityFilter !== "ALL" && c.rarity !== rarityFilter) return false;
       if (nameSearch && !c.name.toLowerCase().includes(normalizedNameSearch)) return false;
       return true;
     });
-  }, [allCharacters, autoPosition, schoolFilter, nameSearch, normalizedNameSearch]);
+  }, [allCharacters, activePositionFilter, schoolFilter, rarityFilter, nameSearch, normalizedNameSearch, targetSlotIdentifier]);
+
+  const isLiberoMode = autoPosition === "L";
 
   const handleIntersect = useCallback((entries: IntersectionObserverEntry[]) => {
     const [entry] = entries;
@@ -175,14 +197,30 @@ export function CharacterSelectionModal() {
             </header>
 
             <section className="character-modal__filters">
-              <NameSearchInput value={nameSearch} onChange={setNameSearch} />
-              <SchoolFilter
-                activeFilter={schoolFilter}
-                onFilterChange={setSchoolFilter}
-              />
+              <div className="character-modal__filters-row">
+                <NameSearchInput value={nameSearch} onChange={setNameSearch} />
+                <SchoolFilter
+                  activeFilter={schoolFilter}
+                  onFilterChange={setSchoolFilter}
+                />
+              </div>
+              <div className="character-modal__filters-row">
+                {!isLiberoMode && (
+                  <PositionFilter
+                    activeFilter={activePositionFilter}
+                    onFilterChange={setActivePositionFilter}
+                    variant="icon"
+                    hideLibero={targetSlotIdentifier?.startsWith("court-") && targetSlotIdentifier !== "court-libero"}
+                  />
+                )}
+                <RarityFilter
+                  activeFilter={rarityFilter}
+                  onFilterChange={setRarityFilter}
+                />
+              </div>
             </section>
 
-            <main className="character-modal__list">
+            <main className="character-modal__list custom-scrollbar">
               {isLoading && <p>Carregando...</p>}
               {fetchError && <p className="error">{fetchError}</p>}
               {!isLoading && !fetchError && filteredCharacters.length === 0 && (

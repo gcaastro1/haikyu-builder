@@ -30,6 +30,11 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
   const [allPotentials, setAllPotentials] = useState<Potential[]>([]);
   const [loadingRelatedData, setLoadingRelatedData] = useState(true);
 
+  const allResonances = useCharacterStore((s) => s.allResonances);
+  const characterResonance = useMemo(() => 
+    allResonances.find(r => r.character_id === character.id), 
+  [allResonances, character.id]);
+  
   useEffect(() => {
     document.body.style.overflow = "hidden";
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -91,25 +96,79 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
   const allMemories = useCharacterStore((s) => s.allMemories);
   const allCharacters = useCharacterStore((s) => s.allCharacters);
   const characterBondLinks = useCharacterStore((s) => s.characterBondLinks);
+  const characterStatsBondLinks = useCharacterStore((s) => s.characterStatsBondLinks);
   const memoryForCharacter = useMemo(() => {
+    if (character.recommended_memories?.main) {
+      return allMemories.find((m) => m.id === character.recommended_memories?.main) || null;
+    }
     const pos = (character.position || "").toString();
     return (
       allMemories.find((m) =>
         (m.positions || []).some((p) => p.toString() === pos)
       ) || null
     );
-  }, [allMemories, character.position]);
+  }, [allMemories, character.position, character.recommended_memories]);
+
+  const otherMemories = useMemo(() => {
+    if (!character.recommended_memories?.others) return [];
+    // Filter Boolean is needed to remove undefined if an ID is not found
+    return character.recommended_memories.others
+      .map((id) => allMemories.find((m) => m.id === id))
+      .filter((m): m is NonNullable<typeof m> => !!m);
+  }, [allMemories, character.recommended_memories]);
 
   const bondParticipants = useMemo(() => {
-    const map = new Map<number, { id: number; name: string; image_url: string | null }[]>();
+    const map = new Map<number, { id: number; name: string; image_url: string | null; rarity: string | null }[]>();
     characterBondLinks.forEach((link) => {
       const ch = allCharacters.find((c) => c.id === link.character_id);
       if (!ch) return;
       if (!map.has(link.bond_id)) map.set(link.bond_id, []);
-      map.get(link.bond_id)!.push({ id: ch.id, name: ch.name, image_url: ch.image_url });
+      map.get(link.bond_id)!.push({ 
+        id: ch.id, 
+        name: ch.name, 
+        image_url: ch.image_url,
+        rarity: ch.rarity
+      });
     });
     return map;
   }, [characterBondLinks, allCharacters]);
+
+  const displayBond = useMemo(() => {
+    if (characterBondIds.length > 0) {
+      const bondId = characterBondIds[0];
+      const bond = bondMap.get(bondId);
+      if (bond) {
+        const participants = bondParticipants.get(bondId) || [];
+        return { 
+          name: bond.name, 
+          desc: bond.description,
+          participants: participants.slice(0, 5)
+        };
+      }
+    }
+    return null;
+  }, [characterBondIds, bondMap, bondParticipants]);
+
+  const specialSkill = useMemo(() => {
+    return characterSkills.find(s => s.type?.toString().toLowerCase() === 'special') || characterSkills[0];
+  }, [characterSkills]);
+
+  const statsBondParticipants = useMemo(() => {
+    const map = new Map<number, { id: number; name: string; image_url: string | null; buff_description: string | null; rarity: string | null }[]>();
+    characterStatsBondLinks.forEach((link) => {
+      const ch = allCharacters.find((c) => c.id === link.character_id);
+      if (!ch) return;
+      if (!map.has(link.stats_bond_id)) map.set(link.stats_bond_id, []);
+      map.get(link.stats_bond_id)!.push({ 
+        id: ch.id, 
+        name: ch.name, 
+        image_url: ch.image_url,
+        buff_description: link.buff_description,
+        rarity: ch.rarity
+      });
+    });
+    return map;
+  }, [characterStatsBondLinks, allCharacters]);
 
   const handleModalContentClick = (e: React.MouseEvent) => e.stopPropagation();
 
@@ -158,36 +217,36 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
           </button>
         </div>
 
+        <motion.nav className={styles.tabs} layout>
+          {(
+            [
+              "Resumo",
+              "Habilidades",
+              "Vínculos",
+              "Ressonâncias",
+              "Memória",
+              "Potenciais",
+            ] as CharacterModalTabKey[]
+          ).map((tab) => (
+            <button
+              key={tab}
+              className={`${styles.tabItem} ${activeTab === tab ? styles.tabItemActive : ""}`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {activeTab === tab && (
+                <motion.div
+                  className={styles.underline}
+                  layoutId="tabs-underline"
+                  transition={{ type: "spring", stiffness: 500, damping: 28 }}
+                />
+              )}
+              {tab}
+            </button>
+          ))}
+        </motion.nav>
+
         <div className={styles.body}>
           <div className={styles.mainContent}>
-            <motion.nav className={styles.tabs} layout>
-              {(
-                [
-                  "Resumo",
-                  "Habilidades",
-                  "Vínculos",
-                  "Ressonâncias",
-                  "Memória",
-                  "Potenciais",
-                ] as CharacterModalTabKey[]
-              ).map((tab) => (
-                <button
-                  key={tab}
-                  className={`${styles.tabItem} ${activeTab === tab ? styles.tabItemActive : ""}`}
-                  onClick={() => setActiveTab(tab)}
-                >
-                  {activeTab === tab && (
-                    <motion.div
-                      className={styles.underline}
-                      layoutId="tabs-underline"
-                      transition={{ type: "spring", stiffness: 500, damping: 28 }}
-                    />
-                  )}
-                  {tab}
-                </button>
-              ))}
-            </motion.nav>
-
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
@@ -258,6 +317,70 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                         />
                       </div>
                     </div>
+                    <div className={styles.summaryDetails}>
+                      <div className={styles.detailItem}>
+                        <h4>Vínculo</h4>
+                        {displayBond ? (
+                          <div 
+                            className={styles.detailContent} 
+                            onClick={() => setActiveTab("Vínculos")}
+                          >
+                            <div className={styles.bondHeaderRow}>
+                              <strong>{displayBond.name}</strong>
+                              {displayBond.participants && displayBond.participants.length > 0 && (
+                                <div className={styles.bondIcons}>
+                                  {displayBond.participants.map((p) => (
+                                    <div key={p.id} className={styles.bondIconWrapper}>
+                                      <Image
+                                        src={p.image_url || "/images/default-avatar.png"}
+                                        alt={p.name}
+                                        width={20}
+                                        height={20}
+                                        className={styles.bondIcon}
+                                        unoptimized
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                            <p title={displayBond.desc || ""}>{displayBond.desc}</p>
+                          </div>
+                        ) : (
+                          <p className={styles.emptyText}>-</p>
+                        )}
+                      </div>
+
+                      <div className={styles.detailItem}>
+                        <h4>Habilidade Especial</h4>
+                        {specialSkill ? (
+                          <div 
+                            className={styles.detailContent}
+                            onClick={() => setActiveTab("Habilidades")}
+                          >
+                            <strong>{specialSkill.name}</strong>
+                            <p title={specialSkill.description}>{specialSkill.description}</p>
+                          </div>
+                        ) : (
+                          <p className={styles.emptyText}>-</p>
+                        )}
+                      </div>
+
+                      <div className={styles.detailItem}>
+                        <h4>Memória</h4>
+                        {memoryForCharacter ? (
+                          <div 
+                            className={styles.detailContent}
+                            onClick={() => setActiveTab("Memória")}
+                          >
+                            <strong>{memoryForCharacter.name}</strong>
+                            <p title={memoryForCharacter.desc}>{memoryForCharacter.desc}</p>
+                          </div>
+                        ) : (
+                          <p className={styles.emptyText}>-</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 )}
                 {activeTab === "Habilidades" && (
@@ -302,49 +425,124 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                   <>
                     {loadingRelatedData ? (
                       <p className={styles.loading}>Carregando...</p>
-                    ) : characterBondIds.length ? (
-                      <ul className={styles.list}>
-                        {characterBondIds.map((id) => {
-                          const b = bondMap.get(id);
-                          const participants = bondParticipants.get(id) || [];
-                          return (
-                            <li key={id} className={styles.listItem}>
-                              <div className={styles.bondHeader}>
-                                <strong>{b?.name || `ID ${id}`}</strong>
-                                <span className={styles.bondCount}>{participants.length}</span>
-                              </div>
-                              <p>{b?.description || ""}</p>
-                              {participants.length > 0 && (
-                                <div className={styles.bondParticipants}>
-                                  {participants.map((p) => (
-                                    <div key={p.id} className={styles.bondParticipant}>
-                                      {p.image_url ? (
-                                        <Image
-                                          src={p.image_url}
-                                          alt={p.name}
-                                          width={24}
-                                          height={24}
-                                          unoptimized
-                                        />
-                                      ) : (
-                                        <span className={styles.bondParticipantPlaceholder} />
+                    ) : (
+                      <div className={styles.bondsContainer}>
+                        {characterBondIds.length > 0 && (
+                          <div className={styles.bondsSection}>
+                            <h3 className={styles.bondsSectionTitle}>Vínculos</h3>
+                            <ul className={styles.list}>
+                              {characterBondIds.map((id) => {
+                                const b = bondMap.get(id);
+                                const participants = bondParticipants.get(id) || [];
+                                return (
+                                  <li key={id} className={styles.listItem}>
+                                    <div className={styles.bondHeader}>
+                                      <strong>{b?.name || `ID ${id}`}</strong>
+                                      <span className={styles.bondCount}>{participants.length}</span>
+                                    </div>
+                                    <p>{b?.description || ""}</p>
+                                    {participants.length > 0 && (
+                                      <div className={styles.bondParticipants}>
+                                        {participants.map((p) => (
+                                          <div 
+                                            key={p.id} 
+                                            className={styles.bondParticipant}
+                                            data-tooltip={`${p.name} - ${p.rarity}`}
+                                          >
+                                            {p.image_url ? (
+                                              <Image
+                                                src={p.image_url}
+                                                alt={p.name}
+                                                width={32}
+                                                height={32}
+                                                unoptimized
+                                              />
+                                            ) : (
+                                              <span className={styles.bondParticipantPlaceholder} />
+                                            )}
+                                          </div>
+                                        ))}
+                                      </div>
+                                    )}
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </div>
+                        )}
+
+                        {characterStatBonds.length > 0 && (
+                          <div className={styles.bondsSection}>
+                            <h3 className={styles.bondsSectionTitle}>Vínculos de Status</h3>
+                            <ul className={styles.list}>
+                              {characterStatBonds.map((sb) => {
+                                const participants = statsBondParticipants.get(sb.stats_bond_id) || [];
+                                return (
+                                  <li key={sb.id} className={styles.listItem}>
+                                    <div className={styles.bondHeader}>
+                                      <strong>{sb.stats_bond_name || `Vínculo de Status ${sb.id}`}</strong>
+                                      {participants.length > 0 && (
+                                        <span className={styles.bondCount}>{participants.length}</span>
                                       )}
                                     </div>
-                                  ))}
-                                </div>
-                              )}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    ) : (
-                      <p className={styles.empty}>Nenhum vínculo definido.</p>
+                                    {participants.length > 0 ? (
+                                      <div className={styles.bondParticipantsList}>
+                                        {participants.map((p) => (
+                                          <div key={p.id} className={styles.bondParticipantRow}>
+                                            <div 
+                                              className={styles.bondParticipantIcon}
+                                              data-tooltip={`${p.name} - ${p.rarity}`}
+                                            >
+                                              {p.image_url ? (
+                                                <Image
+                                                  src={p.image_url}
+                                                  alt={p.name}
+                                                  width={32}
+                                                  height={32}
+                                                  unoptimized
+                                                />
+                                              ) : (
+                                                <span className={styles.bondParticipantPlaceholder} />
+                                              )}
+                                            </div>
+                                            <p className={styles.bondParticipantBuff}>{p.buff_description || "Sem descrição"}</p>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    ) : (
+                                        <p>{sb.buff_description || ""}</p>
+                                    )}
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </div>
+                        )}
+
+                        {characterBondIds.length === 0 && characterStatBonds.length === 0 && (
+                          <p className={styles.empty}>Nenhum vínculo definido.</p>
+                        )}
+                      </div>
                     )}
                   </>
                 )}
                 {activeTab === "Ressonâncias" && (
                   <>
-                    {character.resonance ? (
+                    {characterResonance ? (
+                      <div className={styles.resonanceTimeline}>
+                        {characterResonance.ressonancias.map((res, idx) => {
+                          const roman = ["I", "II", "III", "IV", "V"][idx] || (idx + 1).toString();
+                          return (
+                            <div key={idx} className={styles.resonanceItem}>
+                              <div className={styles.resonanceDot}>{roman}</div>
+                              <div className={styles.resonanceContent}>
+                                <p>{res.descricao}</p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : character.resonance ? (
                       <div className={styles.resonanceTimeline}>
                         {(["re1", "re2", "re3", "re4", "re5"] as const).map((key, idx) => {
                           const text = character.resonance?.[key] || "";
@@ -352,7 +550,6 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                             <div key={key} className={styles.resonanceItem}>
                               <div className={styles.resonanceDot}>{["I","II","III","IV","V"][idx]}</div>
                               <div className={styles.resonanceContent}>
-                                <strong>Ressonância {idx + 1}</strong>
                                 <p>{text || "Em breve."}</p>
                               </div>
                             </div>
@@ -360,50 +557,60 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                         })}
                       </div>
                     ) : (
-                      <>
-                        {loadingRelatedData ? (
-                          <p className={styles.loading}>Carregando...</p>
-                        ) : (
-                          <ul className={styles.list}>
-                            {characterStatBonds.length ? (
-                              characterStatBonds.map((sb) => (
-                                <li key={sb.id} className={styles.listItem}>
-                                  <strong>{sb.stats_bond_name}</strong>
-                                  <p>{sb.buff_description}</p>
-                                </li>
-                              ))
-                            ) : (
-                              <li className={styles.empty}>Nenhuma ressonância definida.</li>
-                            )}
-                          </ul>
-                        )}
-                      </>
+                      <p className={styles.empty}>Nenhuma ressonância definida.</p>
                     )}
                   </>
                 )}
                 {activeTab === "Memória" && (
-                  <>
+                  <div className={styles.memoriesContainer}>
                     {memoryForCharacter ? (
-                      <div className={styles.memoryCard}>
-                        <div className={styles.memoryHero}>
-                          <img
-                            src={memoryForCharacter.image_url}
-                            alt={memoryForCharacter.name}
-                            className={styles.memoryHeroImage}
-                          />
-                          <div className={styles.memoryOverlay} />
-                        </div>
-                        <h3 className={styles.memoryTitle}>
-                          {memoryForCharacter.name}
-                        </h3>
-                        <div className={styles.memoryPanel}>
-                          <p className={styles.memoryDesc}>{memoryForCharacter.desc}</p>
+                      <div className={styles.memorySection}>
+                        <h4 className={styles.memorySectionTitle}>Memória Principal</h4>
+                        <div className={styles.memoryCard}>
+                          <div className={styles.memoryHero}>
+                            <img
+                              src={memoryForCharacter.image_url}
+                              alt={memoryForCharacter.name}
+                              className={styles.memoryHeroImage}
+                            />
+                            <div className={styles.memoryOverlay} />
+                          </div>
+                          <h3 className={styles.memoryTitle}>
+                            {memoryForCharacter.name}
+                          </h3>
+                          <div className={styles.memoryPanel}>
+                            <p className={styles.memoryDesc}>{memoryForCharacter.desc}</p>
+                          </div>
                         </div>
                       </div>
                     ) : (
-                      <p className={styles.empty}>Nenhuma memória correspondente.</p>
+                      <p className={styles.empty}>Nenhuma memória principal definida.</p>
                     )}
-                  </>
+
+                    {otherMemories.length > 0 && (
+                      <div className={styles.memorySection}>
+                        <h4 className={styles.memorySectionTitle}>Sugestões</h4>
+                        <div className={styles.memoryGrid}>
+                          {otherMemories.map((mem) => (
+                            <div key={mem.id} className={styles.memoryCard}>
+                              <div className={styles.memoryHero}>
+                                <img
+                                  src={mem.image_url}
+                                  alt={mem.name}
+                                  className={styles.memoryHeroImage}
+                                />
+                                <div className={styles.memoryOverlay} />
+                              </div>
+                              <h3 className={styles.memoryTitle}>{mem.name}</h3>
+                              <div className={styles.memoryPanel}>
+                                <p className={styles.memoryDesc}>{mem.desc}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 )}
                 {activeTab === "Potenciais" && (
                   <div className={styles.potentials}>

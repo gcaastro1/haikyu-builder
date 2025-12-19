@@ -1,7 +1,7 @@
 @use "../variables" as *;
 @use "sass:color";
 
-.position-filter {
+.rarity-filter {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -42,26 +42,5 @@
       color: $color-white;
       box-shadow: 0 4px 8px rgba($color-orange-500, 0.35);
     }
-  }
-
-  &--icon {
-    .position-filter__btn {
-      padding: 0;
-      width: 42px;
-      height: 42px;
-      border-radius: 8px;
-
-      // "Todos" button remains text
-      &:first-child {
-        width: auto;
-        padding: 0 1rem;
-      }
-    }
-  }
-
-  &__icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 }

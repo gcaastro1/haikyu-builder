@@ -1,5 +1,6 @@
 "use client";
 
+import { sortCharacters } from "@/app/lib/characterUtils";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { useTeamStore } from "@/stores/useTeamStore";
 import { Character, Position, School } from "@/types";
@@ -78,7 +79,7 @@ export function CharacterList({ className = "" }: CharacterListProps) {
   const filteredCharacters = useMemo(() => {
     if (!allCharacters.length) return [];
 
-    return allCharacters.filter((char: Character) => {
+    const filtered = allCharacters.filter((char: Character) => {
       if (positionFilter !== "ALL" && char.position !== positionFilter) {
         return false;
       }
@@ -93,6 +94,8 @@ export function CharacterList({ className = "" }: CharacterListProps) {
 
       return true;
     });
+
+    return filtered.sort(sortCharacters);
   }, [allCharacters, positionFilter, schoolFilter, normalizedNameSearch]);
 
   if (isLoading) {

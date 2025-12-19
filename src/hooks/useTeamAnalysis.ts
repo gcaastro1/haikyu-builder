@@ -1,14 +1,14 @@
-import { useMemo } from "react";
-import { useCharacterStore } from "@/stores/useCharacterStore";
 import { calculateActiveBonds } from "@/app/lib/calculateActiveBonds";
+import { useCharacterStore } from "@/stores/useCharacterStore";
 import {
-  TeamSlots,
-  Character,
-  TeamType,
-  StyleCounts,
-  dbStyleToTeamTypeMap,
-  Bond,
+    Bond,
+    Character,
+    StyleCounts,
+    TeamSlots,
+    TeamType,
+    dbStyleToTeamTypeMap,
 } from "@/types";
+import { useMemo } from "react";
 
 export function useTeamAnalysis(team: TeamSlots, isPositionFree: boolean) {
   const { allBonds, characterBondLinks, allCharacters } = useCharacterStore();

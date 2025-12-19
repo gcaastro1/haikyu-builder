@@ -65,7 +65,7 @@ export function HexagonStatChart({ stats }: HexagonStatChartProps) {
 
   return (
     <div className="hexagon-chart-container" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      <svg width="100%" height="auto" viewBox={`0 0 ${size} ${size}`} style={{ maxWidth: '300px' }}>
         {gridLevels.map((level, lvlIndex) => {
           const points = statConfig.map((_, i) => {
             const angle = (Math.PI * 2 * i) / statConfig.length - Math.PI / 2;

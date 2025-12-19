@@ -2,100 +2,180 @@
   {
     "id": 8,
     "catalog_id": "set_rapid_quick_attack",
-    "name": "Rapid Quick Attack",
+    "name": "Ataque Rápido Veloz",
     "image_url": "/images/sets/rapid_quick_attack.png",
-    "twoPiece": { "Spike": { "pct": 15 } },
-    "fourPiece": { "Spike": { "pct": 15 } },
+    "twoPiece": {
+      "Spike": {
+        "pct": 15
+      }
+    },
+    "fourPiece": {
+      "Spike": {
+        "pct": 15
+      }
+    },
     "desc2": "2p: Aumenta o atributo de Ataque Rápido em 15%.",
     "desc4": "2p: Aumenta o atributo de Ataque Rápido em 15%. 4p: Cada vez que um Ataque Rápido for usado, aumenta o atributo de Ataque Rápido em 5%, até 5 acúmulos."
   },
   {
     "id": 9,
     "catalog_id": "set_sharp_sense",
-    "name": "Sharp Sense",
+    "name": "Sentido Aguçado",
     "image_url": "/images/sets/sharp_sense.png",
-    "twoPiece": { "Spike": { "pct": 15 } },
-    "fourPiece": { "Spike": { "pct": 15 } },
+    "twoPiece": {
+      "Spike": {
+        "pct": 15
+      }
+    },
+    "fourPiece": {
+      "Spike": {
+        "pct": 15
+      }
+    },
     "desc2": "2p: Aumenta o atributo de Ataque Rápido em 15%.",
-    "desc4": "2p: Aumenta o atributo de Ataque Rápido em 15%. 4p: Aumenta a Percepção em 15%; quando um Ataque Rápido for Crítico, aumenta a Força em 10%."
+    "desc4": "2p: Aumenta o atributo de Ataque Rápido em 15%. 4p: Aumenta a Percepção em 15%; quando um Ataque Rápido for crítico, aumenta a Força em 10%."
   },
   {
     "id": 4,
     "catalog_id": "set_power_vibe",
-    "name": "Power Vibe",
+    "name": "Vibração de Poder",
     "image_url": "/images/sets/power_vibe.png",
-    "twoPiece": { "Spike": { "pct": 15 } },
-    "fourPiece": { "Spike": { "pct": 15 } },
+    "twoPiece": {
+      "Spike": {
+        "pct": 15
+      }
+    },
+    "fourPiece": {
+      "Spike": {
+        "pct": 15
+      }
+    },
     "desc2": "2p: Aumenta o atributo de Ataque Potente em 15%.",
-    "desc4": "2p: Aumenta o atributo de Ataque Potente em 15%. 4p: Aumenta a Percepção em 15%; quando um Ataque Potente for Crítico, aumenta a Força em 10%."
+    "desc4": "2p: Aumenta o atributo de Ataque Potente em 15%. 4p: Aumenta a Percepção em 15%; quando um Ataque Potente for crítico, aumenta a Força em 10%."
   },
   {
     "id": 3,
     "catalog_id": "set_power_rise",
-    "name": "Power Rise",
+    "name": "Ascensão de Poder",
     "image_url": "/images/sets/power_rise.png",
-    "twoPiece": { "Spike": { "pct": 15 } },
-    "fourPiece": { "Spike": { "pct": 15 } },
+    "twoPiece": {
+      "Spike": {
+        "pct": 15
+      }
+    },
+    "fourPiece": {
+      "Spike": {
+        "pct": 15
+      }
+    },
     "desc2": "2p: Aumenta o atributo de Ataque Potente em 15%.",
-    "desc4": "2p: Aumenta o atributo de Ataque Potente em 15%. 4p: Aumenta a Técnica de Ataque em 10% ao usar Ataque Potente; ao pontuar com Ataque Potente, recupera 5 de Stamina."
+    "desc4": "2p: Aumenta o atributo de Ataque Potente em 15%. 4p: Aumenta a Técnica de Ataque em 10% ao usar Ataque Potente; ao pontuar com Ataque Potente, recupera 5 de Vigor."
   },
   {
     "id": 6,
     "catalog_id": "set_precise_serve",
-    "name": "Precise Serve",
+    "name": "Saque Preciso",
     "image_url": "/images/sets/precise_serve.png",
-    "twoPiece": { "Set": { "pct": 15 } },
-    "fourPiece": { "Set": { "pct": 15 } },
+    "twoPiece": {
+      "Set": {
+        "pct": 15
+      }
+    },
+    "fourPiece": {
+      "Set": {
+        "pct": 15
+      }
+    },
     "desc2": "2p: Aumenta o atributo de Passe em 15%.",
     "desc4": "2p: Aumenta o atributo de Passe em 15%. 4p: Os saques nunca falham e a Técnica de Ataque aumenta em 15% ao sacar."
   },
   {
     "id": 7,
     "catalog_id": "set_precise_set",
-    "name": "Precise Set",
+    "name": "Passe Preciso",
     "image_url": "/images/sets/precise_set.png",
-    "twoPiece": { "Set": { "pct": 15 } },
-    "fourPiece": { "Set": { "pct": 15 } },
+    "twoPiece": {
+      "Set": {
+        "pct": 15
+      }
+    },
+    "fourPiece": {
+      "Set": {
+        "pct": 15
+      }
+    },
     "desc2": "2p: Aumenta o atributo de Passe em 15%.",
     "desc4": "2p: Aumenta o atributo de Passe em 15%. 4p: Aumenta o poder do passe em 15% do atributo de Passe."
   },
   {
     "id": 5,
     "catalog_id": "set_precise_block",
-    "name": "Precise Block",
+    "name": "Bloqueio Preciso",
     "image_url": "/images/sets/precise_block.png",
-    "twoPiece": { "Block": { "pct": 15 } },
-    "fourPiece": { "Block": { "pct": 15 } },
+    "twoPiece": {
+      "Block": {
+        "pct": 15
+      }
+    },
+    "fourPiece": {
+      "Block": {
+        "pct": 15
+      }
+    },
     "desc2": "2p: Aumenta o atributo de Bloqueio em 15%.",
     "desc4": "2p: Aumenta o atributo de Bloqueio em 15%. 4p: Ao bloquear um Ataque Potente, aumenta o poder deste bloqueio em 20% do atributo de Bloqueio."
   },
   {
     "id": 2,
     "catalog_id": "set_block_movement",
-    "name": "Block Movement",
+    "name": "Movimentação de Bloqueio",
     "image_url": "/images/sets/block_movement.png",
-    "twoPiece": { "Block": { "pct": 15 } },
-    "fourPiece": { "Block": { "pct": 15 } },
+    "twoPiece": {
+      "Block": {
+        "pct": 15
+      }
+    },
+    "fourPiece": {
+      "Block": {
+        "pct": 15
+      }
+    },
     "desc2": "2p: Aumenta o atributo de Bloqueio em 15%.",
     "desc4": "2p: Aumenta o atributo de Bloqueio em 15%. 4p: Ao bloquear um ataque com outros jogadores do tipo Bloqueio presentes na linha de frente, aumenta o poder deste bloqueio em 20% do atributo de Bloqueio."
   },
   {
     "id": 1,
     "catalog_id": "set_assist_receive",
-    "name": "Assist Receive",
+    "name": "Recepção de Assistência",
     "image_url": "/images/sets/assist_receive.png",
-    "twoPiece": { "Receive": { "pct": 15 } },
-    "fourPiece": { "Receive": { "pct": 15 } },
+    "twoPiece": {
+      "Receive": {
+        "pct": 15
+      }
+    },
+    "fourPiece": {
+      "Receive": {
+        "pct": 15
+      }
+    },
     "desc2": "2p: Aumenta o atributo de Recepção em 15%.",
-    "desc4": "2p: Aumenta o atributo de Recepção em 15%. 4p: Ao obter uma recepção PERFECT, aumenta o poder do próximo Spike do seu lado em 30% do atributo de Ataque Potente/Ataque Rápido do atacante."
+    "desc4": "2p: Aumenta o atributo de Recepção em 15%. 4p: Ao obter uma recepção perfeita, aumenta o poder da próxima cortada do seu lado em 30% do atributo de Ataque Potente/Ataque Rápido do atacante."
   },
   {
     "id": 10,
     "catalog_id": "set_supreme_receive",
-    "name": "Supreme Receive",
+    "name": "Recepção Suprema",
     "image_url": "/images/sets/supreme_receive.png",
-    "twoPiece": { "Receive": { "pct": 15 } },
-    "fourPiece": { "Receive": { "pct": 15 } },
+    "twoPiece": {
+      "Receive": {
+        "pct": 15
+      }
+    },
+    "fourPiece": {
+      "Receive": {
+        "pct": 15
+      }
+    },
     "desc2": "2p: Aumenta o atributo de Recepção em 15%.",
     "desc4": "2p: Aumenta o atributo de Recepção em 15%. 4p: Ao receber um Ataque Rápido, aumenta o poder desta recepção em 30% do atributo de Recepção."
   }

@@ -92,6 +92,10 @@ export interface Character {
     slot5?: string;
     slot6?: string;
   } | null;
+  recommended_memories?: {
+    main?: string;
+    others?: string[];
+  } | null;
   substats?: string | null;
   resonance?: {
     re1?: string;
@@ -100,6 +104,18 @@ export interface Character {
     re4?: string;
     re5?: string;
   };
+}
+
+export interface ResonanceItem {
+  nivel: string;
+  descricao: string;
+}
+
+export interface ResonanceEntry {
+  character_id: number;
+  character: string;
+  rarity: string;
+  ressonancias: ResonanceItem[];
 }
 
 export type TeamSlots = {
