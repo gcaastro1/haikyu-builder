@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/hooks/useTranslation";
 import { useI18nStore } from "@/stores/useI18nStore";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
@@ -10,12 +11,13 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDonateOpen, setIsDonateOpen] = useState(false);
   const { lang, setLang } = useI18nStore();
+  const t = useTranslation();
 
   const navLinks = [
-    { href: "/", label: "Builder" },
-    { href: "/database", label: "Personagens" },
-    { href: "/memories", label: "Memórias" },
-    { href: "/exercises", label: "Exercícios" },
+    { href: "/", label: t.navbar.builder },
+    { href: "/database", label: t.navbar.characters },
+    { href: "/memories", label: t.navbar.memories },
+    { href: "/exercises", label: t.navbar.exercises },
   ];
 
   return (
@@ -46,11 +48,10 @@ export function Navbar() {
               value={lang}
               onChange={(e) => setLang(e.target.value as any)}
               className="navbar__lang-select"
-              aria-label="Selecionar idioma"
+              aria-label={t.navbar.select_language}
             >
-              <option value="pt">PT</option>
+              <option value="pt">BR</option>
               <option value="en">EN</option>
-              <option value="es">ES</option>
             </select>
           </div>
 
@@ -59,7 +60,7 @@ export function Navbar() {
               onClick={() => setIsDonateOpen(true)}
               className="navbar__donate-button"
             >
-              Donate
+              {t.navbar.donate}
             </button>
           </div>
 
@@ -91,9 +92,8 @@ export function Navbar() {
                   onChange={(e) => setLang(e.target.value as any)}
                   className="navbar__lang-select"
                 >
-                  <option value="pt">PT</option>
+                  <option value="pt">BR</option>
                   <option value="en">EN</option>
-                  <option value="es">ES</option>
                 </select>
               </div>
 
@@ -103,7 +103,7 @@ export function Navbar() {
                 onClick={() => setIsDonateOpen(true)}
                 className="navbar__donate-button"
               >
-                Donate
+                {t.navbar.donate}
               </button>
             </nav>
           </div>

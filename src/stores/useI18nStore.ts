@@ -2,7 +2,7 @@ import { create, StoreApi, UseBoundStore } from "zustand";
 import { persist } from "zustand/middleware";
 import { useCharacterStore } from "./useCharacterStore";
 
-export type Lang = "pt" | "en" | "es";
+export type Lang = "pt" | "en";
 
 export type I18nStoreState = {
   lang: Lang;

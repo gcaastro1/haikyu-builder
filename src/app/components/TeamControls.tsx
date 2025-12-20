@@ -1,6 +1,7 @@
 "use client";
 
 import { useTeamManager } from "@/hooks/useTeamManager";
+import { useTranslation } from "@/hooks/useTranslation";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { useTeamStore } from "@/stores/useTeamStore";
 import { useUIStore } from "@/stores/useUIStore";
@@ -14,22 +15,23 @@ export function TeamControls() {
   const { team, setTeam, rotateTeam, clearTeam } = useTeamStore();
   const { handleSave } = useTeamManager();
   const { suggestTeam } = useCharacterStore();
+  const t = useTranslation();
 
   const [shake, setShake] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedType, setSelectedType] = useState<TeamType | null>(null);
 
   const handleSaveClick = () => {
-    const name = prompt("Digite o nome do time:");
+    const name = prompt(t.home.team_name_prompt);
     if (!name) return;
     handleSave(name);
   };
 
   const handleClearClick = () => {
-    const confirmClear = confirm("Deseja realmente limpar o time atual?");
+    const confirmClear = confirm(t.home.clear_confirm);
     if (confirmClear) {
       clearTeam();
-      showFeedback("Time limpo com sucesso.");
+      showFeedback(t.home.clear_success);
     } else {
       setShake(true);
       setTimeout(() => setShake(false), 400);
@@ -38,7 +40,7 @@ export function TeamControls() {
 
   const handleRotateClick = () => {
     rotateTeam();
-    showFeedback("Time rotacionado!");
+    showFeedback(t.home.rotate_success);
   };
 
   const handleSuggestClick = () => {
@@ -50,19 +52,19 @@ export function TeamControls() {
     const suggestion = suggestTeam(selectedType, team);
     setTeam(suggestion);
     setIsModalOpen(false);
-    showFeedback(`Time sugerido para o tipo "${selectedType}"!`);
+    showFeedback(`${t.home.suggest_success} "${selectedType}"!`);
   };
 
   return (
     <div className="team-controls">
       <button className="btn btn--save" onClick={handleSaveClick}>
         <Save size={16} />
-        <span>Salvar</span>
+        <span>{t.common.save}</span>
       </button>
 
       <button className="btn btn--manage" onClick={openTeamsModal}>
         <List size={16} />
-        <span>Gerenciar</span>
+        <span>{t.common.manage}</span>
       </button>
 
       <motion.button
@@ -80,7 +82,7 @@ export function TeamControls() {
 
       <button className="btn btn--suggest" onClick={handleSuggestClick}>
         <Lightbulb size={16} />
-        <span>Sugerir</span>
+        <span>{t.common.suggest}</span>
       </button>
 
       <AnimatePresence>
@@ -97,7 +99,7 @@ export function TeamControls() {
               animate={{ scale: 1 }}
               exit={{ scale: 0.9 }}
             >
-              <h3>Selecione o tipo de time</h3>
+              <h3>{t.home.suggest_modal_title}</h3>
 
               <div className="suggest-type-grid">
                 {["Ataque Rápido", "Potente", "Bloqueio", "Recepção"].map((type) => (
@@ -108,7 +110,7 @@ export function TeamControls() {
                       selectedType === type ? "selected" : ""
                     }`}
                   >
-                    {type}
+                    {t.home.team_types[type as keyof typeof t.home.team_types] || type}
                   </button>
                 ))}
               </div>
@@ -119,13 +121,13 @@ export function TeamControls() {
                   disabled={!selectedType}
                   onClick={handleGenerateTeam}
                 >
-                  Gerar
+                  {t.common.generate}
                 </button>
                 <button
                   className="btn btn--cancel"
                   onClick={() => setIsModalOpen(false)}
                 >
-                  Cancelar
+                  {t.common.cancel}
                 </button>
               </div>
             </motion.div>

@@ -1,4 +1,6 @@
 
+import { useTranslation } from "@/hooks/useTranslation";
+
 type Stat = {
   label: string;
   value: number;
@@ -17,6 +19,7 @@ type HexagonStatChartProps = {
 };
 
 export function HexagonStatChart({ stats }: HexagonStatChartProps) {
+  const t = useTranslation();
   const size = 300;
   const center = size / 2;
   const radius = 100;
@@ -33,12 +36,12 @@ export function HexagonStatChart({ stats }: HexagonStatChartProps) {
   const maxStat = maxStatValue > 0 ? maxStatValue : 100;
   
   const statConfig = [
-    { key: 'serve', label: 'Serve', value: stats.serve },
-    { key: 'attack', label: 'Spike', value: stats.attack },
-    { key: 'set', label: 'Set', value: stats.set },
-    { key: 'receive', label: 'Receive', value: stats.receive },
-    { key: 'block', label: 'Block', value: stats.block },
-    { key: 'defense', label: 'Save', value: stats.defense },
+    { key: 'serve', label: t.modal.stats.serve, value: stats.serve },
+    { key: 'attack', label: t.modal.stats.attack, value: stats.attack },
+    { key: 'set', label: t.modal.stats.set, value: stats.set },
+    { key: 'receive', label: t.modal.stats.receive, value: stats.receive },
+    { key: 'block', label: t.modal.stats.block, value: stats.block },
+    { key: 'defense', label: t.modal.stats.defense, value: stats.defense },
   ];
 
   const getPoint = (value: number, index: number, total: number) => {

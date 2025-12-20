@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/hooks/useTranslation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { Bond, Character, StatsBondType } from "@/types";
@@ -34,6 +35,7 @@ const schools = [
 function CadastroForm() {
   const { allPotentials, allCharacters, allBonds, characterBondLinks, characterStatsBondLinks, fetchInitialData, allMemories } = useCharacterStore();
   const { isAdmin } = useAuthStore();
+  const t = useTranslation();
   const searchParams = useSearchParams();
   const router = useRouter();
   const editId = searchParams.get("id");
@@ -56,12 +58,12 @@ function CadastroForm() {
   const [activeTab, setActiveTab] = useState("info");
 
   const tabs = [
-    { id: "info", label: "Informações principais" },
-    { id: "appearance", label: "Aparência" },
-    { id: "bonds", label: "Vínculos" },
-    { id: "potentials", label: "Potenciais" },
-    { id: "memories", label: "Memórias" },
-    { id: "attributes", label: "Atributos" },
+    { id: "info", label: t.cadastro.tabs.info },
+    { id: "appearance", label: t.cadastro.tabs.appearance },
+    { id: "bonds", label: t.cadastro.tabs.bonds },
+    { id: "potentials", label: t.cadastro.tabs.potentials },
+    { id: "memories", label: t.cadastro.tabs.memories },
+    { id: "attributes", label: t.cadastro.tabs.attributes },
   ];
 
   useEffect(() => {
@@ -196,7 +198,7 @@ function CadastroForm() {
 
     if (!name || !position || !rarity || !school) {
       setSubmitStatus("error");
-      setMessage("Erro: Campos obrigatórios (Nome, Posição, Raridade, Escola) estão faltando.");
+      setMessage(t.cadastro.messages.required_fields);
       return;
     }
 
@@ -244,8 +246,8 @@ function CadastroForm() {
     }
   };
 
-  if (!isLoaded) return <div className="cadastro-page"><p>Carregando...</p></div>;
-  if (editId && !editingCharacter && isLoaded) return <div className="cadastro-page"><p>Personagem não encontrado.</p></div>;
+  if (!isLoaded) return <div className="cadastro-page"><p>{t.cadastro.loading}</p></div>;
+  if (editId && !editingCharacter && isLoaded) return <div className="cadastro-page"><p>{t.cadastro.not_found}</p></div>;
 
   const sortedBonds = [...allBonds].sort((a, b) => {
     const aSelected = selectedBonds.includes(a.id);
@@ -267,7 +269,7 @@ function CadastroForm() {
 
   return (
     <main className="cadastro-page">
-      <SectionHeader title={editingCharacter ? "Editar Personagem" : "Cadastro de Personagem"} />
+      <SectionHeader title={editingCharacter ? t.cadastro.title_edit : t.cadastro.title_new} />
 
       {message && (
         <p
@@ -284,13 +286,13 @@ function CadastroForm() {
       <form key={editingCharacter ? editingCharacter.id : 'new'} onSubmit={handleSubmit} className="cadastro-page__form">
         
         <div className="cadastro-page__field cadastro-page__field--wide">
-          <label>Nome do Personagem</label>
+          <label>{t.cadastro.labels.name}</label>
           <input 
             type="text" 
             name="name" 
             required 
             defaultValue={editingCharacter?.name || ""} 
-            placeholder="Ex: Tobio Kageyama"
+            placeholder={t.cadastro.placeholders.name}
             className="cadastro-page__input-name"
           />
         </div>
@@ -319,9 +321,9 @@ function CadastroForm() {
           {/* Nome movido para o topo */}
 
           <div className="cadastro-page__field">
-            <label>Posição</label>
+            <label>{t.cadastro.labels.position}</label>
             <select name="position" required defaultValue={editingCharacter?.position || ""}>
-              <option value="">Selecione a Posição</option>
+              <option value="">{t.cadastro.placeholders.select_position}</option>
               {positions.map((p) => (
                 <option key={p} value={p}>
                   {p}
@@ -331,9 +333,9 @@ function CadastroForm() {
           </div>
 
           <div className="cadastro-page__field">
-            <label>Raridade</label>
+            <label>{t.cadastro.labels.rarity}</label>
             <select name="rarity" required defaultValue={editingCharacter?.rarity || ""}>
-              <option value="">Selecione a Raridade</option>
+              <option value="">{t.cadastro.placeholders.select_rarity}</option>
               {rarities.map((r) => (
                 <option key={r} value={r}>
                   {r}
@@ -343,9 +345,9 @@ function CadastroForm() {
           </div>
 
           <div className="cadastro-page__field">
-            <label>Escola</label>
+            <label>{t.cadastro.labels.school}</label>
             <select name="school" required defaultValue={editingCharacter?.school || ""}>
-              <option value="">Selecione a Escola</option>
+              <option value="">{t.cadastro.placeholders.select_school}</option>
               {schools.map((s) => (
                 <option key={s} value={s}>
                   {s}
@@ -465,7 +467,7 @@ function CadastroForm() {
                       );
                   })}
                   {sortedStatsBonds.length === 0 && (
-                      <p className="text-zinc-500 text-sm p-2">Nenhum vínculo de status cadastrado.</p>
+                      <p className="text-zinc-500 text-sm p-2">{t.cadastro.bonds.no_status_bonds}</p>
                   )}
               </div>
           </div>
@@ -474,21 +476,21 @@ function CadastroForm() {
         {/* Potenciais */}
         <div style={{ display: activeTab === 'potentials' ? 'contents' : 'none' }}>
           <div className="cadastro-page__section">
-            <SectionHeader title="Potenciais" />
+            <SectionHeader title={t.cadastro.potentials.title} />
           </div>
           <div className="cadastro-page__field">
-              <label>Potencial (4 slots)</label>
+              <label>{t.cadastro.labels.potential4}</label>
               <select name="potential4" defaultValue={editingCharacter?.potential?.["4slots"] || ""}>
-                  <option value="">Selecione...</option>
+                  <option value="">{t.cadastro.placeholders.select}</option>
                   {allPotentials.map(p => (
                       <option key={p.id} value={p.id}>{p.name}</option>
                   ))}
               </select>
           </div>
           <div className="cadastro-page__field">
-              <label>Potencial (2 slots)</label>
+              <label>{t.cadastro.labels.potential2}</label>
               <select name="potential2" defaultValue={editingCharacter?.potential?.["2slots"] || ""}>
-                  <option value="">Selecione...</option>
+                  <option value="">{t.cadastro.placeholders.select}</option>
                   {allPotentials.map(p => (
                       <option key={p.id} value={p.id}>{p.name}</option>
                   ))}
@@ -496,16 +498,16 @@ function CadastroForm() {
           </div>
 
           <div className="cadastro-page__section">
-              <SectionHeader title="Status Recomendados (Slots)" />
+              <SectionHeader title={t.cadastro.potentials.recommended_stats} />
           </div>
           <div className="cadastro-page__attributes">
               {[1, 2, 3, 4, 5, 6].map(i => (
                   <div key={i} className="cadastro-page__attr">
-                      <label>Slot {i}</label>
+                      <label>{t.cadastro.labels.slot} {i}</label>
                       <input 
                           type="text" 
                           name={`slot${i}`} 
-                          placeholder={`Status principal`} 
+                          placeholder={t.cadastro.placeholders.slot} 
                           defaultValue={editingCharacter?.recommended_stats?.[`slot${i}` as keyof NonNullable<Character['recommended_stats']>] || ""}
                       />
                   </div>
@@ -513,12 +515,12 @@ function CadastroForm() {
           </div>
 
           <div className="cadastro-page__section">
-              <SectionHeader title="Atributos Recomendados" />
+              <SectionHeader title={t.cadastro.potentials.recommended_attributes} />
           </div>
           <div className="cadastro-page__field cadastro-page__field--wide">
               <textarea 
                   name="substats" 
-                  placeholder="Ex: Ataque %, Salto %, etc."
+                  placeholder={t.cadastro.placeholders.substats}
                   defaultValue={editingCharacter?.substats || ""}
                   rows={3}
                   className="cadastro-page__textarea"

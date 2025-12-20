@@ -2,6 +2,7 @@
 
 import { getRarityBackground } from "@/app/lib/rarityBackgrounds";
 import { DEFAULT_RARITY_COLOR, RARITY_COLORS } from "@/constants/theme";
+import { useTranslation } from "@/hooks/useTranslation";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { Bond, CharacterStatsBond, Potential, Skill } from "@/types";
 import { CharacterModalProps, CharacterModalTabKey } from "@/types/components";
@@ -29,6 +30,16 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
   >([]);
   const [allPotentials, setAllPotentials] = useState<Potential[]>([]);
   const [loadingRelatedData, setLoadingRelatedData] = useState(true);
+  const t = useTranslation();
+
+  const tabLabels: Record<CharacterModalTabKey, string> = {
+    Resumo: t.modal.summary,
+    Habilidades: t.modal.skills,
+    Vínculos: t.modal.bonds,
+    Ressonâncias: t.modal.resonance,
+    Memória: t.modal.memory,
+    Potenciais: t.modal.potentials,
+  };
 
   const allResonances = useCharacterStore((s) => s.allResonances);
   const characterResonance = useMemo(() => 
@@ -240,7 +251,7 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                   transition={{ type: "spring", stiffness: 500, damping: 28 }}
                 />
               )}
-              {tab}
+              {tabLabels[tab]}
             </button>
           ))}
         </motion.nav>
@@ -319,7 +330,7 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                     </div>
                     <div className={styles.summaryDetails}>
                       <div className={styles.detailItem}>
-                        <h4>Vínculo</h4>
+                        <h4>{t.modal.bond}</h4>
                         {displayBond ? (
                           <div 
                             className={styles.detailContent} 
@@ -492,14 +503,14 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
 
                         {characterStatBonds.length > 0 && (
                           <div className={styles.bondsSection}>
-                            <h3 className={styles.bondsSectionTitle}>Vínculos de Status</h3>
+                            <h3 className={styles.bondsSectionTitle}>{t.modal.status_bonds}</h3>
                             <ul className={styles.list}>
                               {characterStatBonds.map((sb) => {
                                 const participants = statsBondParticipants.get(sb.stats_bond_id) || [];
                                 return (
                                   <li key={sb.id} className={styles.listItem}>
                                     <div className={styles.bondHeader}>
-                                      <strong>{sb.stats_bond_name || `Vínculo de Status ${sb.id}`}</strong>
+                                      <strong>{sb.stats_bond_name || `${t.modal.status_bond_default} ${sb.id}`}</strong>
                                       {participants.length > 0 && (
                                         <span className={styles.bondCount}>{participants.length}</span>
                                       )}
@@ -524,7 +535,7 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                                                 <span className={styles.bondParticipantPlaceholder} />
                                               )}
                                             </div>
-                                            <p className={styles.bondParticipantBuff}>{p.buff_description || "Sem descrição"}</p>
+                                            <p className={styles.bondParticipantBuff}>{p.buff_description || t.home.bonds.no_description}</p>
                                           </div>
                                         ))}
                                       </div>
@@ -539,7 +550,7 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                         )}
 
                         {characterBondIds.length === 0 && characterStatBonds.length === 0 && (
-                          <p className={styles.empty}>Nenhum vínculo definido.</p>
+                          <p className={styles.empty}>{t.modal.no_bonds}</p>
                         )}
                       </div>
                     )}
@@ -569,14 +580,14 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                             <div key={key} className={styles.resonanceItem}>
                               <div className={styles.resonanceDot}>{["I","II","III","IV","V"][idx]}</div>
                               <div className={styles.resonanceContent}>
-                                <p>{text || "Em breve."}</p>
+                                <p>{text || t.modal.coming_soon}</p>
                               </div>
                             </div>
                           );
                         })}
                       </div>
                     ) : (
-                      <p className={styles.empty}>Nenhuma ressonância definida.</p>
+                      <p className={styles.empty}>{t.modal.no_resonance}</p>
                     )}
                   </>
                 )}
@@ -584,13 +595,13 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
                   <div className={styles.memoriesContainer}>
                     {/* Caso não exista nada */}
                     {!memoryForCharacter && otherMemories.length === 0 && (
-                      <p className={styles.empty}>Nenhuma memória definida.</p>
+                      <p className={styles.empty}>{t.modal.no_memory}</p>
                     )}
 
                     <div className={styles.memoryGrid}>
                       {memoryForCharacter && (
                         <div className={`${styles.memoryCard} ${styles.memoryCardPrincipal}`}>
-                          <div className={styles.memoryTag}>Principal</div>
+                          <div className={styles.memoryTag}>{t.common.main}</div>
                           <div className={styles.memoryHero}>
                             <img
                               src={memoryForCharacter.image_url}

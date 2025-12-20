@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/hooks/useTranslation";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { StatsBondType } from "@/types";
 import { X } from "lucide-react";
@@ -18,6 +19,7 @@ export function StatsBondCreationModal({ isOpen, onClose, onSuccess }: StatsBond
   const [error, setError] = useState("");
   const [selectedParticipants, setSelectedParticipants] = useState<number[]>([]);
   const { fetchInitialData, allCharacters } = useCharacterStore();
+  const t = useTranslation();
 
   if (!isOpen) return null;
 
@@ -44,7 +46,7 @@ export function StatsBondCreationModal({ isOpen, onClose, onSuccess }: StatsBond
         setError(result.message);
       }
     } catch (err: any) {
-      setError(err.message || "Erro desconhecido");
+      setError(err.message || t.common.unknown_error);
     } finally {
       setIsSubmitting(false);
     }
@@ -60,7 +62,7 @@ export function StatsBondCreationModal({ isOpen, onClose, onSuccess }: StatsBond
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div className="w-full max-w-md bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl overflow-hidden max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between p-4 border-b border-zinc-700 bg-zinc-800 shrink-0">
-          <h3 className="text-lg font-bold text-white">Criar Novo Vínculo de Status</h3>
+          <h3 className="text-lg font-bold text-white">{t.common.create_stats_bond_title}</h3>
           <button onClick={onClose} className="text-zinc-400 hover:text-white transition-colors">
             <X size={20} />
           </button>
@@ -74,19 +76,19 @@ export function StatsBondCreationModal({ isOpen, onClose, onSuccess }: StatsBond
           )}
           
           <div className="space-y-1">
-            <label className="text-sm font-medium text-zinc-300">Nome do Vínculo de Status</label>
+            <label className="text-sm font-medium text-zinc-300">{t.common.stats_bond_name}</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Ex: Setter Soul"
+              placeholder={t.common.stats_bond_placeholder}
               className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-300">Participantes (Opcional)</label>
+            <label className="text-sm font-medium text-zinc-300">{t.common.participants_optional}</label>
             <div className="border border-zinc-700 rounded bg-zinc-800 max-h-40 overflow-y-auto p-2 grid grid-cols-2 gap-2">
               {allCharacters.map(char => (
                 <label key={char.id} className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer hover:bg-zinc-700 p-1 rounded">
@@ -115,14 +117,14 @@ export function StatsBondCreationModal({ isOpen, onClose, onSuccess }: StatsBond
               onClick={onClose}
               className="px-4 py-2 mr-2 text-sm font-medium text-zinc-300 hover:text-white transition-colors"
             >
-              Cancelar
+              {t.common.cancel}
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
               className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Criando..." : "Criar Vínculo"}
+              {isSubmitting ? t.common.creating : t.common.create_bond_btn}
             </button>
           </div>
         </form>

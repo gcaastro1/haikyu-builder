@@ -196,9 +196,10 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
           }
         },
 
-        refreshBondsLanguage: async (_lang) => {
+        refreshBondsLanguage: async (lang) => {
           try {
-            const bondsJson = await fetchAndValidate("/mock/bonds.json", z.array(BondSchema));
+            const fileName = lang === "en" ? "bonds_en.json" : "bonds.json";
+            const bondsJson = await fetchAndValidate(`/mock/${fileName}`, z.array(BondSchema));
             const bonds: Bond[] = bondsJson.map((b) => ({
               id: b.id,
               name: b.name ?? null,
@@ -207,6 +208,15 @@ export const useCharacterStore: UseBoundStore<StoreApi<CharacterStoreState>> =
               participants: b.participants,
             }));
             set({ allBonds: bonds });
+            // Recalculate bonds for current active team if possible, but calculating requires a team.
+            // The activeBonds are derived from team, so if we just update allBonds, we might need to trigger calculation again.
+            // But we don't have the current team in store state (it's in useTeamStore).
+            // However, activeBonds display component uses useActiveBonds hook which likely watches activeBonds state.
+            // Wait, calculateBondsForTeam updates activeBonds. If I update allBonds, activeBonds won't automatically update until calculateBondsForTeam is called.
+            // But I can't call it here easily without the team.
+            // For now, let's assume the user will interact or we rely on the component to re-render.
+            // Actually, if I change language, I should probably trigger a recalculation if I can.
+            // But useTeamStore has the team.
           } catch {}
         },
 

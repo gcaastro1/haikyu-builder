@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/hooks/useTranslation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { Edit, Plus } from "lucide-react";
@@ -20,6 +21,7 @@ export default function MemoriesPage() {
 
   const { isAdmin } = useAuthStore();
   const [searchTerm, setSearchTerm] = useState("");
+  const t = useTranslation();
 
   useEffect(() => {
     if (!hasLoadedData && !isLoading) fetchInitialData();
@@ -32,7 +34,7 @@ export default function MemoriesPage() {
 
   return (
     <main className="min-h-screen p-8 bg-zinc-950 text-white">
-      <SectionHeader title="Banco de Memórias" />
+      <SectionHeader title={t.memories.title} />
 
       {isAdmin && (
          <div className="mb-8 flex justify-end">
@@ -41,7 +43,7 @@ export default function MemoriesPage() {
               className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded flex items-center gap-2 transition-colors"
             >
               <Plus size={20} />
-              Nova Memória
+              {t.memories.new_memory}
             </Link>
          </div>
       )}
@@ -49,7 +51,7 @@ export default function MemoriesPage() {
       <div className="mb-8">
         <input 
           type="text" 
-          placeholder="Buscar memórias por nome ou descrição..." 
+          placeholder={t.memories.search_placeholder} 
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full p-3 rounded bg-zinc-900 text-white border border-zinc-800 focus:border-orange-500 focus:outline-none transition-colors"
@@ -83,7 +85,9 @@ export default function MemoriesPage() {
               <h3 className="text-lg font-bold text-white mb-2">{memory.name}</h3>
               <div className="flex flex-wrap gap-2 mb-3">
                 {memory.positions.map(p => (
-                    <span key={p} className="text-xs bg-zinc-800 text-zinc-300 px-2 py-1 rounded border border-zinc-700">{p}</span>
+                    <span key={p} className="text-xs bg-zinc-800 text-zinc-300 px-2 py-1 rounded border border-zinc-700">
+                        {t.positions[p as keyof typeof t.positions] || p}
+                    </span>
                 ))}
               </div>
               <p className="text-sm text-zinc-400 line-clamp-4 leading-relaxed" title={memory.desc}>{memory.desc}</p>

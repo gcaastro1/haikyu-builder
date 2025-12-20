@@ -6,6 +6,7 @@ import { NameSearchInput } from "./NameSearchInput";
 import { SchoolFilter } from "./SchoolFilter";
 import { PositionFilter } from "./PositionFilter";
 import { Info, Filter } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 type CharacterFiltersProps = {
   nameSearch: string;
@@ -29,6 +30,7 @@ export function CharacterFilters({
   setRarityFilter,
 }: CharacterFiltersProps) {
   const rarities = ["ALL", "UR", "SSR", "SR", "R"];
+  const t = useTranslation();
 
   return (
     <div className="database-character-filters">
@@ -36,20 +38,21 @@ export function CharacterFilters({
         <div className="database-character-filters__field">
           <label className="database-character-filters__label">
             <Filter size={12} className="database-character-filters__icon--filter" />
-            Buscar por nome
+            {t.filters.search_label}
             <Info size={12} className="database-character-filters__icon--info" />
           </label>
           <NameSearchInput
             value={nameSearch}
             onChange={setNameSearch}
             className="database-character-filters__input"
+            placeholder={t.filters.search_placeholder}
           />
         </div>
 
         <div className="database-character-filters__field">
           <label className="database-character-filters__label">
             <Filter size={12} className="database-character-filters__icon--filter" />
-            Escola
+            {t.filters.school}
             <Info size={12} className="database-character-filters__icon--info" />
           </label>
           <SchoolFilter
@@ -64,7 +67,7 @@ export function CharacterFilters({
         <div className="database-character-filters__field database-character-filters__field--wide">
           <label className="database-character-filters__label">
             <Filter size={12} className="database-character-filters__icon--filter" />
-            Posição
+            {t.filters.position}
             <Info size={12} className="database-character-filters__icon--info" />
           </label>
           <PositionFilter
@@ -77,7 +80,7 @@ export function CharacterFilters({
         <div className="database-character-filters__rarity">
           <label className="database-character-filters__label">
             <Filter size={12} className="database-character-filters__icon--filter" />
-            Raridade
+            {t.filters.rarity}
             <Info size={12} className="database-character-filters__icon--info" />
           </label>
 
@@ -92,7 +95,7 @@ export function CharacterFilters({
                     isActive ? "active" : ""
                   }`}
                 >
-                  {rarity}
+                  {rarity === "ALL" ? t.common.all : rarity}
                 </button>
               );
             })}

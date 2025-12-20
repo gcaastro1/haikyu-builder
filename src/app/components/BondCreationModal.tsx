@@ -1,6 +1,7 @@
 "use client";
 
 import { useCharacterStore } from "@/stores/useCharacterStore";
+import { useTranslation } from "@/hooks/useTranslation";
 import { Bond } from "@/types";
 import { X } from "lucide-react";
 import { useState } from "react";
@@ -19,6 +20,7 @@ export function BondCreationModal({ isOpen, onClose, onSuccess }: BondCreationMo
   const [error, setError] = useState("");
   const [selectedParticipants, setSelectedParticipants] = useState<number[]>([]);
   const { fetchInitialData, allCharacters } = useCharacterStore();
+  const t = useTranslation();
 
   if (!isOpen) return null;
 
@@ -44,7 +46,7 @@ export function BondCreationModal({ isOpen, onClose, onSuccess }: BondCreationMo
         setError(result.message);
       }
     } catch (err: any) {
-      setError(err.message || "Erro desconhecido");
+      setError(err.message || t.common.unknown_error);
     } finally {
       setIsSubmitting(false);
     }
@@ -60,7 +62,7 @@ export function BondCreationModal({ isOpen, onClose, onSuccess }: BondCreationMo
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div className="w-full max-w-md bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl overflow-hidden max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between p-4 border-b border-zinc-700 bg-zinc-800 shrink-0">
-          <h3 className="text-lg font-bold text-white">Criar Novo Vínculo</h3>
+          <h3 className="text-lg font-bold text-white">{t.common.create_bond_title}</h3>
           <button onClick={onClose} className="text-zinc-400 hover:text-white transition-colors">
             <X size={20} />
           </button>
@@ -74,7 +76,7 @@ export function BondCreationModal({ isOpen, onClose, onSuccess }: BondCreationMo
           )}
           
           <div className="space-y-1">
-            <label className="text-sm font-medium text-zinc-300">Nome do Vínculo</label>
+            <label className="text-sm font-medium text-zinc-300">{t.common.bond_name}</label>
             <input
               type="text"
               value={name}
@@ -85,7 +87,7 @@ export function BondCreationModal({ isOpen, onClose, onSuccess }: BondCreationMo
           </div>
           
           <div className="space-y-1">
-            <label className="text-sm font-medium text-zinc-300">Descrição</label>
+            <label className="text-sm font-medium text-zinc-300">{t.common.description}</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -95,7 +97,7 @@ export function BondCreationModal({ isOpen, onClose, onSuccess }: BondCreationMo
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-300">Participantes (Opcional)</label>
+            <label className="text-sm font-medium text-zinc-300">{t.common.participants_optional}</label>
             <div className="border border-zinc-700 rounded bg-zinc-800 max-h-40 overflow-y-auto p-2 grid grid-cols-2 gap-2">
               {allCharacters.map(char => (
                 <label key={char.id} className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer hover:bg-zinc-700 p-1 rounded">
@@ -124,7 +126,7 @@ export function BondCreationModal({ isOpen, onClose, onSuccess }: BondCreationMo
               onClick={onClose}
               className="px-4 py-2 mr-2 text-sm font-medium text-zinc-300 hover:text-white transition-colors"
             >
-              Cancelar
+              {t.common.cancel}
             </button>
             <button
               type="submit"
@@ -134,10 +136,10 @@ export function BondCreationModal({ isOpen, onClose, onSuccess }: BondCreationMo
               {isSubmitting ? (
                  <>
                    <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                   Salvando...
+                   {t.common.saving}
                  </>
               ) : (
-                "Criar Vínculo"
+                t.common.create_bond_btn
               )}
             </button>
           </div>

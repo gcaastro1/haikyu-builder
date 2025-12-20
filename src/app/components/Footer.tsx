@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useTranslation } from "@/hooks/useTranslation";
 import { useAuthStore } from "@/stores/useAuthStore";
-import Link from "next/link";
+import { useState } from "react";
 
 export function Footer() {
   const { isAdmin, login, logout } = useAuthStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const t = useTranslation();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,14 +43,14 @@ export function Footer() {
             onClick={handleLogout}
             style={{ background: "none", border: "none", color: "#666", textDecoration: "underline", cursor: "pointer", fontSize: "0.8rem" }}
           >
-            Sair do modo Admin
+            {t.common.logout_admin}
           </button>
         ) : (
           <button 
             onClick={() => setIsModalOpen(true)}
             style={{ background: "none", border: "none", color: "#666", textDecoration: "underline", cursor: "pointer", fontSize: "0.8rem" }}
           >
-            Acesso restrito
+            {t.common.restricted_access}
           </button>
         )}
       </div>
@@ -75,13 +76,13 @@ export function Footer() {
             width: "300px",
             maxWidth: "90%"
           }}>
-            <h3 style={{ color: "#fff", marginBottom: "1rem", textAlign: "center" }}>Acesso Admin</h3>
+            <h3 style={{ color: "#fff", marginBottom: "1rem", textAlign: "center" }}>{t.common.admin_access}</h3>
             <form onSubmit={handleLogin}>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Senha"
+                placeholder={t.common.password}
                 style={{
                   width: "100%",
                   padding: "0.5rem",
@@ -93,7 +94,7 @@ export function Footer() {
                 }}
                 autoFocus
               />
-              {error && <p style={{ color: "#ff4444", fontSize: "0.8rem", marginBottom: "1rem" }}>Senha incorreta</p>}
+              {error && <p style={{ color: "#ff4444", fontSize: "0.8rem", marginBottom: "1rem" }}>{t.common.incorrect_password}</p>}
               
               <div style={{ display: "flex", gap: "0.5rem" }}>
                 <button
@@ -109,7 +110,7 @@ export function Footer() {
                     cursor: "pointer"
                   }}
                 >
-                  Cancelar
+                  {t.common.cancel}
                 </button>
                 <button
                   type="submit"
@@ -124,7 +125,7 @@ export function Footer() {
                     fontWeight: "bold"
                   }}
                 >
-                  Entrar
+                  {t.common.enter}
                 </button>
               </div>
             </form>

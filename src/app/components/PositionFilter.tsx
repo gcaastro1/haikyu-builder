@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/hooks/useTranslation";
 import "@/styles/components/_position-filter.scss";
 import { Position } from "@/types";
 import Image from "next/image";
@@ -21,6 +22,7 @@ export function PositionFilter({
   variant = "text",
   hideLibero = false,
 }: PositionFilterProps) {
+  const t = useTranslation();
   const positions = hideLibero
     ? allPositions.filter((p) => p !== "L")
     : allPositions;
@@ -35,7 +37,7 @@ export function PositionFilter({
             key={pos}
             onClick={() => onFilterChange(pos)}
             className={`position-filter__btn ${isActive ? "is-active" : ""}`}
-            title={pos === "ALL" ? "Todos" : pos}
+            title={pos === "ALL" ? t.filters.all_positions : pos}
           >
             {variant === "icon" && pos !== "ALL" ? (
               <div className="position-filter__icon-wrapper">
@@ -49,7 +51,7 @@ export function PositionFilter({
                 />
               </div>
             ) : (
-              <span>{pos === "ALL" ? "Todos" : pos}</span>
+              <span>{pos === "ALL" ? t.filters.all_positions : pos}</span>
             )}
           </button>
         );

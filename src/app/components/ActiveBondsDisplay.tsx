@@ -1,4 +1,5 @@
 import { useActiveBonds } from "@/hooks/useActiveBonds";
+import { useTranslation } from "@/hooks/useTranslation";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { useTeamStore } from "@/stores/useTeamStore";
 import { Character, CharacterBondLink } from "@/types";
@@ -10,6 +11,7 @@ export function ActiveBondsDisplay() {
   const { allCharacters, characterBondLinks, loadingBonds } = useCharacterStore();
   const { team } = useTeamStore();
   const bonds = useActiveBonds();
+  const t = useTranslation();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [hoveredBondId, setHoveredBondId] = useState<number | null>(null);
   const [hoverPlacement, setHoverPlacement] = useState<"top" | "bottom">("bottom");
@@ -71,7 +73,7 @@ export function ActiveBondsDisplay() {
   if (loadingBonds) {
     return (
       <div className="active-bonds-display">
-        <p className="loading-text">Carregando vínculos...</p>
+        <p className="loading-text">{t.common.loading_bonds}</p>
       </div>
     );
   }
@@ -86,19 +88,19 @@ export function ActiveBondsDisplay() {
   return (
     <div className="active-bonds-display">
       <div className="header">
-        <h3>VÍNCULOS</h3>
+        <h3>{t.home.bonds.title}</h3>
         <div className="tabs">
           <button
             className={activeTab === "ativos" ? "tab active" : "tab"}
             onClick={() => setActiveTab("ativos")}
           >
-            Ativos ({activeBonds.length})
+            {t.home.bonds.active} ({activeBonds.length})
           </button>
           <button
             className={activeTab === "pendentes" ? "tab active" : "tab"}
             onClick={() => setActiveTab("pendentes")}
           >
-            Pendentes ({pendingBonds.length})
+            {t.home.bonds.pending} ({pendingBonds.length})
           </button>
         </div>
       </div>
@@ -166,7 +168,7 @@ export function ActiveBondsDisplay() {
                   )}`}
                 ></div>
               </div>
-              <p className="bond-description">{bond.description || "Sem descrição."}</p>
+              <p className="bond-description">{bond.description || t.home.bonds.no_description}</p>
               {(() => {
                 const membersOnCourt: Character[] = [];
                 const membersOffCourt: Character[] = [];
@@ -245,7 +247,7 @@ export function ActiveBondsDisplay() {
                           : ""
                       }`}
                     >
-                      <p className="bond-tooltip__desc">{bond.description || "Sem descrição."}</p>
+                      <p className="bond-tooltip__desc">{bond.description || t.home.bonds.no_description}</p>
                       <div className="bond-tooltip__participants">
                         {allParticipants.map((member) => (
                           <div
@@ -272,8 +274,8 @@ export function ActiveBondsDisplay() {
         ) : (
           <p className="empty-text">
             {activeTab === "ativos"
-              ? "Nenhum vínculo ativo."
-              : "Nenhum vínculo pendente."}
+              ? t.home.bonds.no_active
+              : t.home.bonds.no_pending}
           </p>
         )}
       </div>

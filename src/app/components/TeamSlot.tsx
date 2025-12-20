@@ -23,7 +23,7 @@ export function TeamSlot({
   const droppable = useDroppable({ id: dropId, data: dropData });
   const { activeDragItem, overId } = useDragContext();
   const isClickable = !!onSlotClick;
-  const isLibero = positionName.toLowerCase().includes("líbero");
+  const isLibero = dropData.slotKey === 'libero';
 
   const isPositionFree = useTeamStore((s) => s.isPositionFree);
 

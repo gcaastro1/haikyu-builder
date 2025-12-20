@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/hooks/useTranslation";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { useTeamStore } from "@/stores/useTeamStore";
 import {
@@ -25,6 +26,7 @@ const activationThreshold: Record<RelevantStyleDisplay, number> = {
 };
 
 export function TeamTypeDisplay() {
+  const t = useTranslation();
   const team = useTeamStore((s) => s.team);
   const allCharacters = useCharacterStore((s) => s.allCharacters);
 
@@ -74,8 +76,10 @@ export function TeamTypeDisplay() {
   return (
     <div className="team-type-display">
       <div className="team-type-display__header">
-        <span className="label">Tipo de Time:</span>
-        <span className={`value ${mainStyle.className}`}>{teamType}</span>
+        <span className="label">{t.home.team_type_label}</span>
+        <span className={`value ${mainStyle.className}`}>
+            {t.home.team_types[teamType as keyof typeof t.home.team_types] || teamType}
+        </span>
       </div>
 
       <div className="team-type-display__styles">
@@ -92,7 +96,9 @@ export function TeamTypeDisplay() {
                 isActive ? "active" : "inactive"
               }`}
             >
-              <span className={`name ${countStyle.className}`}>{styleName}:</span>
+              <span className={`name ${countStyle.className}`}>
+                {t.home.team_types[styleName] || styleName}:
+              </span>
               <span className="count">
                 {count} / {threshold}
               </span>

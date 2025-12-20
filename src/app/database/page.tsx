@@ -1,6 +1,7 @@
 "use client";
 
 import { sortCharacters } from "@/app/lib/characterUtils";
+import { useTranslation } from "@/hooks/useTranslation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { Character, Position, School } from "@/types";
@@ -26,6 +27,7 @@ export default function DatabasePage() {
   );
 
   const { isAdmin } = useAuthStore();
+  const t = useTranslation();
 
   const [positionFilter, setPositionFilter] = useState<Position | "ALL">("ALL");
   const [schoolFilter, setSchoolFilter] = useState<School | "ALL">("ALL");
@@ -94,12 +96,12 @@ export default function DatabasePage() {
 
   return (
     <main className="database-page">
-      <SectionHeader title="Banco de Dados de Personagens"/>
+      <SectionHeader title={t.database.title}/>
 
       {isAdmin && (
         <div style={{ padding: "0 2rem" }}>
           <Link href="/cadastro" className="btn btn--confirm" style={{ padding: "8px 16px", borderRadius: "4px", textDecoration: "none", display: "inline-block", marginBottom: "1rem" }}>
-            + Novo Personagem
+            {t.database.new_character}
           </Link>
         </div>
       )}
@@ -142,7 +144,7 @@ export default function DatabasePage() {
           !fetchError &&
           filteredCharacters.length === 0 && (
             <p className="database-page__status database-page__status--empty">
-              Nenhum personagem encontrado com esses filtros.
+              {t.database.no_characters_found}
             </p>
           )}
 

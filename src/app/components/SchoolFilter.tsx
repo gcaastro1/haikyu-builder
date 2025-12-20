@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useTranslation } from "@/hooks/useTranslation";
 import { School } from "@/types";
 
 const availableSchools: School[] = [
@@ -28,6 +28,8 @@ export function SchoolFilter({
   onFilterChange,
   className = "",
 }: SchoolFilterProps) {
+  const t = useTranslation();
+
   return (
     <div className={`select-wrapper ${className}`}>
       <select
@@ -36,7 +38,7 @@ export function SchoolFilter({
         className="select-input"
         aria-label="Filtrar por escola"
       >
-        <option value="ALL">Todas as Escolas</option>
+        <option value="ALL">{t.filters.all_schools}</option>
         {availableSchools.map((school) => (
           <option key={school} value={school}>
             {school}

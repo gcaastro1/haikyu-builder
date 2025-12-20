@@ -7,18 +7,20 @@ type NameSearchInputProps = {
   value: string;
   onChange: (value: string) => void;
   className?: string;
+  placeholder?: string;
 };
 
 export function NameSearchInput({
   value,
   onChange,
   className = "",
+  placeholder = "Pesquisar por nome...",
 }: NameSearchInputProps) {
   return (
     <div className={`input-wrapper ${className}`}>
       <input
         type="text"
-        placeholder="Pesquisar por nome..."
+        placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="text-input"

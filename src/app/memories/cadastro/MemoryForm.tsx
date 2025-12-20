@@ -4,6 +4,7 @@ import { StorageFile } from "@/app/actions/getMemoryImages";
 import { saveMemoryToJson } from "@/app/actions/saveMemory";
 import { MemoryImageSelector } from "@/app/components/MemoryImageSelector";
 import { SectionHeader } from "@/app/components/SectionHeader";
+import { useTranslation } from "@/hooks/useTranslation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { Memory } from "@/types";
@@ -30,6 +31,7 @@ export function MemoryForm({ initialImages, loadError }: MemoryFormProps) {
   );
   
   const { isAdmin } = useAuthStore();
+  const t = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get("id");
@@ -130,17 +132,17 @@ export function MemoryForm({ initialImages, loadError }: MemoryFormProps) {
 
   return (
     <main className="min-h-screen p-8 pb-24 bg-zinc-950 text-white">
-        <SectionHeader title={editId ? "Editar Memória" : "Nova Memória"} />
+        <SectionHeader title={editId ? t.memory_form.title_edit : t.memory_form.title_new} />
         
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8">
             
             <div className="bg-zinc-900 p-6 rounded-lg border border-zinc-800">
-                <h3 className="text-xl font-bold mb-4 border-b border-zinc-700 pb-2">Informações Básicas</h3>
+                <h3 className="text-xl font-bold mb-4 border-b border-zinc-700 pb-2">{t.memory_form.basic_info}</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-zinc-400 mb-1">ID (Opcional, gerado automaticamente se vazio)</label>
+                            <label className="block text-sm font-medium text-zinc-400 mb-1">{t.memory_form.labels.id}</label>
                             <input 
                                 type="text" 
                                 value={formData.id} 
@@ -151,7 +153,7 @@ export function MemoryForm({ initialImages, loadError }: MemoryFormProps) {
                         </div>
                         
                         <div>
-                            <label className="block text-sm font-medium text-zinc-400 mb-1">Nome *</label>
+                            <label className="block text-sm font-medium text-zinc-400 mb-1">{t.memory_form.labels.name}</label>
                             <input 
                                 type="text" 
                                 required
@@ -162,7 +164,7 @@ export function MemoryForm({ initialImages, loadError }: MemoryFormProps) {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-zinc-400 mb-1">Posições *</label>
+                            <label className="block text-sm font-medium text-zinc-400 mb-1">{t.memory_form.labels.positions}</label>
                             <div className="flex flex-wrap gap-3">
                                 {POSITIONS.map(pos => (
                                     <label key={pos} className="flex items-center gap-2 cursor-pointer bg-zinc-800 px-3 py-1 rounded hover:bg-zinc-700">

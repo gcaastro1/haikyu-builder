@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/hooks/useTranslation";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
@@ -10,6 +11,7 @@ import styles from "./Exercises.module.scss";
 export default function ExercisesPage() {
   const { allExerciseAnswers, fetchInitialData } = useCharacterStore();
   const [searchTerm, setSearchTerm] = useState("");
+  const t = useTranslation();
 
   useEffect(() => {
     fetchInitialData();
@@ -22,8 +24,8 @@ export default function ExercisesPage() {
   return (
     <main className={styles.container}>
       <div className={styles.header}>
-        <h1>Respostas dos Exercícios</h1>
-        <p>Consulte as perguntas do modo exercício e suas possíveis recompensas</p>
+        <h1>{t.exercises.title}</h1>
+        <p>{t.exercises.subtitle}</p>
       </div>
 
       <div className={styles.searchContainer}>
@@ -32,7 +34,7 @@ export default function ExercisesPage() {
         </div>
         <input
           type="text"
-          placeholder="Pesquisar exercícios..."
+          placeholder={t.exercises.search_placeholder}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -55,27 +57,27 @@ export default function ExercisesPage() {
                 <div className={styles.optionImageContainer}>
                     <Image 
                       src={`/images/answer_rewards/${answer.option1}`} 
-                      alt="Recompensa Opção A" 
+                      alt={t.common.reward_option_a}
                       width={64} 
                       height={64}
                       className={styles.optionImage}
                       unoptimized
                     />
                 </div>
-                <span className={styles.optionLabel}>OPÇÃO A</span>
+                <span className={styles.optionLabel}>{t.common.option_a}</span>
               </div>
               <div className={styles.option}>
                  <div className={styles.optionImageContainer}>
                     <Image 
                       src={`/images/answer_rewards/${answer.option2}`} 
-                      alt="Recompensa Opção B" 
+                      alt={t.common.reward_option_b}
                       width={64} 
                       height={64}
                       className={styles.optionImage}
                       unoptimized
                     />
                 </div>
-                <span className={styles.optionLabel}>OPÇÃO B</span>
+                <span className={styles.optionLabel}>{t.common.option_b}</span>
               </div>
             </div>
           </motion.div>
@@ -83,7 +85,7 @@ export default function ExercisesPage() {
         </AnimatePresence>
         {filteredAnswers.length === 0 && (
             <div className={styles.emptyState}>
-                Nenhum exercício encontrado.
+                {t.exercises.no_results}
             </div>
         )}
       </div>

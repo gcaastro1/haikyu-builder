@@ -1,6 +1,7 @@
 "use client";
 
 import { sortCharacters } from "@/app/lib/characterUtils";
+import { useTranslation } from "@/hooks/useTranslation";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { useTeamStore } from "@/stores/useTeamStore";
 import { Character, Position, School } from "@/types";
@@ -17,6 +18,7 @@ type CharacterListProps = {
 };
 
 export function CharacterList({ className = "" }: CharacterListProps) {
+  const t = useTranslation();
   const [positionFilter, setPositionFilter] = useState<Position | "ALL">("ALL");
   const [schoolFilter, setSchoolFilter] = useState<School | "ALL">("ALL");
   const [nameSearch, setNameSearch] = useState<string>("");
@@ -101,7 +103,7 @@ export function CharacterList({ className = "" }: CharacterListProps) {
   if (isLoading) {
     return (
       <div className={`character-list ${className}`}>
-        <div className="character-list__loading">Carregando personagens...</div>
+        <div className="character-list__loading">{t.database.loading_characters}</div>
       </div>
     );
   }
@@ -135,10 +137,10 @@ export function CharacterList({ className = "" }: CharacterListProps) {
         <button
           className={`character-list__toggle ${isMobile ? "character-list__toggle--mobile" : "character-list__toggle--desktop"} ${isExpanded ? "character-list__toggle--expanded" : ""}`}
           onClick={() => setIsExpanded(!isExpanded)}
-          aria-label={isExpanded ? "Recolher lista" : "Expandir lista"}
+          aria-label={isExpanded ? t.common.collapse : t.common.expand}
         >
           <span>
-            {isExpanded ? (isMobile ? "▼ Fechar" : "Fechar") : (isMobile ? "▲ Personagens" : "Personagens")}
+            {isExpanded ? (isMobile ? `▼ ${t.common.close}` : t.common.close) : (isMobile ? `▲ ${t.navbar.characters}` : t.navbar.characters)}
           </span>
         </button>
       </div>
@@ -202,7 +204,7 @@ export function CharacterList({ className = "" }: CharacterListProps) {
 
             {filteredCharacters.length === 0 && (
               <div className="character-list__empty">
-                Nenhum personagem encontrado com esses filtros.
+                {t.database.no_characters_found}
               </div>
             )}
       </motion.div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/hooks/useTranslation";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { useTeamStore } from "@/stores/useTeamStore";
 import { useUIStore } from "@/stores/useUIStore";
@@ -38,6 +39,8 @@ export function CharacterSelectionModal() {
     }))
   );
 
+  const t = useTranslation();
+
   const { allCharacters, isLoading, fetchError, fetchInitialData, hasLoadedData } = useCharacterStore(
     useShallow((s) => ({
       allCharacters: s.allCharacters,
@@ -70,15 +73,7 @@ export function CharacterSelectionModal() {
     setActivePositionFilter(autoPosition);
   }, [autoPosition]);
 
-  const positionNames: Record<string, string> = {
-    S: "Levantador",
-    WS: "Ponta",
-    MB: "Central",
-    OP: "Oposto",
-    L: "Líbero",
-    ALL: "Todos",
-  };
-  const positionTitle = positionNames[autoPosition] || "Todos";
+  const positionTitle = t.positions[autoPosition as keyof typeof t.positions] || autoPosition;
 
   const normalizedNameSearch = nameSearch.toLowerCase();
 
@@ -143,12 +138,12 @@ export function CharacterSelectionModal() {
     );
 
     if (currentNames.has(selectedCharacter.name)) {
-      showFeedback(`${selectedCharacter.name} já está no seu time.`, "error");
+      showFeedback(`${selectedCharacter.name} ${t.selection_modal.already_in_team}`, "error");
       return;
     }
 
     setCharacterInSlot(targetSlotIdentifier, selectedCharacter);
-    showFeedback(`${selectedCharacter.name} adicionado com sucesso!`, "success");
+    showFeedback(`${selectedCharacter.name} ${t.selection_modal.added_success}`, "success");
     setSelectedCharacter(null);
     closeModals();
   };
@@ -190,8 +185,8 @@ export function CharacterSelectionModal() {
             className="character-modal"
           >
             <header className="character-modal__header">
-              <h3>{`Selecionar ${positionTitle}`}</h3>
-              <button onClick={closeModals} aria-label="Fechar">
+              <h3>{`${t.selection_modal.title} ${positionTitle}`}</h3>
+              <button onClick={closeModals} aria-label={t.selection_modal.close}>
                 <X size={24} />
               </button>
             </header>

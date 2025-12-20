@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/hooks/useTranslation";
 import { useCharacterStore } from "@/stores/useCharacterStore";
 import { useSavedTeamsStore } from "@/stores/useSavedTeamsStore";
 import { useTeamStore } from "@/stores/useTeamStore";
@@ -21,6 +22,7 @@ const initialTeamState: TeamSlots = {
 
 export function SavedTeamsModal() {
   const [importKey, setImportKey] = useState("");
+  const t = useTranslation();
 
   const isOpen = useUIStore((s) => s.isTeamsModalOpen);
   const onClose = useUIStore((s) => s.closeModals);
@@ -37,26 +39,26 @@ export function SavedTeamsModal() {
 
   const handleLoadTeam = useCallback(
     (team: SavedTeam) => {
-      if (window.confirm(`Carregar o time "${team.name}"?`)) {
+      if (window.confirm(`${t.saved_teams.confirm_load} "${team.name}"?`)) {
         const success = storeLoadTeam(team);
         if (success) {
           onClose();
-          showFeedback(`Time "${team.name}" carregado!`);
-        } else showFeedback("Erro ao carregar time.", "error");
+          showFeedback(`${t.common.team || "Team"} "${team.name}" ${t.saved_teams.load_success}`);
+        } else showFeedback(t.saved_teams.load_error, "error");
       }
     },
-    [storeLoadTeam, onClose, showFeedback]
+    [storeLoadTeam, onClose, showFeedback, t]
   );
 
   const handleDeleteTeam = useCallback(
     (index: number) => {
       const team = savedTeamsList[index];
-      if (window.confirm(`Excluir o time "${team.name}"?`)) {
+      if (window.confirm(`${t.saved_teams.confirm_delete} "${team.name}"?`)) {
         storeDeleteTeam(index);
-        showFeedback(`Time "${team.name}" excluído.`);
+        showFeedback(`${t.common.team || "Team"} "${team.name}" ${t.saved_teams.delete_success}`);
       }
     },
-    [savedTeamsList, storeDeleteTeam, showFeedback]
+    [savedTeamsList, storeDeleteTeam, showFeedback, t]
   );
 
   const handleExportTeam = useCallback(
@@ -69,23 +71,23 @@ export function SavedTeamsModal() {
         }
         return btoa(JSON.stringify(exported));
       } catch {
-        showFeedback("Erro ao gerar chave.", "error");
+        showFeedback(t.saved_teams.key_error, "error");
         return null;
       }
     },
-    [showFeedback]
+    [showFeedback, t]
   );
 
   const handleCopyKey = useCallback(
     async (key: string) => {
       try {
         await navigator.clipboard.writeText(key);
-        showFeedback("Chave copiada para a área de transferência!");
+        showFeedback(t.saved_teams.copy_success);
       } catch {
-        showFeedback("Erro ao copiar chave.", "error");
+        showFeedback(t.saved_teams.copy_error, "error");
       }
     },
-    [showFeedback]
+    [showFeedback, t]
   );
 
   const handleExportAndCopy = useCallback(
@@ -98,13 +100,13 @@ export function SavedTeamsModal() {
 
   const handleImport = useCallback(async () => {
     if (!importKey.trim()) {
-      showFeedback("Cole uma chave válida.", "error");
+      showFeedback(t.saved_teams.invalid_key, "error");
       return;
     }
 
     try {
       const data = JSON.parse(atob(importKey.trim())) as ExportedTeam;
-      if (!data?.c) throw new Error("Formato inválido.");
+      if (!data?.c) throw new Error(t.saved_teams.invalid_format);
 
       const newTeam: TeamSlots = { ...initialTeamState };
       let foundAll = true;
@@ -127,23 +129,23 @@ export function SavedTeamsModal() {
       setImportKey("");
 
       const name = prompt(
-        `Time importado${foundAll ? "" : " (com falhas)"}! Digite um nome para salvá-lo:`
+        foundAll ? t.saved_teams.import_prompt : t.saved_teams.import_prompt_failures
       );
       if (name && name.trim() !== "") {
         storeSaveCurrentTeam(name);
-        showFeedback(`Time "${name}" importado e salvo!`);
+        showFeedback(`${t.common.team || "Team"} "${name}" ${t.saved_teams.import_success}`);
       } else {
         showFeedback(
-          foundAll ? "Time importado com sucesso!" : "Time importado com falhas.",
+          foundAll ? t.saved_teams.import_success_simple : t.saved_teams.import_failures_simple,
           foundAll ? "success" : "error"
         );
       }
 
       onClose();
     } catch (err: any) {
-      showFeedback(`Erro ao importar: ${err.message}`, "error");
+      showFeedback(`${t.saved_teams.import_error} ${err.message}`, "error");
     }
-  }, [importKey, allCharacters, setTeam, storeSaveCurrentTeam, showFeedback, onClose]);
+  }, [importKey, allCharacters, setTeam, storeSaveCurrentTeam, showFeedback, onClose, t]);
 
   if (!isOpen) return null;
 
@@ -151,8 +153,8 @@ export function SavedTeamsModal() {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <header className="modal__header">
-          <h3>Gerenciar Times Salvos</h3>
-          <button onClick={onClose} aria-label="Fechar">
+          <h3>{t.saved_teams.title}</h3>
+          <button onClick={onClose} aria-label={t.common.close}>
             <X size={22} />
           </button>
         </header>
@@ -167,9 +169,9 @@ export function SavedTeamsModal() {
           )}
 
           <section className="modal__section">
-            <h4>Times Salvos</h4>
+            <h4>{t.saved_teams.saved_teams}</h4>
             {savedTeamsList.length === 0 ? (
-              <p className="modal__empty">Nenhum time salvo.</p>
+              <p className="modal__empty">{t.saved_teams.no_saved_teams}</p>
             ) : (
               <ul className="modal__team-list">
                 {savedTeamsList.map((team, i) => (
@@ -177,26 +179,26 @@ export function SavedTeamsModal() {
                     <div className="modal__team-info">
                       <strong>{team.name}</strong>
                       <span>
-                        ({new Date(team.savedAt).toLocaleDateString("pt-BR")})
+                        ({new Date(team.savedAt).toLocaleDateString()})
                       </span>
                     </div>
                     <div className="modal__team-actions">
                       <button
-                        title="Carregar"
+                        title={t.common.load}
                         className="btn-icon blue"
                         onClick={() => handleLoadTeam(team)}
                       >
                         <Upload size={16} />
                       </button>
                       <button
-                        title="Copiar chave"
+                        title={t.common.copy_key}
                         className="btn-icon yellow"
                         onClick={() => handleExportAndCopy(team)}
                       >
                         <Copy size={16} />
                       </button>
                       <button
-                        title="Excluir"
+                        title={t.common.delete}
                         className="btn-icon red"
                         onClick={() => handleDeleteTeam(i)}
                       >
@@ -210,15 +212,15 @@ export function SavedTeamsModal() {
           </section>
 
           <section className="modal__section">
-            <h4>Importar Time por Chave</h4>
+            <h4>{t.saved_teams.import_title}</h4>
             <div className="modal__import">
               <input
                 type="text"
-                placeholder="Cole a chave aqui..."
+                placeholder={t.saved_teams.import_placeholder}
                 value={importKey}
                 onChange={(e) => setImportKey(e.target.value)}
               />
-              <button onClick={handleImport}>Importar</button>
+              <button onClick={handleImport}>{t.saved_teams.import_btn}</button>
             </div>
           </section>
         </div>
